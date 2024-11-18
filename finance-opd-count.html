@@ -42,7 +42,8 @@
                     <div class="flex-1">
                       <label for="hospital" class="block text-sm font-medium text-gray-700">Hospital</label>
                       <select id="hospital" name="hospital" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option value="FMH" selected>FMH Hospital</option>
+                        <option value="ALL" selected>All</option>
+                        <option value="FMH" >FMH Hospital</option>
                         <option value="HH">Hijaz Hospital</option>
                       </select>
                     </div>
@@ -61,6 +62,10 @@
                       <label for="name" class="block text-sm font-medium text-gray-700">Doctor Name</label>
                       <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                     </div>
+                    <div class="flex-1">
+                        <label for="departemnt" class="block text-sm font-medium text-gray-700">Depatemnt</label>
+                        <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                      </div>
                   </div>
                 <div class="flex justify-between">
                     <button id="searchButton" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
@@ -121,14 +126,17 @@
 
             const hospitalValue = document.getElementById('hospital').value;
 
-const requestBody = {
+            const requestBody = {
     startDate: document.getElementById('startDate').value,
     endDate: document.getElementById('endDate').value,
     name: document.getElementById('name').value,
     type: document.getElementById('type').value,
-    hos1: (hospitalValue === 'FMH') ? hospitalValue : '', 
-    hos2: (hospitalValue === 'HH') ? hospitalValue : '', 
+    department: document.getElementById('departemnt').value,
+    hos1: (hospitalValue === 'ALL' || hospitalValue === 'FMH') ? 'FMH' : '',
+    hos2: (hospitalValue === 'ALL' || hospitalValue === 'HH') ? 'HH' : '',
 };
+
+
 
             try {
                 const response = await fetch(apiUrl, {
