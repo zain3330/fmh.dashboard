@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Department Directory</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="min-h-screen bg-gray-50">
+  <div class="mx-auto max-w-6xl p-6">
+    <header class="mb-8 flex items-center justify-between">
+      <h1 class="text-2xl font-bold text-gray-900">Department Directory</h1>
+      <button onclick="window.location.href='index.html'" class="flex items-center gap-2 rounded-lg bg-gray-800 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700">
+        <i data-lucide="log-out" class="h-4 w-4"></i>
+        Logout
+      </button>
+    </header>
+
+    <div class="rounded-lg bg-white p-8 shadow-sm">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+        <a href="#" onclick="openModal('Finance')" class="group relative overflow-hidden rounded-lg bg-gray-800 p-6 text-white transition-all hover:bg-gray-700">
+          <div class="relative z-10">
+            <h3 class="mb-2 text-lg font-semibold">Finance</h3>
+            <p class="text-sm text-gray-300">View department data</p>
+          </div>
+          <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 transform">
+            <i data-lucide="dollar-sign" class="h-16 w-16 opacity-10"></i>
+          </div>
+        </a>
+        <a href="#" onclick="openModal('humanResources')" class="group relative overflow-hidden rounded-lg bg-gray-800 p-6 text-white transition-all hover:bg-gray-700">
+          <div class="relative z-10">
+            <h3 class="mb-2 text-lg font-semibold">Human Resources</h3>
+            <p class="text-sm text-gray-300">View department data</p>
+          </div>
+          <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 transform">
+            <i data-lucide="users" class="h-16 w-16 opacity-10"></i>
+          </div>
+        </a>
+        <a href="#" onclick="openModal('marketing')" class="group relative overflow-hidden rounded-lg bg-gray-800 p-6 text-white transition-all hover:bg-gray-700">
+          <div class="relative z-10">
+            <h3 class="mb-2 text-lg font-semibold">Marketing</h3>
+            <p class="text-sm text-gray-300">View department data</p>
+          </div>
+          <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 transform">
+            <i data-lucide="megaphone" class="h-16 w-16 opacity-10"></i>
+          </div>
+        </a>
+        <a href="#" onclick="openModal('it')" class="group relative overflow-hidden rounded-lg bg-gray-800 p-6 text-white transition-all hover:bg-gray-700">
+          <div class="relative z-10">
+            <h3 class="mb-2 text-lg font-semibold">IT</h3>
+            <p class="text-sm text-gray-300">View department data</p>
+          </div>
+          <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 transform">
+            <i data-lucide="monitor" class="h-16 w-16 opacity-10"></i>
+          </div>
+        </a>
+        <a href="#" onclick="openModal('operations')" class="group relative overflow-hidden rounded-lg bg-gray-800 p-6 text-white transition-all hover:bg-gray-700">
+          <div class="relative z-10">
+            <h3 class="mb-2 text-lg font-semibold">Operations</h3>
+            <p class="text-sm text-gray-300">View department data</p>
+          </div>
+          <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 transform">
+            <i data-lucide="settings" class="h-16 w-16 opacity-10"></i>
+          </div>
+        </a>
+        <a href="#" onclick="openModal('sales')" class="group relative overflow-hidden rounded-lg bg-gray-800 p-6 text-white transition-all hover:bg-gray-700">
+          <div class="relative z-10">
+            <h3 class="mb-2 text-lg font-semibold">Sales</h3>
+            <p class="text-sm text-gray-300">View department data</p>
+          </div>
+          <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 transform">
+            <i data-lucide="trending-up" class="h-16 w-16 opacity-10"></i>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg p-8 max-w-md w-full max-h-[90vh] flex flex-col">
+      <h2 id="modalTitle" class="text-2xl font-bold mb-4"></h2>
+      <div class="overflow-y-auto flex-grow">
+        <ul id="modalOptions" class="space-y-2">
+          <!-- Options will be dynamically added here -->
+        </ul>
+      </div>
+      <button onclick="closeModal()" class="mt-6 w-full rounded-lg bg-gray-800 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-700">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const departmentOptions = {
+      Finance: [
+        { name: "OPD Count", link: "finance-opd-count.html" },
+        { name: "Budget Overview", link: "finance-budget-overview.html" },
+        { name: "Expense Reports", link: "finance-expense-reports.html" },
+        { name: "Revenue Analysis", link: "finance-revenue-analysis.html" },
+        { name: "Cash Flow Management", link: "finance-cash-flow.html" },
+        { name: "Financial Forecasting", link: "finance-forecasting.html" },
+        { name: "Tax Planning", link: "finance-tax-planning.html" },
+        { name: "Investment Portfolio", link: "finance-investments.html" },
+        { name: "Audit Preparation", link: "finance-audit-prep.html" },
+        { name: "Financial Risk Assessment", link: "finance-risk-assessment.html" }
+      ],
+      // humanResources: [
+      //   { name: "OPD HR", link: "human-resources-opd-hr.html" },
+      //   { name: "Employee Count", link: "human-resources-employee-count.html" },
+      //   { name: "Training Programs", link: "human-resources-training-programs.html" }
+      // ],
+      // marketing: [
+      //   { name: "Campaign Performance", link: "marketing-campaign-performance.html" },
+      //   { name: "Lead Generation", link: "marketing-lead-generation.html" },
+      //   { name: "Social Media Analytics", link: "marketing-social-media-analytics.html" }
+      // ],
+      // it: [
+      //   { name: "System Uptime", link: "it-system-uptime.html" },
+      //   { name: "Ticket Resolution", link: "it-ticket-resolution.html" },
+      //   { name: "Software Licenses", link: "it-software-licenses.html" }
+      // ],
+      // operations: [
+      //   { name: "Productivity Metrics", link: "operations-productivity-metrics.html" },
+      //   { name: "Quality Control", link: "operations-quality-control.html" },
+      //   { name: "Supply Chain Overview", link: "operations-supply-chain-overview.html" }
+      // ],
+      // sales: [
+      //   { name: "Revenue Overview", link: "sales-revenue-overview.html" },
+      //   { name: "Sales Pipeline", link: "sales-pipeline.html" },
+      //   { name: "Customer Acquisition", link: "sales-customer-acquisition.html" }
+      // ]
+    };
+
+    function openModal(department) {
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalOptions = document.getElementById('modalOptions');
+
+      modalTitle.textContent = department.replace(/([A-Z])/g, ' $1').trim() + " Options";
+      modalOptions.innerHTML = '';
+
+      departmentOptions[department].forEach(option => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <a href="${option.link}" class="block p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-800">
+            ${option.name}
+          </a>
+        `;
+        modalOptions.appendChild(li);
+      });
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.classList.add('hidden');
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('modal');
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+  </script>
+</body>
+</html>

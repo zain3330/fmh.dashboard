@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Data</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ce000b',
+                    },
+                },
+            },
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="min-h-screen bg-gray-100 p-8">
+    <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-6 bg-white border-b border-gray-200">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-gray-800">Department Data</h1>
+                <button onclick="window.location.href='home.html'" class="p-2 rounded-full hover:bg-gray-100">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-6">
+            <div class="space-y-4">
+                <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
+                    <div class="relative flex-grow">
+                        <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                        <input id="searchInput" type="text" placeholder="Search by Doctor or Department" class="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                    </div>
+                    <div class="relative">
+                        <i data-lucide="calendar" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                        <input id="startDate" type="date" placeholder="Start Date" class="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                    </div>
+                    <div class="relative">
+                        <i data-lucide="calendar" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                        <input id="endDate" type="date" placeholder="End Date" class="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                    </div>
+                </div>
+                <div class="flex justify-between">
+                    <button id="searchButton" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Search
+                    </button>
+                    <button id="downloadButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        <i data-lucide="download" class="inline-block w-4 h-4 mr-2"></i>
+                        Download Data
+                    </button>
+                </div>
+            </div>
+            <div class="mt-6 rounded-md border overflow-x-auto">
+                <table id="dataTable" class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doctor Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Count</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- Table rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="pagination" class="mt-4 flex justify-between items-center">
+                <button id="prevPage" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    Previous
+                </button>
+                <span id="pageInfo" class="text-gray-600"></span>
+                <button id="nextPage" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        let departmentData = [];
+        let currentPage = 1;
+        const itemsPerPage = 10;
+
+        document.getElementById('searchButton').addEventListener('click', fetchData);
+        document.getElementById('downloadButton').addEventListener('click', downloadData);
+        document.getElementById('prevPage').addEventListener('click', () => changePage(-1));
+        document.getElementById('nextPage').addEventListener('click', () => changePage(1));
+
+        async function fetchData() {
+            const searchButton = document.getElementById('searchButton');
+            searchButton.disabled = true;
+            searchButton.textContent = 'Searching...';
+
+            const apiUrl = 'https://prod-02.northeurope.logic.azure.com:443/workflows/b2f1c68994ee46e1b52010f3864c619b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VhQhvD79Y929KV2ZJ56rrtP8nKtkoTmmGRTBFeS3Y_8';
+
+            const requestBody = {
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                search: document.getElementById('searchInput').value
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody),
+                });
+
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                departmentData = await response.json();
+                currentPage = 1;
+                updateTable();
+                document.getElementById('downloadButton').disabled = false;
+            } catch (error) {
+                console.error('Failed to fetch data:', error);
+                alert('Failed to fetch data. Please try again.');
+            } finally {
+                searchButton.disabled = false;
+                searchButton.textContent = 'Search';
+            }
+        }
+
+        function updateTable() {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageData = departmentData.slice(startIndex, endIndex);
+
+            pageData.forEach(item => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">${item.DOCTOR_NAME}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${item.DEPARTMENT}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${item.COUNT}</td>
+                `;
+            });
+
+            updatePagination();
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(departmentData.length / itemsPerPage);
+            document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage === totalPages;
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            updateTable();
+        }
+
+        function downloadData() {
+            let csvContent = 'Doctor Name,Department,Count\n';
+            departmentData.forEach(item => {
+                csvContent += `${item.DOCTOR_NAME},${item.DEPARTMENT},${item.COUNT}\n`;
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', 'department_data.csv');
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    </script>
+</body>
+</html>
