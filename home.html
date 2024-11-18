@@ -77,12 +77,12 @@
     </div>
   </div>
   <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-50">
-    <div class="bg-white rounded-lg p-8 max-w-md w-full max-h-[90vh] flex flex-col">
+    <div class="bg-white rounded-lg p-8 max-w-2xl w-full max-h-[90vh] flex flex-col">
       <h2 id="modalTitle" class="text-2xl font-bold mb-4"></h2>
       <div class="overflow-y-auto flex-grow">
-        <ul id="modalOptions" class="space-y-2">
+        <div id="modalOptions" class="grid grid-cols-2 gap-4">
           <!-- Options will be dynamically added here -->
-        </ul>
+        </div>
       </div>
       <button onclick="closeModal()" class="mt-6 w-full rounded-lg bg-gray-800 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-700">
         Close
@@ -141,14 +141,15 @@
       modalTitle.textContent = department.replace(/([A-Z])/g, ' $1').trim() + " Options";
       modalOptions.innerHTML = '';
 
-      departmentOptions[department].forEach(option => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-          <a href="${option.link}" class="block p-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-800">
-            ${option.name}
+
+departmentOptions[department].forEach(option => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <a href="${option.link}" class="block p-4 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-800 transition-colors duration-200">
+            <h3 class="font-semibold mb-1">${option.name}</h3>
           </a>
         `;
-        modalOptions.appendChild(li);
+        modalOptions.appendChild(div);
       });
 
       modal.classList.remove('hidden');
