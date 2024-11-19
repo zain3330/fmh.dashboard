@@ -97,13 +97,13 @@
                     </tbody>
                     <tfoot id="tableFoot" class="bg-gray-50">
                         <tr>
-                            <td class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            <td class="px-6 py-3 text-left text-lg font-bold text-gray-500 uppercase tracking-wider"
                                 colspan="2">Total</td>
                             <td id="totalPvtOpd"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-3 text-left text-lg font-bold text-gray-500 uppercase tracking-wider">
                             </td>
                             <td id="totalGenOpd"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-3 text-left text-lg font-bold text-gray-500 uppercase tracking-wider">
                             </td>
                         </tr>
                     </tfoot>
@@ -192,8 +192,8 @@
                 row.innerHTML = `
                     <td class="px-6 py-4 whitespace-nowrap">${item.DOCTOR_NAME}</td>
                     <td class="px-6 py-4 whitespace-nowrap">${item.SPECIALITY}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">${item.PVT_OPD}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">${item.GEN_OPD}</td>
+                     <td class="px-6 py-4 whitespace-nowrap">${(parseInt(item.PVT_OPD) || 0).toLocaleString()}</td>
+        <td class="px-6 py-4 whitespace-nowrap">${(parseInt(item.GEN_OPD) || 0).toLocaleString()}</td>
                 `;
             });
 
@@ -215,12 +215,13 @@
         }
 
         function updateTotals() {
-            const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.PVT_OPD) || 0), 0);
-            const totalGenOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.GEN_OPD) || 0), 0);
+    const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.PVT_OPD) || 0), 0);
+    const totalGenOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.GEN_OPD) || 0), 0);
 
-            document.getElementById('totalPvtOpd').textContent = totalPvtOpd;
-            document.getElementById('totalGenOpd').textContent = totalGenOpd;
-        }
+    document.getElementById('totalPvtOpd').textContent = totalPvtOpd.toLocaleString();
+    document.getElementById('totalGenOpd').textContent = totalGenOpd.toLocaleString();
+}
+
 
         function changePage(direction) {
             currentPage += direction;
