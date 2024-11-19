@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +19,7 @@
     </script>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body class="min-h-screen bg-gray-100 p-8">
     <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <div class="p-6 bg-white border-b border-gray-200">
@@ -31,47 +33,46 @@
         <div class="p-6">
             <div class="space-y-4">
                 <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
-                    <div class="flex-1">
-                      <label for="type" class="block text-sm font-medium text-gray-700">Hospital Type</label>
-                      <select id="type" name="hospitalType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option value="M" selected>Hospital</option>
-                        <option value="D">Dental</option>
-                      </select>
+                    <div class="flex-1"> <label for="type" class="block text-sm font-medium text-gray-700">Hospital
+                            Type</label> <select id="type" name="hospitalType"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option value="M" selected>Hospital</option>
+                            <option value="D">Dental</option>
+                        </select> </div>
+                    <div class="flex-1"> <label for="hospital"
+                            class="block text-sm font-medium text-gray-700">Hospital</label> <select id="hospital"
+                            name="hospital"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option value="ALL" selected>All</option>
+                            <option value="FMH">FMH Hospital</option>
+                            <option value="HH">Hijaz Hospital</option>
+                        </select> </div>
+                    <div class="flex-1"> <label for="startDate" class="block text-sm font-medium text-gray-700">Start
+                            Date</label> <input type="date" id="startDate" name="startDate"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                     </div>
-                    
-                    <div class="flex-1">
-                      <label for="hospital" class="block text-sm font-medium text-gray-700">Hospital</label>
-                      <select id="hospital" name="hospital" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option value="ALL" selected>All</option>
-                        <option value="FMH" >FMH Hospital</option>
-                        <option value="HH">Hijaz Hospital</option>
-                      </select>
+                    <div class="flex-1"> <label for="endDate" class="block text-sm font-medium text-gray-700">End
+                            Date</label> <input type="date" id="endDate" name="endDate"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                     </div>
-                  
-                    <div class="flex-1">
-                      <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
-                      <input type="date" id="startDate" name="startDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                    <div class="flex-1"> <label for="name" class="block text-sm font-medium text-gray-700">Doctor
+                            Name</label> <input type="text" id="name" name="name"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                     </div>
-                  
-                    <div class="flex-1">
-                      <label for="endDate" class="block text-sm font-medium text-gray-700">End Date</label>
-                      <input type="date" id="endDate" name="endDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                    <div class="flex-1"> <label for="departemnt"
+                            class="block text-sm font-medium text-gray-700">Depatment</label> <input type="text"
+                            id="departemnt" name="name"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                     </div>
-                  
-                    <div class="flex-1">
-                      <label for="name" class="block text-sm font-medium text-gray-700">Doctor Name</label>
-                      <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                    </div>
-                    <div class="flex-1">
-                        <label for="departemnt" class="block text-sm font-medium text-gray-700">Depatemnt</label>
-                        <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                      </div>
-                  </div>
+                </div>
                 <div class="flex justify-between">
-                    <button id="searchButton" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <button id="searchButton"
+                        class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                         Search
                     </button>
-                    <button id="downloadButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    <button id="downloadButton"
+                        class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled>
                         <i data-lucide="download" class="inline-block w-4 h-4 mr-2"></i>
                         Download Data
                     </button>
@@ -81,23 +82,41 @@
                 <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doctor Name</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Speciality</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Private OPD</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">General OPD</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Doctor Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Speciality</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Private OPD</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                General OPD</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
                         <!-- Table rows will be inserted here -->
                     </tbody>
+                    <tfoot id="tableFoot" class="bg-gray-50">
+                        <tr>
+                            <td class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                colspan="2">Total</td>
+                            <td id="totalPvtOpd"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            </td>
+                            <td id="totalGenOpd"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
-            <div id="pagination" class="mt-4 flex justify-between items-center">
-                <button id="prevPage" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+            <div id="pagination" class="mt-4 flex justify-between items-center hidden">
+                <button id="prevPage"
+                    class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     Previous
                 </button>
                 <span id="pageInfo" class="text-gray-600"></span>
-                <button id="nextPage" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                <button id="nextPage"
+                    class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     Next
                 </button>
             </div>
@@ -127,16 +146,14 @@
             const hospitalValue = document.getElementById('hospital').value;
 
             const requestBody = {
-    startDate: document.getElementById('startDate').value,
-    endDate: document.getElementById('endDate').value,
-    name: document.getElementById('name').value,
-    type: document.getElementById('type').value,
-    department: document.getElementById('departemnt').value,
-    hos1: (hospitalValue === 'ALL' || hospitalValue === 'FMH') ? 'FMH' : '',
-    hos2: (hospitalValue === 'ALL' || hospitalValue === 'HH') ? 'HH' : '',
-};
-
-
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                name: document.getElementById('name').value,
+                type: document.getElementById('type').value,
+                department: document.getElementById('departemnt').value,
+                hos1: (hospitalValue === 'ALL' || hospitalValue === 'FMH') ? 'FMH' : '',
+                hos2: (hospitalValue === 'ALL' || hospitalValue === 'HH') ? 'HH' : '',
+            };
 
             try {
                 const response = await fetch(apiUrl, {
@@ -176,18 +193,33 @@
                     <td class="px-6 py-4 whitespace-nowrap">${item.DOCTOR_NAME}</td>
                     <td class="px-6 py-4 whitespace-nowrap">${item.SPECIALITY}</td>
                     <td class="px-6 py-4 whitespace-nowrap">${item.PVT_OPD}</td>
-                         <td class="px-6 py-4 whitespace-nowrap">${item.GEN_OPD}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${item.GEN_OPD}</td>
                 `;
             });
 
             updatePagination();
+            updateTotals();
         }
 
         function updatePagination() {
-            const totalPages = Math.ceil(departmentData.length / itemsPerPage);
-            document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
-            document.getElementById('prevPage').disabled = currentPage === 1;
-            document.getElementById('nextPage').disabled = currentPage === totalPages;
+            const paginationElement = document.getElementById('pagination');
+            if (departmentData.length > 0) {
+                paginationElement.classList.remove('hidden');
+                const totalPages = Math.ceil(departmentData.length / itemsPerPage);
+                document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
+                document.getElementById('prevPage').disabled = currentPage === 1;
+                document.getElementById('nextPage').disabled = currentPage === totalPages;
+            } else {
+                paginationElement.classList.add('hidden');
+            }
+        }
+
+        function updateTotals() {
+            const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.PVT_OPD) || 0), 0);
+            const totalGenOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.GEN_OPD) || 0), 0);
+
+            document.getElementById('totalPvtOpd').textContent = totalPvtOpd;
+            document.getElementById('totalGenOpd').textContent = totalGenOpd;
         }
 
         function changePage(direction) {
@@ -196,9 +228,9 @@
         }
 
         function downloadData() {
-            let csvContent = 'Doctor Name,Department,Count\n';
+            let csvContent = 'Doctor Name,Speciality,Private OPD,General OPD\n';
             departmentData.forEach(item => {
-                csvContent += `${item.DOCTOR_NAME},${item.DEPARTMENT},${item.COUNT}\n`;
+                csvContent += `${item.DOCTOR_NAME},${item.SPECIALITY},${item.PVT_OPD},${item.GEN_OPD}\n`;
             });
 
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -215,4 +247,5 @@
         }
     </script>
 </body>
+
 </html>
