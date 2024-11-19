@@ -82,40 +82,26 @@
 
   <script>
     lucide.createIcons();
-// Function to format the MR No.
 function formatMRNo(value) {
-  if (value.length === 4) {
-    return "1006000000" + value; // Add prefix for 4-digit MR No.
-  } else if (value.length === 3) {
-    return "10060000000" + value; // Add prefix for 3-digit MR No.
-  } else if (value.length === 2) {
-    return "100600000000" + value; // Add prefix for 2-digit MR No.
-  }
-  return value; // Default to user input if full MR No. is entered
-}
-
-// Function to auto-fill the MR No. when required and reset password
-function autoFillMRNo() {
-  const mrnoInput = document.getElementById("mrno");
-  const passwordInput = document.getElementById("pin"); // Password field
-  const value = mrnoInput.value.trim();
-
-  // Only reset the password if the MR No. has changed
-  if (passwordInput.dataset.lastMrno !== value) {
-    passwordInput.value = ""; // Clear the password field
-    passwordInput.dataset.lastMrno = value; // Update the stored MR No.
+    if (value.length === 4) {
+      return "1006000000" + value; // Add prefix for 4-digit MR No.
+    } else if (value.length === 3) {
+      return "10060000000" + value; // Add prefix for 3-digit MR No.
+    } else if (value.length === 2) {
+      return "100600000000" + value; // Add prefix for 2-digit MR No.
+    }
+    return value; // Default to user input if full MR No. is entered
   }
 
-  // Format MR No. based on length
-  if (value && (value.length === 2 || value.length === 3 || value.length === 4)) {
-    mrnoInput.value = formatMRNo(value);
+  // Function to auto-fill the MR No. when required
+  function autoFillMRNo() {
+    const mrnoInput = document.getElementById("mrno");
+    const value = mrnoInput.value.trim();
+
+    if (value && (value.length === 2 || value.length === 3 || value.length === 4)) {
+      mrnoInput.value = formatMRNo(value); // Format MR No. based on length
+    }
   }
-}
-
-
-
-document.getElementById("mrno").addEventListener("blur", autoFillMRNo);
-
     function togglePasswordVisibility() {
       const passwordInput = document.getElementById('pin');
       const eyeIcon = document.querySelector('[data-lucide="eye"]');
