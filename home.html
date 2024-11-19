@@ -169,17 +169,8 @@ departmentOptions[department].forEach(option => {
       }
     }
     function logout() {
-   // Reset the pin field
-  const pinInput = document.getElementById('pin');
-  if (pinInput) {
-    pinInput.value = ''; // Clear the pin field
-  }
-
-  // Remove the login status from localStorage
-  localStorage.removeItem('isLoggedIn');
-
-  // Redirect to the login page
-  window.location.href = 'index.html';
+      localStorage.removeItem('isLoggedIn');
+      window.location.href = 'index.html';
     }
   </script>
 </body>
