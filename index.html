@@ -100,19 +100,18 @@ function autoFillMRNo() {
   const passwordInput = document.getElementById("pin"); // Password field
   const value = mrnoInput.value.trim();
 
-  // Reset password field
-  if (value !== passwordInput.dataset.lastMrno) {
+  // Only reset the password if the MR No. has changed
+  if (passwordInput.dataset.lastMrno !== value) {
     passwordInput.value = ""; // Clear the password field
+    passwordInput.dataset.lastMrno = value; // Update the stored MR No.
   }
 
   // Format MR No. based on length
   if (value && (value.length === 2 || value.length === 3 || value.length === 4)) {
     mrnoInput.value = formatMRNo(value);
   }
-
-  // Store the last entered MR No. to avoid repeated resets
-  passwordInput.dataset.lastMrno = value;
 }
+
 
 
 document.getElementById("mrno").addEventListener("blur", autoFillMRNo);
