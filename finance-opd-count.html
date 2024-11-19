@@ -82,13 +82,13 @@
                 <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-center text-xs font-serif text-gray-500 uppercase tracking-wider">
                                 Doctor Name</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-center text-xs font-serif text-gray-500 uppercase tracking-wider">
                                 Speciality</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-center text-xs font-serif text-gray-500 uppercase tracking-wider">
                                 Private OPD</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-center text-xs font-serif text-gray-500 uppercase tracking-wider">
                                 General OPD</th>
                         </tr>
                     </thead>
@@ -100,10 +100,10 @@
                             <td class="px-6 py-3 text-left text-lg font-bold text-gray-500 uppercase tracking-wider"
                                 colspan="2">Total</td>
                             <td id="totalPvtOpd"
-                                class="px-6 py-3 text-left text-lg font-bold text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-3 text-right text-lg font-bold text-gray-500 uppercase tracking-wider">
                             </td>
                             <td id="totalGenOpd"
-                                class="px-6 py-3 text-left text-lg font-bold text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-3 text-right text-lg font-bold text-gray-500 uppercase tracking-wider">
                             </td>
                         </tr>
                     </tfoot>
@@ -190,10 +190,10 @@
             pageData.forEach(item => {
                 const row = tableBody.insertRow();
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap">${item.DOCTOR_NAME}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">${item.SPECIALITY}</td>
-                     <td class="px-6 py-4 whitespace-nowrap">${(parseInt(item.PVT_OPD) || 0).toLocaleString()}</td>
-        <td class="px-6 py-4 whitespace-nowrap">${(parseInt(item.GEN_OPD) || 0).toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap font-serif">${item.DOCTOR_NAME}</td>
+                    <td class="px-6 py-4 whitespace-nowrap font-serif">${item.SPECIALITY}</td>
+                     <td class="px-6 py-4 whitespace-nowrap font-serif text-right">${(parseInt(item.PVT_OPD) || 0).toLocaleString()}</td>
+        <td class="px-6 py-4 whitespace-nowrap font-serif text-right">${(parseInt(item.GEN_OPD) || 0).toLocaleString()}</td>
                 `;
             });
 
