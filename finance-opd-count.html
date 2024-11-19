@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Department Data</title>
+    <script src="auth-check.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -91,7 +92,7 @@
                     <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
                         <!-- Table rows will be inserted here -->
                     </tbody>
-                    <tfoot id="tableFoot" class="bg-gray-50">
+                    <tfoot id="tableFoot" class="bg-gray-50 hidden">
                         <tr>
                             <td class="px-6 py-3 text-left   font-serif text-gray-500 uppercase tracking-wider" colspan="2">Total</td>
                             <td id="totalPvtOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></td>
@@ -100,15 +101,37 @@
                     </tfoot>
                 </table>
             </div>
-            <div id="pagination" class="mt-4 flex justify-between items-center hidden">
-                <button id="prevPage" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                    Previous
+            <div id="pagination" class="mt-4 flex justify-center items-center space-x-2 hidden">
+                <!-- First Page Button -->
+                <button id="firstPage" 
+                        class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                  First
                 </button>
-                <span id="pageInfo" class="text-gray-600"></span>
-                <button id="nextPage" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                    Next
+              
+                <!-- Previous Page Button -->
+                <button id="prevPage" 
+                        class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                  Previous
                 </button>
-            </div>
+              
+                <!-- Page Info -->
+                <span id="pageInfo" class="text-sm font-medium text-gray-700">
+                  Page 1 of 10
+                </span>
+              
+                <!-- Next Page Button -->
+                <button id="nextPage" 
+                        class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                  Next
+                </button>
+              
+                <!-- Last Page Button -->
+                <button id="lastPage" 
+                        class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                  Last
+                </button>
+              </div>
+              
         </div>
     </div>
 
@@ -119,7 +142,8 @@
         let departmentData = [];
         let currentPage = 1;
         const itemsPerPage = 10;
-
+        document.getElementById('firstPage').addEventListener('click', () => goToPage(1));
+        document.getElementById('lastPage').addEventListener('click', () => goToPage('last'));
         document.getElementById('searchButton').addEventListener('click', fetchData);
         document.getElementById('downloadButton').addEventListener('click', downloadData);
         document.getElementById('prevPage').addEventListener('click', () => changePage(-1));
@@ -183,14 +207,28 @@
                 searchButton.textContent = 'Search';
             }
         }
-
+        function goToPage(page) {
+    if (page === 'last') {
+        currentPage = Math.ceil(departmentData.length / itemsPerPage);
+    } else {
+        currentPage = page;
+    }
+    updateTable();
+}
         function updateTable() {
             const tableBody = document.getElementById('tableBody');
-            tableBody.innerHTML = '';
+    const tableFoot = document.getElementById('tableFoot');
+    tableBody.innerHTML = '';
 
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const pageData = departmentData.slice(startIndex, endIndex);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const pageData = departmentData.slice(startIndex, endIndex);
+
+    if (pageData.length === 0) {
+        tableFoot.classList.add('hidden');
+    } else {
+        tableFoot.classList.remove('hidden');
+    }
 
             pageData.forEach(item => {
                 const row = tableBody.insertRow();

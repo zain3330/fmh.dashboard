@@ -16,86 +16,109 @@
           <p class="mt-2 text-sm text-gray-600">Please sign in to continue</p>
         </div>
 
-        <form class="space-y-6">
+        <form id="loginForm" class="space-y-6">
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">
-              Mrno No.
+            <label for="mrno" class="block text-sm font-medium text-gray-700">
+              MR No.
             </label>
             <div class="mt-1 relative">
-              <i data-lucide="mail" class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"></i>
+              <i data-lucide="user" class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"></i>
               <input
-                id="email"
-                type="email"
+                id="mrno"
+                name="mrno"
+                type="text"
                 required
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 py-3 pl-10 pr-3 text-gray-900 placeholder-gray-500 focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500"
-                placeholder="Enter your email"
+                placeholder="Enter your MR number"
+                onblur="autoFillMRNo()"
               />
             </div>
           </div>
 
           <div>
-            <label for="password" class="block text-sm font-medium text-gray-700">
+            <label for="pin" class="block text-sm font-medium text-gray-700">
               Pin/Password
             </label>
             <div class="mt-1 relative">
               <i data-lucide="lock" class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"></i>
               <input
-                id="password"
+                id="pin"
+                name="pin"
                 type="password"
                 required
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 py-3 pl-10 pr-10 text-gray-900 placeholder-gray-500 focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500"
-                placeholder="Enter your password"
+                placeholder="Enter your pin"
+                onclick="autoFillMRNo()"
               />
               <button
                 type="button"
                 onclick="togglePasswordVisibility()"
                 class="absolute right-3 top-1/2 -translate-y-1/2"
+                onclick="autoFillMRNo(); return false;"
               >
                 <i data-lucide="eye" class="h-5 w-5 text-gray-400"></i>
               </button>
             </div>
           </div>
 
-          <!-- <div class="flex items-center justify-between">
-            <div class="flex items-center">
-              <input
-                id="remember-me"
-                type="checkbox"
-                class="h-4 w-4 rounded border-gray-300 text-gray-800 focus:ring-gray-500"
-              />
-              <label for="remember-me" class="ml-2 block text-sm text-gray-700">
-                Remember me
-              </label>
-            </div>
-            <a href="#" class="text-sm font-medium text-gray-700 hover:text-gray-900">
-              Forgot password?
-            </a>
-          </div> -->
-
           <button
             type="submit"
-            onclick="window.location.href='home.html'; return false;"
-            class="w-full rounded-lg bg-gray-800 px-4 py-3 text-sm font-semibold text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+            class="w-full rounded-lg bg-gray-800 px-4 py-3 text-sm font-semibold text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 relative"
           >
-            Sign in
+            <span id="buttonText">Sign in</span>
+            <div id="loader" class="absolute inset-0 flex items-center justify-center hidden">
+              <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </div>
           </button>
         </form>
-
-        <!-- <p class="mt-6 text-center text-sm text-gray-600">
-          Don't have an account?
-          <a href="#" class="font-medium text-gray-900 hover:underline">
-            Sign up
-          </a>
-        </p> -->
+        <div id="errorMessage" class="mt-4 text-center text-red-500 hidden"></div>
+        <div id="debugInfo" class="mt-4 text-center text-gray-500 text-sm"></div>
       </div>
     </div>
   </div>
 
   <script>
     lucide.createIcons();
+// Function to format the MR No.
+function formatMRNo(value) {
+  if (value.length === 4) {
+    return "1006000000" + value; // Add prefix for 4-digit MR No.
+  } else if (value.length === 3) {
+    return "10060000000" + value; // Add prefix for 3-digit MR No.
+  } else if (value.length === 2) {
+    return "100600000000" + value; // Add prefix for 2-digit MR No.
+  }
+  return value; // Default to user input if full MR No. is entered
+}
+
+// Function to auto-fill the MR No. when required and reset password
+function autoFillMRNo() {
+  const mrnoInput = document.getElementById("mrno");
+  const passwordInput = document.getElementById("pin"); // Password field
+  const value = mrnoInput.value.trim();
+
+  // Reset password field
+  if (value !== passwordInput.dataset.lastMrno) {
+    passwordInput.value = ""; // Clear the password field
+  }
+
+  // Format MR No. based on length
+  if (value && (value.length === 2 || value.length === 3 || value.length === 4)) {
+    mrnoInput.value = formatMRNo(value);
+  }
+
+  // Store the last entered MR No. to avoid repeated resets
+  passwordInput.dataset.lastMrno = value;
+}
+
+// Add event listener to auto-fill MR No. and reset password
+document.getElementById("mrno").addEventListener("blur", autoFillMRNo);
 
     function togglePasswordVisibility() {
-      const passwordInput = document.getElementById('password');
+      const passwordInput = document.getElementById('pin');
       const eyeIcon = document.querySelector('[data-lucide="eye"]');
       
       if (passwordInput.type === 'password') {
@@ -107,6 +130,53 @@
       }
       lucide.createIcons();
     }
+
+
+
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const mrno = document.getElementById('mrno').value;
+      const pin = document.getElementById('pin').value;
+      const errorMessage = document.getElementById('errorMessage');
+      const debugInfo = document.getElementById('debugInfo');
+      const loader = document.getElementById('loader');
+      const buttonText = document.getElementById('buttonText');
+      
+      loader.classList.remove('hidden');
+      buttonText.classList.add('invisible');
+
+      try {
+        const response = await fetch('https://prod-28.northeurope.logic.azure.com:443/workflows/47c8380b8ae84961a88f1f26783a38df/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=sd64jkjTRdn3FUaeFEbQ8HMr10xn3q4baL-aHi1aPIA', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ mrno, pin }),
+        });
+
+        const data = await response.json();
+      
+        debugInfo.classList.remove('hidden');
+
+        if (data[0] && data[0]['UserCount '] === 1) {
+          localStorage.setItem('isLoggedIn', 'true');
+          window.location.href = 'home.html';
+        } else {
+          errorMessage.textContent = 'Invalid credentials. Please try again.';
+          errorMessage.classList.remove('hidden');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        errorMessage.textContent = 'An error occurred. Please try again later.';
+        errorMessage.classList.remove('hidden');
+
+        debugInfo.classList.remove('hidden');
+      } finally {
+        loader.classList.add('hidden');
+        buttonText.classList.remove('invisible');
+      }
+    });
   </script>
 </body>
 </html>
