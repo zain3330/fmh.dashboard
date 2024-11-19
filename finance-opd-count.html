@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +18,6 @@
     </script>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-
 <body class="min-h-screen bg-gray-100 p-8">
     <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <div class="p-6 bg-white border-b border-gray-200">
@@ -33,63 +31,61 @@
         <div class="p-6">
             <div class="space-y-4">
                 <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
-                    <div class="flex-1"> <label for="type" class="block text-sm font-medium text-gray-700">Hospital
-                            Type</label> <select id="type" name="hospitalType"
-                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                    <div class="flex-1">
+                        <label for="type" class="block text-sm font-medium text-gray-700">Hospital Type</label>
+                        <select id="type" name="hospitalType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             <option value="M" selected>Hospital</option>
                             <option value="D">Dental</option>
-                        </select> </div>
-                    <div class="flex-1"> <label for="hospital"
-                            class="block text-sm font-medium text-gray-700">Hospital</label> <select id="hospital"
-                            name="hospital"
-                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        </select>
+                    </div>
+                    <div class="flex-1">
+                        <label for="hospital" class="block text-sm font-medium text-gray-700">Hospital</label>
+                        <select id="hospital" name="hospital" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             <option value="ALL" selected>All</option>
                             <option value="FMH">FMH Hospital</option>
                             <option value="HH">Hijaz Hospital</option>
-                        </select> </div>
-                    <div class="flex-1"> <label for="startDate" class="block text-sm font-medium text-gray-700">Start
-                            Date</label> <input type="date" id="startDate" name="startDate"
-                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        </select>
                     </div>
-                    <div class="flex-1"> <label for="endDate" class="block text-sm font-medium text-gray-700">End
-                            Date</label> <input type="date" id="endDate" name="endDate"
-                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                    <div class="flex-1">
+                        <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
+                        <input type="date" id="startDate" name="startDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                     </div>
-                    <div class="flex-1"> <label for="name" class="block text-sm font-medium text-gray-700">Doctor
-                            Name</label> <input type="text" id="name" name="name"
-                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                    <div class="flex-1">
+                        <label for="endDate" class="block text-sm font-medium text-gray-700">End Date</label>
+                        <input type="date" id="endDate" name="endDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                     </div>
-                    <div class="flex-1"> <label for="departemnt"
-                            class="block text-sm font-medium text-gray-700">Depatment</label> <input type="text"
-                            id="departemnt" name="name"
-                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                    <div class="flex-1">
+                        <label for="name" class="block text-sm font-medium text-gray-700">Doctor Name</label>
+                        <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                    </div>
+                    <div class="flex-1">
+                        <label for="departemnt" class="block text-sm font-medium text-gray-700">Department</label>
+                        <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                     </div>
                 </div>
-                <div class="flex justify-between">
-                    <button id="searchButton"
-                        class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                        Search
+                <div class="flex justify-between items-center">
+                    <button id="resetButton" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
+                        Reset
                     </button>
-                    <button id="downloadButton"
-                        class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                        disabled>
-                        <i data-lucide="download" class="inline-block w-4 h-4 mr-2"></i>
-                        Download Data
-                    </button>
+                    <div class="space-x-2">
+                        <button id="searchButton" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            Search
+                        </button>
+                        <button id="downloadButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            <i data-lucide="download" class="inline-block w-4 h-4 mr-2"></i>
+                            Download Data
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="mt-6 rounded-md border overflow-x-auto">
                 <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-center text-xs font-serif text-gray-500 uppercase tracking-wider">
-                                Doctor Name</th>
-                            <th class="px-6 py-3 text-center text-xs font-serif text-gray-500 uppercase tracking-wider">
-                                Speciality</th>
-                            <th class="px-6 py-3 text-center text-xs font-serif text-gray-500 uppercase tracking-wider">
-                                Private OPD</th>
-                            <th class="px-6 py-3 text-center text-xs font-serif text-gray-500 uppercase tracking-wider">
-                                General OPD</th>
+                            <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor Name</th>
+                            <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Speciality</th>
+                            <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Private OPD</th>
+                            <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">General OPD</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
@@ -97,26 +93,19 @@
                     </tbody>
                     <tfoot id="tableFoot" class="bg-gray-50">
                         <tr>
-                            <td class="px-6 py-3 text-left text-lg font-bold text-gray-500 uppercase tracking-wider"
-                                colspan="2">Total</td>
-                            <td id="totalPvtOpd"
-                                class="px-6 py-3 text-right text-lg font-bold text-gray-500 uppercase tracking-wider">
-                            </td>
-                            <td id="totalGenOpd"
-                                class="px-6 py-3 text-right text-lg font-bold text-gray-500 uppercase tracking-wider">
-                            </td>
+                            <td class="px-6 py-3 text-left text-lg font-bold text-gray-500 uppercase tracking-wider" colspan="2">Total</td>
+                            <td id="totalPvtOpd" class="px-6 py-3 text-right text-lg font-bold text-gray-500 uppercase tracking-wider"></td>
+                            <td id="totalGenOpd" class="px-6 py-3 text-right text-lg font-bold text-gray-500 uppercase tracking-wider"></td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
             <div id="pagination" class="mt-4 flex justify-between items-center hidden">
-                <button id="prevPage"
-                    class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                <button id="prevPage" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     Previous
                 </button>
                 <span id="pageInfo" class="text-gray-600"></span>
-                <button id="nextPage"
-                    class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                <button id="nextPage" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     Next
                 </button>
             </div>
@@ -135,6 +124,22 @@
         document.getElementById('downloadButton').addEventListener('click', downloadData);
         document.getElementById('prevPage').addEventListener('click', () => changePage(-1));
         document.getElementById('nextPage').addEventListener('click', () => changePage(1));
+        document.getElementById('resetButton').addEventListener('click', resetForm);
+
+        function resetForm() {
+            document.getElementById('type').value = 'M';
+            document.getElementById('hospital').value = 'ALL';
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
+            document.getElementById('name').value = '';
+            document.getElementById('departemnt').value = '';
+            
+            // Clear the table and reset other states
+            departmentData = [];
+            currentPage = 1;
+            updateTable();
+            document.getElementById('downloadButton').disabled = true;
+        }
 
         async function fetchData() {
             const searchButton = document.getElementById('searchButton');
@@ -190,10 +195,10 @@
             pageData.forEach(item => {
                 const row = tableBody.insertRow();
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap font-serif">${item.DOCTOR_NAME}</td>
-                    <td class="px-6 py-4 whitespace-nowrap font-serif">${item.SPECIALITY}</td>
-                     <td class="px-6 py-4 whitespace-nowrap font-serif text-right">${(parseInt(item.PVT_OPD) || 0).toLocaleString()}</td>
-        <td class="px-6 py-4 whitespace-nowrap font-serif text-right">${(parseInt(item.GEN_OPD) || 0).toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.DOCTOR_NAME}</td>
+                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.SPECIALITY}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${(parseInt(item.PVT_OPD) || 0).toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap  text-right  font-serif text-gray-500">${(parseInt(item.GEN_OPD) || 0).toLocaleString()}</td>
                 `;
             });
 
@@ -215,13 +220,12 @@
         }
 
         function updateTotals() {
-    const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.PVT_OPD) || 0), 0);
-    const totalGenOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.GEN_OPD) || 0), 0);
+            const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.PVT_OPD) || 0), 0);
+            const totalGenOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.GEN_OPD) || 0), 0);
 
-    document.getElementById('totalPvtOpd').textContent = totalPvtOpd.toLocaleString();
-    document.getElementById('totalGenOpd').textContent = totalGenOpd.toLocaleString();
-}
-
+            document.getElementById('totalPvtOpd').textContent = totalPvtOpd.toLocaleString();
+            document.getElementById('totalGenOpd').textContent = totalGenOpd.toLocaleString();
+        }
 
         function changePage(direction) {
             currentPage += direction;
@@ -248,5 +252,4 @@
         }
     </script>
 </body>
-
 </html>
