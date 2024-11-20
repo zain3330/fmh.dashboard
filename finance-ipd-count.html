@@ -40,6 +40,13 @@
                         </select>
                     </div>
                     <div class="flex-1">
+                        <label for="ipd_type" class="block text-sm font-medium text-gray-700">IPD Type</label>
+                        <select id="ipd_type" name="ipdType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option value="IPD" selected>Admissions</option>
+                            <option value="SHORT">ShortStay</option>
+                        </select>
+                    </div>
+                    <div class="flex-1">
                         <label for="hospital" class="block text-sm font-medium text-gray-700">Hospital</label>
                         <select id="hospital" name="hospital" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             <option value="ALL" selected>All</option>
@@ -85,8 +92,8 @@
                         <tr>
                             <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor Name</th>
                             <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Speciality</th>
-                            <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Private OPD</th>
-                            <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">General OPD</th>
+                            <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Patient Type</th>
+                            <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Admissions</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
@@ -94,10 +101,10 @@
                     </tbody>
                     <tfoot id="tableFoot" class="bg-gray-50 hidden">
                         <tr>
-                            <th class="px-6 py-3 text-left   font-serif text-gray-500 uppercase tracking-wider" colspan="2">Total</th>
-                            <th id="totalPvtOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>
-                            <th id="totalGenOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>
+                            <th class="px-6 py-3 text-left font-serif text-gray-500 uppercase tracking-wider" colspan="3">Total</th>
+                            <th id="totalADMISSIONS" class="px-6 py-3 text-right font-serif text-gray-500 uppercase tracking-wider"></th>
                         </tr>
+                        
                     </tfoot>
                 </table>
             </div>
@@ -157,7 +164,7 @@
             document.getElementById('endDate').value = '';
             document.getElementById('name').value = '';
             document.getElementById('departemnt').value = '';
-            
+            document.getElementById('ipd_type').value = 'IPD';
             // Clear the table and reset other states
             departmentData = [];
             currentPage = 1;
@@ -170,7 +177,7 @@
             searchButton.disabled = true;
             searchButton.textContent = 'Searching...';
 
-            const apiUrl = 'https://prod-02.northeurope.logic.azure.com:443/workflows/b2f1c68994ee46e1b52010f3864c619b/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VhQhvD79Y929KV2ZJ56rrtP8nKtkoTmmGRTBFeS3Y_8';
+            const apiUrl = 'https://prod-32.northeurope.logic.azure.com:443/workflows/fa7fa71ff0a742dd986f55ad9e76f822/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=8qo42KoUJ-rzP5NTIY5xGhdfG4zPyvknak3KBn5Wk_g';
             const hospitalValue = document.getElementById('hospital').value;
 
             const requestBody = {
@@ -181,8 +188,9 @@
                 department: document.getElementById('departemnt').value,
                 hos1: (hospitalValue === 'ALL' || hospitalValue === 'FMH') ? 'FMH' : '',
                 hos2: (hospitalValue === 'ALL' || hospitalValue === 'HH') ? 'HH' : '',
+                ipdtype: document.getElementById('ipd_type').value,
             };
-
+    
             try {
                 const response = await fetch(apiUrl, {
                     method: 'POST',
@@ -234,8 +242,8 @@
                 row.innerHTML = `
                     <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.DOCTOR_NAME}</td>
                     <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.SPECIALITY}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${(parseInt(item.PVT_OPD) || 0).toLocaleString()}</td>
-                    <td class="px-6 py-4 whitespace-nowrap  text-right  font-serif text-gray-500">${(parseInt(item.GEN_OPD) || 0).toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${item.PATIENT_TYPE}</td>
+                    <td class="px-6 py-4 whitespace-nowrap  text-right  font-serif text-gray-500">${(parseInt(item.ADMISSIONS) || 0).toLocaleString()}</td>
                 `;
             });
 
@@ -257,11 +265,9 @@
         }
 
         function updateTotals() {
-            const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.PVT_OPD) || 0), 0);
-            const totalGenOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.GEN_OPD) || 0), 0);
-
-            document.getElementById('totalPvtOpd').textContent = totalPvtOpd.toLocaleString();
-            document.getElementById('totalGenOpd').textContent = totalGenOpd.toLocaleString();
+        
+            const totalADMISSIONS = departmentData.reduce((sum, item) => sum + (parseInt(item.ADMISSIONS) || 0), 0);
+            document.getElementById('totalADMISSIONS').textContent = totalADMISSIONS.toLocaleString();
         }
 
         function changePage(direction) {
@@ -270,9 +276,9 @@
         }
 
         function downloadData() {
-            let csvContent = 'Doctor Name,Speciality,Private OPD,General OPD\n';
+            let csvContent = 'Doctor Name,Speciality,Patient Type,Admissions\n';
             departmentData.forEach(item => {
-                csvContent += `${item.DOCTOR_NAME},${item.SPECIALITY},${item.PVT_OPD},${item.GEN_OPD}\n`;
+                csvContent += `${item.DOCTOR_NAME},${item.SPECIALITY},${item.PATIENT_TYPE},${item.ADMISSIONS}\n`;
             });
 
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
