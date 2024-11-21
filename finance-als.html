@@ -80,6 +80,7 @@
                     </div>
                 </div>
             </div>
+            
             <div id="tableView" class="mt-6 rounded-md border ">
                 <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -155,7 +156,18 @@
                 chart = null;
             }
         }
+        const today = new Date();
+    
+    // Calculate the date for 3 days ago
+    const lastThreeDays = new Date(today);
+    lastThreeDays.setDate(today.getDate() - 3);
 
+    // Format the date to YYYY-MM-DD
+    const maxDate = lastThreeDays.toISOString().split('T')[0];
+
+    // Set the maximum date for both start and end date inputs
+    document.getElementById('startDate').setAttribute('max', maxDate);
+    document.getElementById('endDate').setAttribute('max', maxDate);
         async function fetchData() {
             const searchButton = document.getElementById('searchButton');
             searchButton.disabled = true;
