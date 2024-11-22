@@ -157,15 +157,9 @@
             }
         }
         const today = new Date();
-    
-    // Calculate the date for 3 days ago
     const lastThreeDays = new Date(today);
     lastThreeDays.setDate(today.getDate() - 3);
-
-    // Format the date to YYYY-MM-DD
     const maxDate = lastThreeDays.toISOString().split('T')[0];
-
-    // Set the maximum date for both start and end date inputs
     document.getElementById('startDate').setAttribute('max', maxDate);
     document.getElementById('endDate').setAttribute('max', maxDate);
         async function fetchData() {
@@ -184,7 +178,7 @@
                 // hos1: (hospitalValue === 'ALL' || hospitalValue === 'FMH') ? 'FMH' : '',
                 // hos2: (hospitalValue === 'ALL' || hospitalValue === 'HH') ? 'HH' : '',
             };
-            console.log(requestBody,'-------------------------------')
+    
 
             try {
                 const response = await fetch(apiUrl, {

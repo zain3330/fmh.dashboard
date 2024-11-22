@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Department Data</title>
+    <title>OPD Count</title>
     <script src="auth-check.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -76,10 +78,13 @@
                             <i data-lucide="download" class="inline-block w-4 h-4 mr-2"></i>
                             Download Data
                         </button>
+                        <button id="toggleViewButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
+                            Show Graph
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="mt-6 rounded-md border">
+            <div id="tableView" class="mt-6 rounded-md border">
                 <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
@@ -101,37 +106,30 @@
                     </tfoot>
                 </table>
             </div>
+            <div id="graphView" class="mt-6 rounded-md border p-4 hidden">
+                <canvas id="chartCanvas"></canvas>
+            </div>
             <div id="pagination" class="mt-4 flex justify-center items-center space-x-2 hidden">
-                <!-- First Page Button -->
                 <button id="firstPage" 
                         class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                   First
                 </button>
-              
-                <!-- Previous Page Button -->
                 <button id="prevPage" 
                         class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                   Previous
                 </button>
-              
-                <!-- Page Info -->
                 <span id="pageInfo" class="text-sm font-medium text-gray-700">
                   Page 1 of 10
                 </span>
-              
-                <!-- Next Page Button -->
                 <button id="nextPage" 
                         class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                   Next
                 </button>
-              
-                <!-- Last Page Button -->
                 <button id="lastPage" 
                         class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                   Last
                 </button>
-              </div>
-              
+            </div>
         </div>
     </div>
 
@@ -142,6 +140,8 @@
         let departmentData = [];
         let currentPage = 1;
         const itemsPerPage = 10;
+        let chart = null;
+
         document.getElementById('firstPage').addEventListener('click', () => goToPage(1));
         document.getElementById('lastPage').addEventListener('click', () => goToPage('last'));
         document.getElementById('searchButton').addEventListener('click', fetchData);
@@ -149,6 +149,7 @@
         document.getElementById('prevPage').addEventListener('click', () => changePage(-1));
         document.getElementById('nextPage').addEventListener('click', () => changePage(1));
         document.getElementById('resetButton').addEventListener('click', resetForm);
+        document.getElementById('toggleViewButton').addEventListener('click', toggleView);
 
         function resetForm() {
             document.getElementById('type').value = 'M';
@@ -158,12 +159,22 @@
             document.getElementById('name').value = '';
             document.getElementById('departemnt').value = '';
             
-            // Clear the table and reset other states
             departmentData = [];
             currentPage = 1;
             updateTable();
             document.getElementById('downloadButton').disabled = true;
+            if (chart) {
+                chart.destroy();
+                chart = null;
+            }
         }
+
+        const today = new Date();
+        const lastThreeDays = new Date(today);
+        lastThreeDays.setDate(today.getDate() - 3);
+        const maxDate = lastThreeDays.toISOString().split('T')[0];
+        document.getElementById('startDate').setAttribute('max', maxDate);
+        document.getElementById('endDate').setAttribute('max', maxDate);
 
         async function fetchData() {
             const searchButton = document.getElementById('searchButton');
@@ -197,6 +208,7 @@
                 departmentData = await response.json();
                 currentPage = 1;
                 updateTable();
+                updateGraph();
                 document.getElementById('downloadButton').disabled = false;
             } catch (error) {
                 console.error('Failed to fetch data:', error);
@@ -206,28 +218,30 @@
                 searchButton.textContent = 'Search';
             }
         }
+
         function goToPage(page) {
-    if (page === 'last') {
-        currentPage = Math.ceil(departmentData.length / itemsPerPage);
-    } else {
-        currentPage = page;
-    }
-    updateTable();
-}
+            if (page === 'last') {
+                currentPage = Math.ceil(departmentData.length / itemsPerPage);
+            } else {
+                currentPage = page;
+            }
+            updateTable();
+        }
+
         function updateTable() {
             const tableBody = document.getElementById('tableBody');
-    const tableFoot = document.getElementById('tableFoot');
-    tableBody.innerHTML = '';
+            const tableFoot = document.getElementById('tableFoot');
+            tableBody.innerHTML = '';
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const pageData = departmentData.slice(startIndex, endIndex);
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageData = departmentData.slice(startIndex, endIndex);
 
-    if (pageData.length === 0) {
-        tableFoot.classList.add('hidden');
-    } else {
-        tableFoot.classList.remove('hidden');
-    }
+            if (pageData.length === 0) {
+                tableFoot.classList.add('hidden');
+            } else {
+                tableFoot.classList.remove('hidden');
+            }
 
             pageData.forEach(item => {
                 const row = tableBody.insertRow();
@@ -251,6 +265,8 @@
                 document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
                 document.getElementById('prevPage').disabled = currentPage === 1;
                 document.getElementById('nextPage').disabled = currentPage === totalPages;
+                document.getElementById('firstPage').disabled = currentPage === 1;
+                document.getElementById('lastPage').disabled = currentPage === totalPages;
             } else {
                 paginationElement.classList.add('hidden');
             }
@@ -287,6 +303,129 @@
                 document.body.removeChild(link);
             }
         }
+
+        function toggleView() {
+            const tableView = document.getElementById('tableView');
+            const graphView = document.getElementById('graphView');
+            const pagination = document.getElementById('pagination');
+            const toggleButton = document.getElementById('toggleViewButton');
+
+            if (tableView.classList.contains('hidden')) {
+                tableView.classList.remove('hidden');
+                graphView.classList.add('hidden');
+                pagination.classList.remove('hidden');
+                toggleButton.textContent = 'Show Graph';
+            } else {
+                tableView.classList.add('hidden');
+                graphView.classList.remove('hidden');
+                pagination.classList.add('hidden');
+                toggleButton.textContent = 'Show Table';
+                updateGraph();
+            }
+        }
+
+        function updateGraph() {
+    const ctx = document.getElementById('chartCanvas').getContext('2d');
+
+    if (chart) {
+        chart.destroy();
+    }
+
+    if (departmentData.length === 0) {
+        return; // Don't create a chart if there's no data
+    }
+
+    // Group the data by SPECIALITY and sum the PVT_OPD and GEN_OPD values
+    const groupedData = departmentData.reduce((acc, item) => {
+        if (!acc[item.SPECIALITY]) {
+            acc[item.SPECIALITY] = { PVT_OPD: 0, GEN_OPD: 0 };
+        }
+        acc[item.SPECIALITY].PVT_OPD += parseInt(item.PVT_OPD) || 0;
+        acc[item.SPECIALITY].GEN_OPD += parseInt(item.GEN_OPD) || 0;
+        return acc;
+    }, {});
+
+    // Convert the grouped data into an array and sort by total OPD
+    const sortedData = Object.entries(groupedData)
+        .map(([speciality, values]) => ({
+            SPECIALITY: speciality,
+            PVT_OPD: values.PVT_OPD,
+            GEN_OPD: values.GEN_OPD
+        }))
+        .sort((a, b) => (b.PVT_OPD + b.GEN_OPD) - (a.PVT_OPD + a.GEN_OPD));
+
+    // Create the chart if there is valid data
+    if (sortedData.length > 0) {
+        chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: sortedData.map(item => item.SPECIALITY), // X-axis labels
+                datasets: [
+                    {
+                        label: 'Private OPD',
+                        data: sortedData.map(item => item.PVT_OPD), // Y-axis data for Private OPD
+                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2,
+                        fill: true, // Show area under the line
+                        tension: 0.4 // Smooth the line
+                    },
+                    {
+                        label: 'General OPD',
+                        data: sortedData.map(item => item.GEN_OPD), // Y-axis data for General OPD
+                        borderColor: 'rgb(255, 159, 64)',
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderWidth: 2,
+                        fill: true, // Show area under the line
+                        tension: 0.4 // Smooth the line
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: 'OPD Count by Specialty'
+                    },
+                    tooltip: {
+                        enabled: true
+                    },
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: (value) => `${value}`,
+                        font: {
+                            weight: 'bold'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            autoSkip: false,
+                            maxRotation: 90,
+                            minRotation: 90
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                elements: {
+                    point: {
+                        pointStyle: 'circle'
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+    }
+}
+
     </script>
 </body>
 </html>
