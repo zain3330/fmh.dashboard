@@ -3,175 +3,176 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Department Directory</title>
+  <title>Department Directory Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-... your_hash ..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="auth-check.js"></script>
 </head>
-<body class="min-h-screen bg-gray-50">
-  <div class="mx-auto max-w-6xl p-6">
-    <header class="mb-8 flex items-center justify-between">
-      <h1 class="text-2xl font-bold text-gray-900">Department Directory</h1>
-      <button onclick="logout()" class="flex items-center gap-2 rounded-lg bg-gray-800 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700">
-        <i data-lucide="log-out" class="h-4 w-4"></i>
-        Logout
-      </button>
-    </header>
-
-    <div class="rounded-lg bg-white p-8 shadow-sm">
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-        <a href="#" onclick="openModal('Finance')" class="group relative overflow-hidden rounded-lg bg-gray-800 p-6 text-white transition-all hover:bg-gray-700">
-          <div class="relative z-10">
-            <h3 class="mb-2 text-lg font-semibold">Finance</h3>
-            <p class="text-sm text-gray-300">View department data</p>
-          </div>
-          <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 transform">
-            <i data-lucide="dollar-sign" class="h-16 w-16 opacity-10"></i>
-          </div>
-        </a>
-        <a href="#" onclick="openModal('humanResources')" class="group relative overflow-hidden rounded-lg bg-gray-800 p-6 text-white transition-all hover:bg-gray-700">
-          <div class="relative z-10">
-            <h3 class="mb-2 text-lg font-semibold">Human Resources</h3>
-            <p class="text-sm text-gray-300">View department data</p>
-          </div>
-          <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 transform">
-            <i data-lucide="users" class="h-16 w-16 opacity-10"></i>
-          </div>
-        </a>
-        <a href="#" onclick="openModal('marketing')" class="group relative overflow-hidden rounded-lg bg-gray-800 p-6 text-white transition-all hover:bg-gray-700">
-          <div class="relative z-10">
-            <h3 class="mb-2 text-lg font-semibold">Marketing</h3>
-            <p class="text-sm text-gray-300">View department data</p>
-          </div>
-          <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 transform">
-            <i data-lucide="megaphone" class="h-16 w-16 opacity-10"></i>
-          </div>
-        </a>
-        <a href="#" onclick="openModal('it')" class="group relative overflow-hidden rounded-lg bg-gray-800 p-6 text-white transition-all hover:bg-gray-700">
-          <div class="relative z-10">
-            <h3 class="mb-2 text-lg font-semibold">IT</h3>
-            <p class="text-sm text-gray-300">View department data</p>
-          </div>
-          <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 transform">
-            <i data-lucide="monitor" class="h-16 w-16 opacity-10"></i>
-          </div>
-        </a>
-        <a href="#" onclick="openModal('operations')" class="group relative overflow-hidden rounded-lg bg-gray-800 p-6 text-white transition-all hover:bg-gray-700">
-          <div class="relative z-10">
-            <h3 class="mb-2 text-lg font-semibold">Operations</h3>
-            <p class="text-sm text-gray-300">View department data</p>
-          </div>
-          <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 transform">
-            <i data-lucide="settings" class="h-16 w-16 opacity-10"></i>
-          </div>
-        </a>
-        <a href="#" onclick="openModal('sales')" class="group relative overflow-hidden rounded-lg bg-gray-800 p-6 text-white transition-all hover:bg-gray-700">
-          <div class="relative z-10">
-            <h3 class="mb-2 text-lg font-semibold">Sales</h3>
-            <p class="text-sm text-gray-300">View department data</p>
-          </div>
-          <div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 transform">
-            <i data-lucide="trending-up" class="h-16 w-16 opacity-10"></i>
-          </div>
-        </a>
+<body class="bg-gray-100">
+  <div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 bg-gray-900 text-white transition-all duration-300">
+      <div class="p-4">
+        <h1 class="text-2xl font-bold">Department Directory</h1>
       </div>
-    </div>
-  </div>
-  <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-50">
-    <div class="bg-white rounded-lg p-8 max-w-2xl w-full max-h-[90vh] flex flex-col">
-      <h2 id="modalTitle" class="text-2xl font-bold mb-4"></h2>
-      <div class="overflow-y-auto flex-grow">
-        <div id="modalOptions" class="grid grid-cols-2 gap-4">
-          <!-- Options will be dynamically added here -->
+      <nav class="mt-6">
+        <div class="relative">
+          <button onclick="toggleDropdown('Finance')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
+            <span class="flex items-center">
+              <i class="fas fa-dollar-sign w-5 h-5 mr-2"></i>
+              <span class="sidebar-text">Finance</span>
+            </span>
+            <i class="fas fa-chevron-down w-4 h-4"></i>
+          </button>
+          <div id="Finance-dropdown" class="hidden bg-gray-700 py-2">
+            <!-- Dropdown items will be inserted here -->
+          </div>
+        </div>
+      </nav>
+    </aside>
+    <main class="flex-1 overflow-y-auto bg-gray-100">
+    <!-- Main Content -->
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+      <div class="max-w-7xl mx-auto pt-4 px-4 sm:px-6 lg:px-4 flex justify-between items-center">
+          <div class="flex items-center space-x-4">
+        
+          <button onclick="toggleSidebar()" class="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+              <i class="fas fa-bars w-6 h-6"></i>
+            </button>
+            <!-- <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">OPD Count</h2> -->
+            </div>
+
+          <div class="flex items-center space-x-4">
+           
+              <button onclick="logout()" class="flex items-center space-x-2 bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-md transition duration-200">
+                <i class="fas fa-sign-out-alt w-4 h-4"></i>
+                <span>Logout</span>
+              </button>
+          </div>
+      </div>
+    </header>
+      <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div id="departmentContent" class="px-4 py-6 sm:px-0">
+          <!-- Department content will be dynamically inserted here -->
         </div>
       </div>
-      <button onclick="closeModal()" class="mt-6 w-full rounded-lg bg-gray-800 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-700">
-        Close
-      </button>
-    </div>
+    </main>
   </div>
 
   <script>
-    lucide.createIcons();
-
     const departmentOptions = {
       Finance: [
-        { name: "OPD Count", link: "finance-opd-count.html" },
-        { name: "IPD Count", link: "finance-ipd-count.html" },
-        { name: "Average Length of Stay", link: "finance-als.html" },
-        { name: "Revenue Analysis", link: "finance-revenue-analysis.html" },
-        { name: "Cash Flow Management", link: "finance-cash-flow.html" },
-        { name: "Financial Forecasting", link: "finance-forecasting.html" },
-        { name: "Tax Planning", link: "finance-tax-planning.html" },
-        { name: "Investment Portfolio", link: "finance-investments.html" },
-        { name: "Audit Preparation", link: "finance-audit-prep.html" },
-        { name: "Financial Risk Assessment", link: "finance-risk-assessment.html" }
+        {
+          name: "Count",
+          icon: "fa-chart-pie",
+          submenu: [
+            { name: "OPD Count", link: "finance-opd-count.html", icon: "fa-users" },
+            { name: "IPD Count", link: "finance-ipd-count.html", icon: "fa-bed" },
+          ],
+        },
       ],
-      // humanResources: [
-      //   { name: "OPD HR", link: "human-resources-opd-hr.html" },
-      //   { name: "Employee Count", link: "human-resources-employee-count.html" },
-      //   { name: "Training Programs", link: "human-resources-training-programs.html" }
-      // ],
-      // marketing: [
-      //   { name: "Campaign Performance", link: "marketing-campaign-performance.html" },
-      //   { name: "Lead Generation", link: "marketing-lead-generation.html" },
-      //   { name: "Social Media Analytics", link: "marketing-social-media-analytics.html" }
-      // ],
-      // it: [
-      //   { name: "System Uptime", link: "it-system-uptime.html" },
-      //   { name: "Ticket Resolution", link: "it-ticket-resolution.html" },
-      //   { name: "Software Licenses", link: "it-software-licenses.html" }
-      // ],
-      // operations: [
-      //   { name: "Productivity Metrics", link: "operations-productivity-metrics.html" },
-      //   { name: "Quality Control", link: "operations-quality-control.html" },
-      //   { name: "Supply Chain Overview", link: "operations-supply-chain-overview.html" }
-      // ],
-      // sales: [
-      //   { name: "Revenue Overview", link: "sales-revenue-overview.html" },
-      //   { name: "Sales Pipeline", link: "sales-pipeline.html" },
-      //   { name: "Customer Acquisition", link: "sales-customer-acquisition.html" }
-      // ]
     };
 
-    function openModal(department) {
-      const modal = document.getElementById('modal');
-      const modalTitle = document.getElementById('modalTitle');
-      const modalOptions = document.getElementById('modalOptions');
+    function createDropdownItems(options, parentId = '') {
+      const fragment = document.createDocumentFragment();
+      options.forEach(option => {
+        if (option.submenu) {
+          const submenuButton = document.createElement('button');
+          submenuButton.className = 'w-full text-left flex items-center justify-between py-2 px-4 text-sm text-gray-300 hover:bg-gray-600 hover:text-white';
+          const submenuId = `${parentId}${option.name.replace(/\s+/g, '')}`;
+          submenuButton.onclick = () => toggleDropdown(submenuId);
+          
+          const iconSpan = document.createElement('span');
+          iconSpan.className = 'flex items-center';
+          iconSpan.innerHTML = `<i class="fas ${option.icon} w-4 h-4 mr-2"></i><span class="sidebar-text">${option.name}</span>`;
+          
+          const chevronIcon = document.createElement('i');
+          chevronIcon.className = 'fas fa-chevron-right w-4 h-4';
+          
+          submenuButton.appendChild(iconSpan);
+          submenuButton.appendChild(chevronIcon);
+          
+          const submenu = document.createElement('div');
+          submenu.id = `${submenuId}-dropdown`;
+          submenu.className = 'hidden bg-gray-800 py-2 pl-6';
+          
+          submenu.appendChild(createDropdownItems(option.submenu, submenuId));
 
-      modalTitle.textContent = department.replace(/([A-Z])/g, ' $1').trim() + " Options";
-      modalOptions.innerHTML = '';
-
-
-departmentOptions[department].forEach(option => {
-        const div = document.createElement('div');
-        div.innerHTML = `
-          <a href="${option.link}" class="block p-4 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-800 transition-colors duration-200">
-            <h3 class="font-semibold mb-1">${option.name}</h3>
-          </a>
-        `;
-        modalOptions.appendChild(div);
+          fragment.appendChild(submenuButton);
+          fragment.appendChild(submenu);
+        } else {
+          const link = document.createElement('a');
+          link.href = option.link;
+          link.className = 'block py-2 px-4 text-sm text-gray-300 hover:bg-gray-600 hover:text-white flex items-center';
+          link.innerHTML = `<i class="fas ${option.icon} w-4 h-4 mr-2"></i><span class="sidebar-text">${option.name}</span>`;
+          fragment.appendChild(link);
+        }
       });
-
-      modal.classList.remove('hidden');
+      return fragment;
     }
 
-    function closeModal() {
-      const modal = document.getElementById('modal');
-      modal.classList.add('hidden');
+    for (const [department, options] of Object.entries(departmentOptions)) {
+      const dropdown = document.getElementById(`${department}-dropdown`);
+      dropdown.appendChild(createDropdownItems(options, department));
     }
 
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-      const modal = document.getElementById('modal');
-      if (event.target == modal) {
-        closeModal();
+    function toggleDropdown(id) {
+      const dropdown = document.getElementById(`${id}-dropdown`);
+      if (dropdown) {
+        const isHidden = dropdown.classList.contains('hidden');
+        
+        // Close all dropdowns at the same level
+        dropdown.parentElement.querySelectorAll(':scope > [id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
+        
+        // Toggle the clicked dropdown
+        if (isHidden) {
+          dropdown.classList.remove('hidden');
+        }
+        
+        // Rotate the chevron icon
+        const button = document.querySelector(`button[onclick="toggleDropdown('${id}')"]`);
+        const chevron = button.querySelector('.fa-chevron-right');
+        if (chevron) {
+          chevron.style.transform = isHidden ? 'rotate(90deg)' : 'rotate(0deg)';
+        }
       }
     }
+
+    function showDepartmentContent(department) {
+      const departmentTitle = document.getElementById('departmentTitle');
+      const departmentContent = document.getElementById('departmentContent');
+
+      departmentTitle.textContent = department.replace(/([A-Z])/g, ' $1').trim();
+      departmentContent.innerHTML = `<h3 class="text-xl font-semibold mb-4">Select an option from the ${department} menu to view details.</h3>`;
+    }
+
     function logout() {
       localStorage.removeItem('isLoggedIn');
       window.location.href = 'index.html';
     }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarTexts = document.querySelectorAll('.sidebar-text');
+      
+      if (sidebar.classList.contains('w-64')) {
+        sidebar.classList.remove('w-64');
+        sidebar.classList.add('w-20');
+        sidebarTexts.forEach(text => text.classList.add('hidden'));
+      } else {
+        sidebar.classList.remove('w-20');
+        sidebar.classList.add('w-64');
+        sidebarTexts.forEach(text => text.classList.remove('hidden'));
+      }
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(event) {
+      if (!event.target.closest('.relative')) {
+        document.querySelectorAll('[id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.fa-chevron-right').forEach(el => el.style.transform = 'rotate(0deg)');
+      }
+    });
   </script>
 </body>
 </html>

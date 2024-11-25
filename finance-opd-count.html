@@ -19,124 +19,173 @@
             },
         }
     </script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-... your_hash ..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
-<body class="min-h-screen bg-gray-100 p-8">
-    <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="p-6 bg-white border-b border-gray-200">
-            <div class="flex justify-between items-center">
-                <h1 class="text-2xl font-bold text-gray-800">OPD Count</h1>
-                <button onclick="window.location.href='home.html'" class="p-2 rounded-full hover:bg-gray-100">
-                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
-                </button>
+
+    <body class="bg-gray-100">
+        <div class="flex h-screen overflow-hidden">
+          <!-- Sidebar -->
+          <aside id="sidebar" class="w-64 bg-gray-900 text-white transition-all duration-300">
+            <div class="p-4">
+              <h1 class="text-2xl font-bold">Department Directory</h1>
             </div>
-        </div>
-        <div class="p-6">
-            <div class="space-y-4">
-                <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
-                    <div class="flex-1">
-                        <label for="type" class="block text-sm font-medium text-gray-700">Hospital Type</label>
-                        <select id="type" name="hospitalType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            <option value="M" selected>Hospital</option>
-                            <option value="D">Dental</option>
-                        </select>
-                    </div>
-                    <div class="flex-1">
-                        <label for="hospital" class="block text-sm font-medium text-gray-700">Hospital</label>
-                        <select id="hospital" name="hospital" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            <option value="ALL" selected>All</option>
-                            <option value="FMH">FMH Hospital</option>
-                            <option value="HH">Hijaz Hospital</option>
-                        </select>
-                    </div>
-                    <div class="flex-1">
-                        <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
-                        <input type="date" id="startDate" name="startDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                    </div>
-                    <div class="flex-1">
-                        <label for="endDate" class="block text-sm font-medium text-gray-700">End Date</label>
-                        <input type="date" id="endDate" name="endDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                    </div>
-                    <div class="flex-1">
-                        <label for="name" class="block text-sm font-medium text-gray-700">Doctor Name</label>
-                        <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                    </div>
-                    <div class="flex-1">
-                        <label for="departemnt" class="block text-sm font-medium text-gray-700">Department</label>
-                        <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                    </div>
+            <nav class="mt-6">
+              <div class="relative">
+                <button onclick="toggleDropdown('Finance')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
+                  <span class="flex items-center">
+                    <i class="fas fa-dollar-sign w-5 h-5 mr-2"></i>
+                    <span class="sidebar-text">Finance</span>
+                  </span>
+                  <i class="fas fa-chevron-down w-4 h-4"></i>
+                </button>
+                <div id="Finance-dropdown" class="hidden bg-gray-700 py-2">
+                  <!-- Dropdown items will be inserted here -->
                 </div>
-                <div class="flex justify-between items-center">
-                    <button id="resetButton" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
-                        Reset
+              </div>
+            </nav>
+          </aside>
+          <main class="flex-1 overflow-y-auto bg-gray-100">
+          <!-- Main Content -->
+          <header class="bg-white shadow-sm sticky top-0 z-10">
+            <div class="max-w-7xl mx-auto pt-4 px-4 sm:px-6 lg:px-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+              
+                <button onclick="toggleSidebar()" class="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    <i class="fas fa-bars w-6 h-6"></i>
+                  </button>
+                  <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">OPD Count</h2>
+                  </div>
+
+                <div class="flex items-center space-x-4">
+                 
+                    <button onclick="logout()" class="flex items-center space-x-2 bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-md transition duration-200">
+                      <i class="fas fa-sign-out-alt w-4 h-4"></i>
+                      <span>Logout</span>
                     </button>
-                    <div class="space-x-2">
-                        <button id="searchButton" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                            Search
-                        </button>
-                        <button id="downloadButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                            <i data-lucide="download" class="inline-block w-4 h-4 mr-2"></i>
-                            Download Data
-                        </button>
-                        <button id="toggleViewButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
-                            Show Graph
-                        </button>
-                    </div>
                 </div>
             </div>
-            <div id="tableView" class="mt-6 rounded-md border">
-                <table id="dataTable" class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor Name</th>
-                            <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Speciality</th>
-                            <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Private OPD</th>
-                            <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">General OPD</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
-                        <!-- Table rows will be inserted here -->
-                    </tbody>
-                    <tfoot id="tableFoot" class="bg-gray-50 hidden">
-                        <tr>
-                            <th class="px-6 py-3 text-left   font-serif text-gray-500 uppercase tracking-wider" colspan="2">Total</th>
-                            <th id="totalPvtOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>
-                            <th id="totalGenOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>
-                        </tr>
-                    </tfoot>
-                </table>
+          </header>
+      
+            <div class="max-w-7xl mx-auto py- sm:px-6 lg:px-3">
+              <div id="departmentContent" class="px-4 py-2 sm:px-0">
+          
+                    <!-- <div class="p-6 bg-white border-b border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <h1 class="text-2xl font-bold text-gray-800">OPD Count</h1>
+                            <button onclick="window.location.href='home.html'" class="p-2 rounded-full hover:bg-gray-100">
+                                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div> -->
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
+                                <div class="flex-1">
+                                    <label for="type" class="block text-sm font-medium text-gray-700">Hospital Type</label>
+                                    <select id="type" name="hospitalType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                        <option value="M" selected>Hospital</option>
+                                        <option value="D">Dental</option>
+                                    </select>
+                                </div>
+                                <div class="flex-1">
+                                    <label for="hospital" class="block text-sm font-medium text-gray-700">Hospital</label>
+                                    <select id="hospital" name="hospital" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                        <option value="ALL" selected>All</option>
+                                        <option value="FMH">FMH Hospital</option>
+                                        <option value="HH">Hijaz Hospital</option>
+                                    </select>
+                                </div>
+                                <div class="flex-1">
+                                    <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
+                                    <input type="date" id="startDate" name="startDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                </div>
+                                <div class="flex-1">
+                                    <label for="endDate" class="block text-sm font-medium text-gray-700">End Date</label>
+                                    <input type="date" id="endDate" name="endDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                </div>
+                                <div class="flex-1">
+                                    <label for="name" class="block text-sm font-medium text-gray-700">Doctor Name</label>
+                                    <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                </div>
+                                <div class="flex-1">
+                                    <label for="departemnt" class="block text-sm font-medium text-gray-700">Department</label>
+                                    <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <button id="resetButton" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
+                                    Reset
+                                </button>
+                                <div class="space-x-2">
+                                    <button id="searchButton" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                                        Search
+                                    </button>
+                                    <button id="downloadButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                        <i class="fas fa-download inline-block w-4 h-4 mr-2"></i>
+
+                                        Download Data
+                                    </button>
+                                    <button id="toggleViewButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
+                                        Show Graph
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tableView" class="mt-6 rounded-md border">
+                            <table id="dataTable" class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor Name</th>
+                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Speciality</th>
+                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Private OPD</th>
+                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">General OPD</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
+                                    <!-- Table rows will be inserted here -->
+                                </tbody>
+                                <tfoot id="tableFoot" class="bg-gray-50 hidden">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left   font-serif text-gray-500 uppercase tracking-wider" colspan="2">Total</th>
+                                        <th id="totalPvtOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>
+                                        <th id="totalGenOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div id="graphView" class="mt-6 rounded-md border p-4 hidden">
+                            <canvas id="chartCanvas"></canvas>
+                        </div>
+                        <div id="pagination" class="mt-4 flex justify-center items-center space-x-2 hidden">
+                            <button id="firstPage" 
+                                    class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                              First
+                            </button>
+                            <button id="prevPage" 
+                                    class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                              Previous
+                            </button>
+                            <span id="pageInfo" class="text-sm font-medium text-gray-700">
+                              Page 1 of 10
+                            </span>
+                            <button id="nextPage" 
+                                    class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                              Next
+                            </button>
+                            <button id="lastPage" 
+                                    class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                              Last
+                            </button>
+                        </div>
+                    </div>
+                </div>
+              </div>
             </div>
-            <div id="graphView" class="mt-6 rounded-md border p-4 hidden">
-                <canvas id="chartCanvas"></canvas>
-            </div>
-            <div id="pagination" class="mt-4 flex justify-center items-center space-x-2 hidden">
-                <button id="firstPage" 
-                        class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                  First
-                </button>
-                <button id="prevPage" 
-                        class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                  Previous
-                </button>
-                <span id="pageInfo" class="text-sm font-medium text-gray-700">
-                  Page 1 of 10
-                </span>
-                <button id="nextPage" 
-                        class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                  Next
-                </button>
-                <button id="lastPage" 
-                        class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                  Last
-                </button>
-            </div>
+          </main>
         </div>
-    </div>
-
     <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-
+  
         let departmentData = [];
         let currentPage = 1;
         const itemsPerPage = 10;
@@ -427,5 +476,123 @@
 }
 
     </script>
+  
+    
+  <script>
+    const departmentOptions = {
+      Finance: [
+        {
+          name: "Count",
+          icon: "fa-chart-pie",
+          submenu: [
+            { name: "OPD Count", link: "finance-opd-count.html", icon: "fa-users" },
+            { name: "IPD Count", link: "finance-ipd-count.html", icon: "fa-bed" },
+          ],
+        },
+      ],
+    };
+
+    function createDropdownItems(options, parentId = '') {
+      const fragment = document.createDocumentFragment();
+      options.forEach(option => {
+        if (option.submenu) {
+          const submenuButton = document.createElement('button');
+          submenuButton.className = 'w-full text-left flex items-center justify-between py-2 px-4 text-sm text-gray-300 hover:bg-gray-600 hover:text-white';
+          const submenuId = `${parentId}${option.name.replace(/\s+/g, '')}`;
+          submenuButton.onclick = () => toggleDropdown(submenuId);
+          
+          const iconSpan = document.createElement('span');
+          iconSpan.className = 'flex items-center';
+          iconSpan.innerHTML = `<i class="fas ${option.icon} w-4 h-4 mr-2"></i><span class="sidebar-text">${option.name}</span>`;
+          
+          const chevronIcon = document.createElement('i');
+          chevronIcon.className = 'fas fa-chevron-right w-4 h-4';
+          
+          submenuButton.appendChild(iconSpan);
+          submenuButton.appendChild(chevronIcon);
+          
+          const submenu = document.createElement('div');
+          submenu.id = `${submenuId}-dropdown`;
+          submenu.className = 'hidden bg-gray-800 py-2 pl-6';
+          
+          submenu.appendChild(createDropdownItems(option.submenu, submenuId));
+
+          fragment.appendChild(submenuButton);
+          fragment.appendChild(submenu);
+        } else {
+          const link = document.createElement('a');
+          link.href = option.link;
+          link.className = 'block py-2 px-4 text-sm text-gray-300 hover:bg-gray-600 hover:text-white flex items-center';
+          link.innerHTML = `<i class="fas ${option.icon} w-4 h-4 mr-2"></i><span class="sidebar-text">${option.name}</span>`;
+          fragment.appendChild(link);
+        }
+      });
+      return fragment;
+    }
+
+    for (const [department, options] of Object.entries(departmentOptions)) {
+      const dropdown = document.getElementById(`${department}-dropdown`);
+      dropdown.appendChild(createDropdownItems(options, department));
+    }
+
+    function toggleDropdown(id) {
+      const dropdown = document.getElementById(`${id}-dropdown`);
+      if (dropdown) {
+        const isHidden = dropdown.classList.contains('hidden');
+        
+        // Close all dropdowns at the same level
+        dropdown.parentElement.querySelectorAll(':scope > [id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
+        
+        // Toggle the clicked dropdown
+        if (isHidden) {
+          dropdown.classList.remove('hidden');
+        }
+        
+        // Rotate the chevron icon
+        const button = document.querySelector(`button[onclick="toggleDropdown('${id}')"]`);
+        const chevron = button.querySelector('.fa-chevron-right');
+        if (chevron) {
+          chevron.style.transform = isHidden ? 'rotate(90deg)' : 'rotate(0deg)';
+        }
+      }
+    }
+
+    function showDepartmentContent(department) {
+      const departmentTitle = document.getElementById('departmentTitle');
+      const departmentContent = document.getElementById('departmentContent');
+
+      departmentTitle.textContent = department.replace(/([A-Z])/g, ' $1').trim();
+      departmentContent.innerHTML = `<h3 class="text-xl font-semibold mb-4">Select an option from the ${department} menu to view details.</h3>`;
+    }
+
+    function logout() {
+      localStorage.removeItem('isLoggedIn');
+      window.location.href = 'index.html';
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarTexts = document.querySelectorAll('.sidebar-text');
+      
+      if (sidebar.classList.contains('w-64')) {
+        sidebar.classList.remove('w-64');
+        sidebar.classList.add('w-20');
+        sidebarTexts.forEach(text => text.classList.add('hidden'));
+      } else {
+        sidebar.classList.remove('w-20');
+        sidebar.classList.add('w-64');
+        sidebarTexts.forEach(text => text.classList.remove('hidden'));
+      }
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(event) {
+      if (!event.target.closest('.relative')) {
+        document.querySelectorAll('[id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.fa-chevron-right').forEach(el => el.style.transform = 'rotate(0deg)');
+      }
+    });
+  </script>
+
 </body>
 </html>
