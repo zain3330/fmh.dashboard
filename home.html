@@ -70,24 +70,32 @@
   <script>
     const departmentOptions = {
       Finance: [
-    {
-      name: "Count",
-      icon: "fa-chart-pie",
-      submenu: [
-        { name: "OPD Count", link: "finance-opd-count.html", icon: "fa-users" },
-        { name: "IPD Count", link: "finance-ipd-count.html", icon: "fa-bed" },
+        {
+          name: "Count",
+          icon: "fa-chart-pie",
+          submenu: [
+            { name: "OPD Count", link: "finance-opd-count.html", icon: "fa-users" },
+            { name: "IPD Count", link: "finance-ipd-count.html", icon: "fa-bed" },
+          ],
+        },
+        {
+          name: "ALOS",
+          icon: "fa-chart-pie",
+          submenu: [
+            { name: "Average Length Of Stay", link: "finance-als.html", icon: "fa-users" },
+
+          ],
+        },
+        {
+          name: "Short Stay",
+          icon: "fa-chart-pie",
+          submenu: [
+            { name: "Short Stay", link: "finance-short-stay.html", icon: "fa-users" },
+
+          ],
+        },
       ],
-    },
-    {
-      name: "ALOS",
-      icon: "fa-chart-pie",
-      submenu: [
-        { name: "Average Length Of Stay", link: "finance-als.html", icon: "fa-users" },
-    
-      ],
-    },
-  ],
-};
+    };
 
 
     function createDropdownItems(options, parentId = '') {
