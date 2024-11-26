@@ -41,9 +41,9 @@
             <i class="fas fa-bars w-6 h-6"></i>
           </button>
           <!-- Hidden Title for Larger Screens -->
-          <h2 id="departmentTitle" class="text-base font-bold text-gray-900" style="white-space: nowrap;">
+          <!-- <h2 id="departmentTitle" class="text-base font-bold text-gray-900" style="white-space: nowrap;">
             OPD Count
-          </h2>
+          </h2> -->
         </div>
     
         <!-- Right Section -->
@@ -70,16 +70,25 @@
   <script>
     const departmentOptions = {
       Finance: [
-        {
-          name: "Count",
-          icon: "fa-chart-pie",
-          submenu: [
-            { name: "OPD Count", link: "finance-opd-count.html", icon: "fa-users" },
-            { name: "IPD Count", link: "finance-ipd-count.html", icon: "fa-bed" },
-          ],
-        },
+    {
+      name: "Count",
+      icon: "fa-chart-pie",
+      submenu: [
+        { name: "OPD Count", link: "finance-opd-count.html", icon: "fa-users" },
+        { name: "IPD Count", link: "finance-ipd-count.html", icon: "fa-bed" },
       ],
-    };
+    },
+    {
+      name: "ALOS",
+      icon: "fa-chart-pie",
+      submenu: [
+        { name: "Average Length Of Stay", link: "finance-als.html", icon: "fa-users" },
+    
+      ],
+    },
+  ],
+};
+
 
     function createDropdownItems(options, parentId = '') {
       const fragment = document.createDocumentFragment();
