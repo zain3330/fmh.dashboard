@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - Department Directory</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-... your_hash ..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="min-h-screen bg-gray-50">
   <div class="flex min-h-screen items-center justify-center p-4">
@@ -22,7 +22,7 @@
               MR No.
             </label>
             <div class="mt-1 relative">
-              <i data-lucide="user" class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"></i>
+              <i class="fas fa-user absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"></i>
               <input
                 id="mrno"
                 name="mrno"
@@ -40,7 +40,7 @@
               Pin/Password
             </label>
             <div class="mt-1 relative">
-              <i data-lucide="lock" class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"></i>
+              <i class="fas fa-lock absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"></i>
               <input
                 id="pin"
                 name="pin"
@@ -54,9 +54,8 @@
                 type="button"
                 onclick="togglePasswordVisibility()"
                 class="absolute right-3 top-1/2 -translate-y-1/2"
-                onclick="autoFillMRNo(); return false;"
               >
-                <i data-lucide="eye" class="h-5 w-5 text-gray-400"></i>
+                <i id="passwordToggleIcon" class="fas fa-eye h-5 w-5 text-gray-400"></i>
               </button>
             </div>
           </div>
@@ -81,42 +80,41 @@
   </div>
 
   <script>
-    lucide.createIcons();
-function formatMRNo(value) {
-    if (value.length === 4) {
-      return "1006000000" + value; // Add prefix for 4-digit MR No.
-    } else if (value.length === 3) {
-      return "10060000000" + value; // Add prefix for 3-digit MR No.
-    } else if (value.length === 2) {
-      return "100600000000" + value; // Add prefix for 2-digit MR No.
+    function formatMRNo(value) {
+      if (value.length === 4) {
+        return "1006000000" + value; // Add prefix for 4-digit MR No.
+      } else if (value.length === 3) {
+        return "10060000000" + value; // Add prefix for 3-digit MR No.
+      } else if (value.length === 2) {
+        return "100600000000" + value; // Add prefix for 2-digit MR No.
+      }
+      return value; // Default to user input if full MR No. is entered
     }
-    return value; // Default to user input if full MR No. is entered
-  }
 
-  // Function to auto-fill the MR No. when required
-  function autoFillMRNo() {
-    const mrnoInput = document.getElementById("mrno");
-    const value = mrnoInput.value.trim();
+    // Function to auto-fill the MR No. when required
+    function autoFillMRNo() {
+      const mrnoInput = document.getElementById("mrno");
+      const value = mrnoInput.value.trim();
 
-    if (value && (value.length === 2 || value.length === 3 || value.length === 4)) {
-      mrnoInput.value = formatMRNo(value); // Format MR No. based on length
+      if (value && (value.length === 2 || value.length === 3 || value.length === 4)) {
+        mrnoInput.value = formatMRNo(value); // Format MR No. based on length
+      }
     }
-  }
+
     function togglePasswordVisibility() {
       const passwordInput = document.getElementById('pin');
-      const eyeIcon = document.querySelector('[data-lucide="eye"]');
+      const eyeIcon = document.getElementById('passwordToggleIcon');
       
       if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        eyeIcon.setAttribute('data-lucide', 'eye-off');
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
       } else {
         passwordInput.type = 'password';
-        eyeIcon.setAttribute('data-lucide', 'eye');
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
       }
-      lucide.createIcons();
     }
-
-
 
     document.getElementById('loginForm').addEventListener('submit', async function(e) {
       e.preventDefault();
