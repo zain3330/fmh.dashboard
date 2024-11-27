@@ -55,7 +55,7 @@
             <button onclick="toggleSidebar()" class="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 <i class="fas fa-bars w-6 h-6"></i>
               </button>
-              <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">IPD Count</h2>
+              <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">Bed Occupancy</h2>
               </div>
 
             <div class="flex items-center space-x-4">
@@ -106,10 +106,6 @@
                                 <input type="date" id="endDate" name="endDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             </div>
                             <div class="flex-1">
-                                <label for="name" class="block text-sm font-medium text-gray-700">Doctor Name</label>
-                                <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            </div>
-                            <div class="flex-1">
                                 <label for="departemnt" class="block text-sm font-medium text-gray-700">Department</label>
                                 <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             </div>
@@ -136,21 +132,13 @@
                         <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor Name</th>
-                                    <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Speciality</th>
-                                    <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Patient Type</th>
-                                    <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Admissions</th>
+                                    <th class="px-6 py-3 text-center font-serif text-gray-500 uppercase tracking-wider">Speciality</th>
+                                    <th class="px-6 py-3 text-center font-serif text-gray-500 uppercase tracking-wider">Bed Occupancy</th>
                                 </tr>
                             </thead>
                             <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
                                 <!-- Table rows will be inserted here -->
                             </tbody>
-                            <tfoot id="tableFoot" class="bg-gray-50 hidden">
-                                <tr>
-                                    <th class="px-6 py-3 text-left font-serif text-gray-500 uppercase tracking-wider" colspan="3">Total</th>
-                                    <th id="totalADMISSIONS" class="px-6 py-3 text-right font-serif text-gray-500 uppercase tracking-wider"></th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                     <div id="graphView" class="mt-6 rounded-md border p-4 hidden">
@@ -174,15 +162,6 @@
                         </button>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
 
     </div>
 </div>
@@ -212,7 +191,6 @@
             document.getElementById('hospital').value = 'ALL';
             document.getElementById('startDate').value = '';
             document.getElementById('endDate').value = '';
-            document.getElementById('name').value = '';
             document.getElementById('departemnt').value = '';
             departmentData = [];
             currentPage = 1;
@@ -236,13 +214,12 @@
             searchButton.disabled = true;
             searchButton.textContent = 'Searching...';
 
-            const apiUrl = 'https://prod-32.northeurope.logic.azure.com:443/workflows/fa7fa71ff0a742dd986f55ad9e76f822/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=8qo42KoUJ-rzP5NTIY5xGhdfG4zPyvknak3KBn5Wk_g';
+            const apiUrl = 'https://prod-04.northeurope.logic.azure.com:443/workflows/cb110db55e9643d18081aa47105f83f5/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=aPd9DuavqDRel8HZZLjnxpT6A7A2CNS9100OVhZh12I';
             const hospitalValue = document.getElementById('hospital').value;
 
             const requestBody = {
                 startDate: document.getElementById('startDate').value,
                 endDate: document.getElementById('endDate').value,
-                name: document.getElementById('name').value,
                 type: document.getElementById('type').value,
                 department: document.getElementById('departemnt').value,
                 hos1: (hospitalValue === 'ALL' || hospitalValue === 'FMH') ? 'FMH' : '',
@@ -292,24 +269,21 @@
             const endIndex = startIndex + itemsPerPage;
             const pageData = departmentData.slice(startIndex, endIndex);
 
-            if (pageData.length === 0) {
-                tableFoot.classList.add('hidden');
-            } else {
-                tableFoot.classList.remove('hidden');
-            }
+            // if (pageData.length === 0) {
+            //     tableFoot.classList.add('hidden');
+            // } else {
+            //     tableFoot.classList.remove('hidden');
+            // }
 
             pageData.forEach(item => {
                 const row = tableBody.insertRow();
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.DOCTOR_NAME}</td>
-                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.SPECIALITY}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${item.PATIENT_TYPE}</td>
-                    <td class="px-6 py-4 whitespace-nowrap  text-right  font-serif text-gray-500">${(parseInt(item.ADMISSIONS) || 0).toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center font-serif text-gray-500">${item.SPECIALITY}</td>
+                   <td class="px-6 py-4 whitespace-nowrap text-center font-serif text-gray-500">${(parseInt(item.OCC_PER) || 0).toLocaleString()}</td>
                 `;
             });
 
             updatePagination();
-            updateTotals();
         }
 
         function updatePagination() {
@@ -327,10 +301,10 @@
             }
         }
 
-        function updateTotals() {
-            const totalADMISSIONS = departmentData.reduce((sum, item) => sum + (parseInt(item.ADMISSIONS) || 0), 0);
-            document.getElementById('totalADMISSIONS').textContent = totalADMISSIONS.toLocaleString();
-        }
+        // function updateTotals() {
+        //     const totalADMISSIONS = departmentData.reduce((sum, item) => sum + (parseInt(item.OCC_PER) || 0), 0);
+        //     document.getElementById('totalADMISSIONS').textContent = totalADMISSIONS.toLocaleString();
+        // }
 
         function changePage(direction) {
             currentPage += direction;
@@ -338,9 +312,9 @@
         }
 
         function downloadData() {
-            let csvContent = 'Doctor Name,Speciality,Patient Type,Admissions\n';
+            let csvContent = 'Speciality, Bed Occupancy\n';
             departmentData.forEach(item => {
-                csvContent += `${item.DOCTOR_NAME},${item.SPECIALITY},${item.PATIENT_TYPE},${item.ADMISSIONS}\n`;
+                csvContent += `${item.SPECIALITY},${item.OCC_PER}\n`;
             });
 
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -387,100 +361,34 @@
                 return; // Don't create a chart if there's no data
             }
 
-            // Group and sum the ADMISSIONS by SPECIALITY
-            const groupedData = departmentData.reduce((acc, item) => {
-                if (acc[item.SPECIALITY]) {
-                    acc[item.SPECIALITY] += item.ADMISSIONS;
-                } else {
-                    acc[item.SPECIALITY] = item.ADMISSIONS;
-                }
-                return acc;
-            }, {});
-
-            // Convert the grouped data into a sorted array
-            const sortedData = Object.entries(groupedData)
-                .map(([speciality, admissions]) => ({ SPECIALITY: speciality, ADMISSIONS: admissions }))
-                .sort((a, b) => b.ADMISSIONS - a.ADMISSIONS);
-
-            if (sortedData.length === 0) {
-                return; // Don't create a chart if there's no data after processing
-            }
-
-            const admissionsData = sortedData.map(item => item.ADMISSIONS);
-            const minAdmissions = Math.min(...admissionsData);
-            const maxAdmissions = Math.max(...admissionsData);
-            const paddingFactor = 0.2; // Increased to 20% padding for more space
-            const paddingRange = (maxAdmissions - minAdmissions) * paddingFactor;
-
-            // Create a map to store the count of each admission value
-            const admissionCounts = new Map();
-            admissionsData.forEach(value => {
-                admissionCounts.set(value, (admissionCounts.get(value) || 0) + 1);
-            });
-
-            // Calculate jittered positions for overlapping points
-            const jitteredData = admissionsData.map((value, index) => {
-                if (admissionCounts.get(value) > 1) {
-                    const offset = (index % 2 === 0 ? 1 : -1) * 0.2;
-                    return value + offset;
-                }
-                return value;
-            });
+            // Sort data from greater to lesser values
+            const sortedData = [...departmentData].sort((a, b) => b.OCC_PER - a.OCC_PER);
 
             chart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: sortedData.map(item => item.SPECIALITY),
                     datasets: [{
-                        label: 'IPD Count',
-                        data: jitteredData,
+                        label: 'Average Length of Stay',
+                        data: sortedData.map(item => item.OCC_PER),
                         borderColor: 'rgb(75, 192, 192)',
                         tension: 0.1,
                         pointRadius: 7,
-                        pointHoverRadius: 10,
-                        borderWidth: 3,
-                        fill: false
+                        pointHoverRadius: 10
                     }]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 20,
-                            bottom: 20
-                        }
-                    },
                     plugins: {
                         legend: {
                             position: 'top',
-                            padding: 20
                         },
                         title: {
                             display: true,
-                            text: 'IPD Count by Speciality',
-                            padding: 20
+                            text: 'Average Length of Stay by Speciality'
                         },
                         tooltip: {
-                            enabled: true,
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    return `IPD Count: ${Math.round(context.parsed.y)}`;
-                                }
-                            }
-                        },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'top',
-                            offset: 10,
-                            formatter: (value, context) => {
-                                return `${Math.round(admissionsData[context.dataIndex])}`;
-                            },
-                            font: {
-                                weight: 'bold'
-                            },
-                            padding: 6
+                            enabled: false
                         }
                     },
                     scales: {
@@ -488,41 +396,25 @@
                             ticks: {
                                 autoSkip: false,
                                 maxRotation: 90,
-                                minRotation: 90,
-                                padding: 10
-                            },
-                            grid: {
-                                display: true,
-                                drawBorder: true,
-                                drawOnChartArea: true,
-                                drawTicks: true,
-                            }
-                        },
-                        y: {
-                            min: Math.max(0, minAdmissions - (paddingRange * 1.5)),
-                            max: maxAdmissions + (paddingRange * 1.5),
-                            ticks: {
-                                stepSize: Math.ceil((maxAdmissions - minAdmissions) / 40),
-                                padding: 0.2
-                            },
-                            grid: {
-                                display: true,
-                                drawBorder: true,
-                                drawOnChartArea: true,
-                                drawTicks: true,
+                                minRotation: 90
                             }
                         }
                     },
                     elements: {
                         point: {
-                            pointStyle: 'circle',
-                            radius: 7,
-                            hoverRadius: 10,
-                            borderWidth: 2,
-                            backgroundColor: 'white'
-                        },
-                        line: {
-                            tension: 0.1
+                            pointStyle: 'circle'
+                        }
+                    },
+                    plugins: {
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'top',
+                            formatter: (value, context) => {
+                                return `${value}`;
+                            },
+                            font: {
+                                weight: 'bold'
+                            }
                         }
                     }
                 },
@@ -534,6 +426,7 @@
 
         
   <script>
+
       const departmentOptions = {
           Finance: [
               {
@@ -546,7 +439,7 @@
               },
               {
 
-                       name: "Average Length Of Stay", link: "finance-als.html", icon: "fa-users"
+                  name: "Average Length Of Stay", link: "finance-als.html", icon: "fa-users"
 
               },
               // {

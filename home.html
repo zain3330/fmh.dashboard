@@ -13,7 +13,7 @@
     <!-- Sidebar -->
     <aside id="sidebar" class="w-64 bg-gray-900 text-white transition-all duration-300">
       <div class="p-4">
-        <h1 class="text-2xl font-bold">Department Directory</h1>
+        <h1 class="text-2xl font-bold">Dashboard</h1>
       </div>
       <nav class="mt-6">
         <div class="relative">
@@ -58,7 +58,7 @@
         </div>
       </div>
     </header>
-    
+
       <div class="max-w-10xl mx-auto py-6 sm:px-6 lg:px-8">
         <div id="departmentContent" class="px-4 py-6 sm:px-0">
           <!-- Department content will be dynamically inserted here -->
@@ -68,6 +68,7 @@
   </div>
 
   <script>
+
     const departmentOptions = {
       Finance: [
         {
@@ -79,20 +80,23 @@
           ],
         },
         {
-          name: "ALOS",
-          icon: "fa-chart-pie",
-          submenu: [
-            { name: "Average Length Of Stay", link: "finance-als.html", icon: "fa-users" },
 
-          ],
+          name: "Average Length Of Stay", link: "finance-als.html", icon: "fa-users"
+
+        },
+        // {
+        //     name: "Short Stay",
+        //     icon: "fa-chart-pie",
+        //     submenu: [
+        //         { name: "Short Stay", link: "finance-short-stay.html", icon: "fa-users" },
+        //
+        //     ],
+        // },
+        {
+          name: "Bed Occupancy", link: "finance-bed-occupancy.html", icon: "fa-users"
         },
         {
-          name: "Short Stay",
-          icon: "fa-chart-pie",
-          submenu: [
-            { name: "Short Stay", link: "finance-short-stay.html", icon: "fa-users" },
-
-          ],
+          name: "Short Stay", link: "finance-short-stay.html", icon: "fa-users"
         },
       ],
     };
@@ -179,11 +183,13 @@
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       const sidebarTexts = document.querySelectorAll('.sidebar-text');
+      const sidebarTitle = document.getElementById('sidebarTitle');
       
       if (sidebar.classList.contains('w-64')) {
         sidebar.classList.remove('w-64');
         sidebar.classList.add('w-20');
         sidebarTexts.forEach(text => text.classList.add('hidden'));
+        sidebarTitle.forEach(text => text.classList.add('hidden'));
       } else {
         sidebar.classList.remove('w-20');
         sidebar.classList.add('w-64');

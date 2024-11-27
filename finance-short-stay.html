@@ -449,6 +449,7 @@
 
 
 <script>
+
     const departmentOptions = {
         Finance: [
             {
@@ -460,20 +461,23 @@
                 ],
             },
             {
-                name: "ALOS",
-                icon: "fa-chart-pie",
-                submenu: [
-                    { name: "Average Length Of Stay", link: "finance-als.html", icon: "fa-users" },
 
-                ],
+                name: "Average Length Of Stay", link: "finance-als.html", icon: "fa-users"
+
+            },
+            // {
+            //     name: "Short Stay",
+            //     icon: "fa-chart-pie",
+            //     submenu: [
+            //         { name: "Short Stay", link: "finance-short-stay.html", icon: "fa-users" },
+            //
+            //     ],
+            // },
+            {
+                name: "Bed Occupancy", link: "finance-bed-occupancy.html", icon: "fa-users"
             },
             {
-                name: "Short Stay",
-                icon: "fa-chart-pie",
-                submenu: [
-                    { name: "Short Stay", link: "finance-short-stay.html", icon: "fa-users" },
-
-                ],
+                name: "Short Stay", link: "finance-short-stay.html", icon: "fa-users"
             },
         ],
     };
