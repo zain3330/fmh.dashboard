@@ -29,7 +29,7 @@
     <!-- Sidebar -->
     <aside id="sidebar" class="w-64 bg-gray-900 text-white transition-all duration-300">
         <div class="p-4">
-            <h1 class="text-2xl font-bold">Department Directory</h1>
+            <h1 id="userName" class="text-center text-2xl font-bold"></h1>
         </div>
         <nav class="mt-6">
             <div class="relative">
@@ -557,29 +557,51 @@
 
     function logout() {
         localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('fullName');
         window.location.href = 'index.html';
+    }
+
+    function getInitials(name) {
+        return name.split(' ').map(word => word[0].toUpperCase()).join('');
     }
 
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
         const sidebarTexts = document.querySelectorAll('.sidebar-text');
+        const userNameElement = document.getElementById('userName');
+        const fullName = localStorage.getItem('fullName');
 
         if (sidebar.classList.contains('w-64')) {
             sidebar.classList.remove('w-64');
             sidebar.classList.add('w-20');
             sidebarTexts.forEach(text => text.classList.add('hidden'));
+            if (fullName) {
+                userNameElement.textContent = getInitials(fullName);
+            }
         } else {
             sidebar.classList.remove('w-20');
             sidebar.classList.add('w-64');
             sidebarTexts.forEach(text => text.classList.remove('hidden'));
+            if (fullName) {
+                userNameElement.textContent = fullName;
+            }
         }
     }
+
 
     // Close dropdowns when clicking outside
     document.addEventListener('click', function(event) {
         if (!event.target.closest('.relative')) {
             document.querySelectorAll('[id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.fa-chevron-right').forEach(el => el.style.transform = 'rotate(0deg)');
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const userNameElement = document.getElementById('userName');
+        const fullName = localStorage.getItem('fullName');
+        if (fullName) {
+            userNameElement.textContent = `${fullName}`;
         }
     });
 </script>

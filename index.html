@@ -139,11 +139,11 @@
         });
 
         const data = await response.json();
-      
         debugInfo.classList.remove('hidden');
 
         if (data[0] && data[0]['UserCount '] === 1) {
           localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('fullName', data[0]['FULL_NAME']);
           window.location.href = 'home.html';
         } else {
           errorMessage.textContent = 'Invalid credentials. Please try again.';
@@ -160,6 +160,7 @@
         buttonText.classList.remove('invisible');
       }
     });
+
   </script>
 </body>
 </html>
