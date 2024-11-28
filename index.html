@@ -30,6 +30,7 @@
                     required
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 py-3 pl-10 pr-3 text-gray-900 placeholder-gray-500 focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500"
                     placeholder="Enter your MR number"
+                    onblur="autoFillMRNo()"
             />
           </div>
         </div>
@@ -47,10 +48,11 @@
                     required
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 py-3 pl-10 pr-10 text-gray-900 placeholder-gray-500 focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500"
                     placeholder="Enter your pin"
+                    onclick="autoFillMRNo()"
             />
             <button
                     type="button"
-                    id="togglePassword"
+                    onclick="togglePasswordVisibility()"
                     class="absolute right-3 top-1/2 -translate-y-1/2"
             >
               <i id="passwordToggleIcon" class="fas fa-eye h-5 w-5 text-gray-400"></i>
@@ -94,45 +96,31 @@
   document.head.appendChild(link);
 
   function formatMRNo(value) {
-    const length = value.length;
-    if (length >= 2 && length <= 4) {
-      return "1006" + "0".repeat(10 - length) + value;
+    if (value.length === 4) {
+      return "1006000000" + value; // Add prefix for 4-digit MR No.
+    } else if (value.length === 3) {
+      return "10060000000" + value; // Add prefix for 3-digit MR No.
+    } else if (value.length === 2) {
+      return "100600000000" + value; // Add prefix for 2-digit MR No.
     }
-    return value;
+    return value; // Default to user input if full MR No. is entered
   }
 
-  function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
+  // Function to auto-fill the MR No. when required
+  function autoFillMRNo() {
+    const value = mrnoInput.value.trim();
+
+    if (value && (value.length === 2 || value.length === 3 || value.length === 4)) {
+      mrnoInput.value = formatMRNo(value); // Format MR No. based on length
+    }
   }
 
-  const autoFillMRNo = debounce(() => {
-    mrnoInput.value = formatMRNo(mrnoInput.value.trim());
-  }, 300);
-
-  mrnoInput.addEventListener('input', autoFillMRNo);
-
-  togglePasswordButton.addEventListener('click', () => {
+  function togglePasswordVisibility() {
     const type = pinInput.getAttribute('type') === 'password' ? 'text' : 'password';
     pinInput.setAttribute('type', type);
     passwordToggleIcon.classList.toggle('fa-eye');
     passwordToggleIcon.classList.toggle('fa-eye-slash');
-  });
-
-  // Prefetch the API
-  const prefetchApi = () => {
-    fetch(apiUrl, { method: 'HEAD' }).catch(() => {});
-  };
-
-  // Perform prefetch on page load
-  prefetchApi();
+  }
 
   loginForm.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -180,7 +168,7 @@
 
   // Warm up the connection on user interaction
   document.body.addEventListener('mousemove', () => {
-    prefetchApi();
+    fetch(apiUrl, { method: 'HEAD' }).catch(() => {});
   }, { once: true });
 </script>
 </body>
