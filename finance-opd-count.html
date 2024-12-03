@@ -335,23 +335,48 @@
         }
 
         function downloadData() {
-            let csvContent = 'Doctor Name,Speciality,Private OPD,General OPD\n';
+            let xlsContent = `
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Doctor Name</th>
+                    <th>Speciality</th>
+                    <th>Private OPD</th>
+                    <th>General OPD</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
             departmentData.forEach(item => {
-                csvContent += `${item.DOCTOR_NAME},${item.SPECIALITY},${item.PVT_OPD},${item.GEN_OPD}\n`;
+                xlsContent += `
+            <tr>
+                <td>${item.DOCTOR_NAME}</td>
+                <td>${item.SPECIALITY}</td>
+                <td>${item.PVT_OPD}</td>
+                <td>${item.GEN_OPD}</td>
+            </tr>
+        `;
             });
 
-            const blob = new Blob([csvContent], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+            xlsContent += `
+            </tbody>
+        </table>
+    `;
+
+            const blob = new Blob([xlsContent], { type: 'application/vnd.ms-excel;charset=utf-8;' });
             const link = document.createElement('a');
             if (link.download !== undefined) {
                 const url = URL.createObjectURL(blob);
                 link.setAttribute('href', url);
-                link.setAttribute('download', 'department_data.xls');
+                link.setAttribute('download', 'department_data.xls'); // Use .xls
                 link.style.visibility = 'hidden';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
             }
         }
+
 
         function toggleView() {
             const tableView = document.getElementById('tableView');
