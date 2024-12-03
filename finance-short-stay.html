@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -319,22 +320,20 @@
     }
 
     function downloadData() {
-        let csvContent = 'Doctor Name,Speciality,Patient Type,Admissions\n';
-        departmentData.forEach(item => {
-            csvContent += `${item.DOCTOR_NAME},${item.SPECIALITY},${item.PATIENT_TYPE},${item.ADMISSIONS}\n`;
-        });
+        const worksheetData = departmentData.map(item => [
+            item.DOCTOR_NAME,
+            item.SPECIALITY,
+            item.PATIENT_TYPE,
+            item.ADMISSIONS,
+        ]);
+        const worksheet = XLSX.utils.aoa_to_sheet([
+            ['Doctor Name', 'Speciality', 'Patient Type', 'Admissions'], // Headers
+            ...worksheetData,
+        ]);
 
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        if (link.download !== undefined) {
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', 'department_data.csv');
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Department Data');
+        XLSX.writeFile(workbook, 'department_data.xlsx');
     }
 
     function toggleView() {

@@ -340,15 +340,12 @@
 
 
         function downloadData() {
-            // Convert the data to an array of arrays
             const worksheetData = departmentData.map(item => [
                 item.DOCTOR_NAME,
                 item.SPECIALITY,
                 item.PATIENT_TYPE,
                 item.ADMISSIONS,
             ]);
-
-            // Add headers
             const worksheet = XLSX.utils.aoa_to_sheet([
                 ['Doctor Name', 'Speciality', 'Patient Type', 'Admissions'], // Headers
                 ...worksheetData, // Data
