@@ -336,7 +336,8 @@
         }
 
         function downloadData() {
-            // Convert the data to an array of arrays
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
             const worksheetData = departmentData.map(item => [
                 item.DOCTOR_NAME,
                 item.SPECIALITY,
@@ -352,7 +353,7 @@
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Department Data');
 
-            XLSX.writeFile(workbook, 'department_data.xlsx');
+            XLSX.writeFile(workbook, `opd_${startDate}_to_${endDate}.xlsx`);
         }
 
 

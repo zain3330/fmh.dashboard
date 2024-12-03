@@ -313,7 +313,8 @@
         }
 
         function downloadData() {
-            // Convert the data to an array of arrays
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
             const worksheetData = departmentData.map(item => [
                 item.SPECIALITY,
                 item.OCC_PER,
@@ -330,7 +331,7 @@
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Bed Occupancy Data');
 
             // Trigger the download
-            XLSX.writeFile(workbook, 'department_data.xlsx');
+            XLSX.writeFile(workbook, `bed_occupancy_${startDate}_to_${endDate}.xlsx`);
         }
         
         function toggleView() {
