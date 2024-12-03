@@ -55,7 +55,7 @@
             <button onclick="toggleSidebar()" class="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 <i class="fas fa-bars w-6 h-6"></i>
               </button>
-              <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">IPD Count</h2>
+              <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">OPD Count</h2>
               </div>
 
             <div class="flex items-center space-x-4">
@@ -340,12 +340,12 @@
                 csvContent += `${item.DOCTOR_NAME},${item.SPECIALITY},${item.PVT_OPD},${item.GEN_OPD}\n`;
             });
 
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob([csvContent], { type: 'application/vnd.ms-excel;charset=utf-8;' });
             const link = document.createElement('a');
             if (link.download !== undefined) {
                 const url = URL.createObjectURL(blob);
                 link.setAttribute('href', url);
-                link.setAttribute('download', 'department_data.csv');
+                link.setAttribute('download', 'department_data.xls');
                 link.style.visibility = 'hidden';
                 document.body.appendChild(link);
                 link.click();
@@ -492,7 +492,7 @@
               },
               {
 
-                  name: "Average Length Of Stay", link: "finance-als.html", icon: "fa-users"
+                  name: "Average Length Of Stay", link: "finance-als.html", icon: "fa-calendar-day"
 
               },
               // {
@@ -504,10 +504,10 @@
               //     ],
               // },
               {
-                  name: "Bed Occupancy", link: "finance-bed-occupancy.html", icon: "fa-users"
+                  name: "Bed Occupancy", link: "finance-bed-occupancy.html", icon: "fa-procedures"
               },
               {
-                  name: "Short Stay", link: "finance-short-stay.html", icon: "fa-users"
+                  name: "Short Stay", link: "finance-short-stay.html", icon: "fa-stopwatch"
               },
           ],
       };
