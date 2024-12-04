@@ -56,7 +56,7 @@
                     <button onclick="toggleSidebar()" class="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
                         <i class="fas fa-bars w-6 h-6"></i>
                     </button>
-                    <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">Short Stay</h2>
+                    <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">Admission from EAR</h2>
                 </div>
 
                 <div class="flex items-center space-x-4">
@@ -71,18 +71,9 @@
         <div class="max-w-`8xl mx-auto py- sm:px-6 lg:px-0 ">
             <div id="departmentContent" class="px-4 py-2 sm:px-0">
 
-                <!-- <div class="p-6 bg-white border-b border-gray-200">
-                    <div class="flex justify-between items-center">
-                        <h1 class="text-2xl font-bold text-gray-800">OPD Count</h1>
-                        <button onclick="window.location.href='home.html'" class="p-2 rounded-full hover:bg-gray-100">
-                            <i data-lucide="arrow-left" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                </div> -->
                 <div class="p-6">
                     <div class="space-y-4">
                         <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
-
                             <div class="flex-1">
                                 <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
                                 <input type="date" id="startDate" name="startDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
@@ -96,8 +87,8 @@
                                 <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             </div>
                             <div class="flex-1">
-                                <label for="departemnt" class="block text-sm font-medium text-gray-700">Department</label>
-                                <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
+                                <input type="text" id="department" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             </div>
                         </div>
                         <div class="flex justify-between items-center">
@@ -122,10 +113,9 @@
                         <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor Name</th>
-                                <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Speciality</th>
-                                <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Patient Type</th>
-                                <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Admissions</th>
+                                <th class="px-6 py-3 text-left font-serif text-gray-500 uppercase tracking-wider w-1/3">Doctor Name</th>
+                                <th class="px-6 py-3 text-center font-serif text-gray-500 uppercase tracking-wider w-1/3">Speciality</th>
+                                <th class="px-6 py-3 text-right font-serif text-gray-500 uppercase tracking-wider w-1/3">Admissions</th>
                             </tr>
                             </thead>
                             <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
@@ -133,12 +123,14 @@
                             </tbody>
                             <tfoot id="tableFoot" class="bg-gray-50 hidden">
                             <tr>
-                                <th class="px-6 py-3 text-left font-serif text-gray-500 uppercase tracking-wider" colspan="3">Total</th>
+                                <th class="px-6 py-3 text-left font-serif text-gray-500 uppercase tracking-wider" colspan="2">Total</th>
                                 <th id="totalADMISSIONS" class="px-6 py-3 text-right font-serif text-gray-500 uppercase tracking-wider"></th>
                             </tr>
                             </tfoot>
                         </table>
                     </div>
+
+
                     <div id="graphView" class="mt-6 rounded-md border p-4 hidden">
                         <canvas id="chartCanvas"></canvas>
                     </div>
@@ -160,14 +152,6 @@
                         </button>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
 
 
             </div>
@@ -197,7 +181,7 @@
         document.getElementById('startDate').value = '';
         document.getElementById('endDate').value = '';
         document.getElementById('name').value = '';
-        document.getElementById('departemnt').value = '';
+        document.getElementById('department').value = '';
         departmentData = [];
         currentPage = 1;
         updateTable();
@@ -220,15 +204,13 @@
         searchButton.disabled = true;
         searchButton.textContent = 'Searching...';
 
-        const apiUrl = 'https://prod-61.northeurope.logic.azure.com:443/workflows/462717b01b7c44438fd52edfeaba6c69/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=demkhj7EjdxF3KFQ-3eUNwyR7kXb0phudNuVRnhq5HY';
-
+        const apiUrl = 'https://prod-25.northeurope.logic.azure.com:443/workflows/d7209c387b2246e7a957b4e68cadfd15/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B3XXRAQ60y9q594pXroC_jZyZZglCuGFBP_w3zQr-YI';
 
         const requestBody = {
             startDate: document.getElementById('startDate').value,
             endDate: document.getElementById('endDate').value,
             name: document.getElementById('name').value,
-            department: document.getElementById('departemnt').value,
-
+            department: document.getElementById('department').value,
         };
 
         try {
@@ -283,10 +265,9 @@
         pageData.forEach(item => {
             const row = tableBody.insertRow();
             row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.DOCTOR_NAME}</td>
-                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.SPECIALITY}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${item.PATIENT_TYPE}</td>
-                    <td class="px-6 py-4 whitespace-nowrap  text-right  font-serif text-gray-500">${(parseInt(item.ADMISSIONS) || 0).toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.NAME}</td>
+                    <td class="px-6 py-4 whitespace-nowrap  text-center  font-serif text-gray-500">${item.DEPARTMENT}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right   font-serif text-gray-500">${(parseInt(item.ADMISSION_FROM_OPD) || 0).toLocaleString()}</td>
                 `;
         });
 
@@ -310,7 +291,7 @@
     }
 
     function updateTotals() {
-        const totalADMISSIONS = departmentData.reduce((sum, item) => sum + (parseInt(item.ADMISSIONS) || 0), 0);
+        const totalADMISSIONS = departmentData.reduce((sum, item) => sum + (parseInt(item.ADMISSION_FROM_OPD) || 0), 0);
         document.getElementById('totalADMISSIONS').textContent = totalADMISSIONS.toLocaleString();
     }
 
@@ -319,23 +300,26 @@
         updateTable();
     }
 
+
     function downloadData() {
         const startDate = document.getElementById('startDate').value;
         const endDate = document.getElementById('endDate').value;
         const worksheetData = departmentData.map(item => [
-            item.DOCTOR_NAME,
+            item.NAME,
             item.SPECIALITY,
-            item.PATIENT_TYPE,
-            item.ADMISSIONS,
+            item.ADMISSION_FROM_OPD,
         ]);
         const worksheet = XLSX.utils.aoa_to_sheet([
-            ['Doctor Name', 'Speciality', 'Patient Type', 'Admissions'], // Headers
-            ...worksheetData,
+            ['Doctor Name', 'Speciality',  'Admissions'], // Headers
+            ...worksheetData, // Data
         ]);
 
+        // Create a new workbook and append the worksheet
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Department Data');
-        XLSX.writeFile(workbook, `short_stay_${startDate}_to_${endDate}.xlsx`);
+
+        // Save the file as .xlsx
+        XLSX.writeFile(workbook,  `finance_admission_from_opd_${startDate}_to_${endDate}.xlsx`);
     }
 
     function toggleView() {
@@ -369,36 +353,20 @@
             return; // Don't create a chart if there's no data
         }
 
-        // Group and sum the ADMISSIONS by SPECIALITY
-        const groupedData = departmentData.reduce((acc, item) => {
-            if (acc[item.SPECIALITY]) {
-                acc[item.SPECIALITY] += item.ADMISSIONS;
-            } else {
-                acc[item.SPECIALITY] = item.ADMISSIONS;
-            }
-            return acc;
-        }, {});
-
-        // Convert the grouped data into a sorted array
-        const sortedData = Object.entries(groupedData)
-            .map(([speciality, admissions]) => ({ SPECIALITY: speciality, ADMISSIONS: admissions }))
-            .sort((a, b) => b.ADMISSIONS - a.ADMISSIONS);
-
-        if (sortedData.length === 0) {
-            return; // Don't create a chart if there's no data after processing
-        }
+        // Sort data from greater to lesser values
+        const sortedData = [...departmentData].sort((a, b) => b.ADMISSION_FROM_OPD - a.ADMISSION_FROM_OPD);
 
         chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: sortedData.map(item => item.SPECIALITY),
+                labels: sortedData.map(item => item.DEPARTMENT),
                 datasets: [{
-                    label: 'IPD Count',
-                    data: sortedData.map(item => item.ADMISSIONS),
+                    label: 'Admissions from OPD',
+                    data: sortedData.map(item => item.ADMISSION_FROM_OPD),
                     borderColor: 'rgb(75, 192, 192)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     tension: 0.1,
-                    pointRadius: 7,
-                    pointHoverRadius: 10
+                    fill: false
                 }]
             },
             options: {
@@ -409,48 +377,52 @@
                     },
                     title: {
                         display: true,
-                        text: 'Short Stay by Speciality'
+                        text: 'Admissions from OPD by Doctor'
                     },
                     tooltip: {
-                        enabled: false
+                        mode: 'index',
+                        intersect: false,
                     }
                 },
                 scales: {
                     x: {
+                        title: {
+                            display: true,
+                            text: 'Doctor Name'
+                        },
                         ticks: {
                             autoSkip: false,
                             maxRotation: 90,
                             minRotation: 90
                         }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Admissions'
+                        }
                     }
                 },
                 elements: {
+                    line: {
+                        borderWidth: 2
+                    },
                     point: {
-                        pointStyle: 'circle'
-                    }
-                },
-                plugins: {
-                    datalabels: {
-                        anchor: 'end',
-                        align: 'top',
-                        formatter: (value, context) => {
-                            return `${value}`;
-                        },
-                        font: {
-                            weight: 'bold'
-                        }
+                        radius: 5,
+                        hoverRadius: 7
                     }
                 }
-            },
-            plugins: [ChartDataLabels]
+            }
         });
     }
+
+
 
 </script>
 
 
 <script>
-
     const departmentOptions = {
         Finance: [
             {
@@ -566,7 +538,6 @@
 
     function logout() {
         localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('fullName');
         window.location.href = 'index.html';
     }
 
@@ -598,7 +569,7 @@
     }
 
 
-    // Close dropdowns when clicking outside
+
     document.addEventListener('click', function(event) {
         if (!event.target.closest('.relative')) {
             document.querySelectorAll('[id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
