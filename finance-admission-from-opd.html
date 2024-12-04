@@ -356,13 +356,36 @@
         // Sort data from greater to lesser values
         const sortedData = [...departmentData].sort((a, b) => b.ADMISSION_FROM_OPD - a.ADMISSION_FROM_OPD);
 
+        // Remove duplicate DEPARTMENT entries while summing their ADMISSION_FROM_OPD values
+        const uniqueData = [];
+        const departmentMap = new Map();
+
+        sortedData.forEach(item => {
+            if (departmentMap.has(item.DEPARTMENT)) {
+                departmentMap.set(
+                    item.DEPARTMENT,
+                    departmentMap.get(item.DEPARTMENT) + item.ADMISSION_FROM_OPD
+                );
+            } else {
+                departmentMap.set(item.DEPARTMENT, item.ADMISSION_FROM_OPD);
+            }
+        });
+
+        departmentMap.forEach((admissions, department) => {
+            uniqueData.push({ DEPARTMENT: department, ADMISSION_FROM_OPD: admissions });
+        });
+
+        // Sort uniqueData in descending order based on ADMISSION_FROM_OPD
+        uniqueData.sort((a, b) => b.ADMISSION_FROM_OPD - a.ADMISSION_FROM_OPD);
+
+        // Create the chart
         chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: sortedData.map(item => item.DEPARTMENT),
+                labels: uniqueData.map(item => item.DEPARTMENT),
                 datasets: [{
                     label: 'Admissions from OPD',
-                    data: sortedData.map(item => item.ADMISSION_FROM_OPD),
+                    data: uniqueData.map(item => item.ADMISSION_FROM_OPD),
                     borderColor: 'rgb(75, 192, 192)',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     tension: 0.1,
@@ -377,7 +400,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Admissions from OPD by Doctor'
+                        text: 'Admissions from OPD by Department'
                     },
                     tooltip: {
                         mode: 'index',
@@ -388,7 +411,7 @@
                     x: {
                         title: {
                             display: true,
-                            text: 'Doctor Name'
+                            text: 'Department Name'
                         },
                         ticks: {
                             autoSkip: false,
@@ -416,6 +439,7 @@
             }
         });
     }
+
 
 
 
