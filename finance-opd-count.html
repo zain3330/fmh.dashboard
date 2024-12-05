@@ -378,106 +378,96 @@
         }
 
         function updateGraph() {
-    const ctx = document.getElementById('chartCanvas').getContext('2d');
+            const ctx = document.getElementById('chartCanvas').getContext('2d');
 
-    if (chart) {
-        chart.destroy();
-    }
+            if (chart) {
+                chart.destroy();
+            }
 
-    if (departmentData.length === 0) {
-        return; // Don't create a chart if there's no data
-    }
+            if (departmentData.length === 0) {
+                return; // Don't create a chart if there's no data
+            }
 
-    // Group the data by SPECIALITY and sum the PVT_OPD and GEN_OPD values
-    const groupedData = departmentData.reduce((acc, item) => {
-        if (!acc[item.SPECIALITY]) {
-            acc[item.SPECIALITY] = { PVT_OPD: 0, GEN_OPD: 0 };
-        }
-        acc[item.SPECIALITY].PVT_OPD += parseInt(item.PVT_OPD) || 0;
-        acc[item.SPECIALITY].GEN_OPD += parseInt(item.GEN_OPD) || 0;
-        return acc;
-    }, {});
-
-    // Convert the grouped data into an array and sort by total OPD
-    const sortedData = Object.entries(groupedData)
-        .map(([speciality, values]) => ({
-            SPECIALITY: speciality,
-            PVT_OPD: values.PVT_OPD,
-            GEN_OPD: values.GEN_OPD
-        }))
-        .sort((a, b) => (b.PVT_OPD + b.GEN_OPD) - (a.PVT_OPD + a.GEN_OPD));
-
-    // Create the chart if there is valid data
-    if (sortedData.length > 0) {
-        chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: sortedData.map(item => item.SPECIALITY), // X-axis labels
-                datasets: [
-                    {
-                        label: 'Private OPD',
-                        data: sortedData.map(item => item.PVT_OPD), // Y-axis data for Private OPD
-                        borderColor: 'rgb(75, 192, 192)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderWidth: 2,
-                        fill: true, // Show area under the line
-                        tension: 0.4 // Smooth the line
-                    },
-                    {
-                        label: 'General OPD',
-                        data: sortedData.map(item => item.GEN_OPD), // Y-axis data for General OPD
-                        borderColor: 'rgb(255, 159, 64)',
-                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                        borderWidth: 2,
-                        fill: true, // Show area under the line
-                        tension: 0.4 // Smooth the line
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top'
-                    },
-                    title: {
-                        display: true,
-                        text: 'OPD Count by Specialty'
-                    },
-                    tooltip: {
-                        enabled: true
-                    },
-                    datalabels: {
-                        anchor: 'end',
-                        align: 'top',
-                        formatter: (value) => `${value}`,
-                        font: {
-                            weight: 'bold'
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        ticks: {
-                            autoSkip: false,
-                            maxRotation: 90,
-                            minRotation: 90
-                        }
-                    },
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                elements: {
-                    point: {
-                        pointStyle: 'circle'
-                    }
+            // Group the data by SPECIALITY and sum the PVT_OPD and GEN_OPD values
+            const groupedData = departmentData.reduce((acc, item) => {
+                if (!acc[item.SPECIALITY]) {
+                    acc[item.SPECIALITY] = 0;
                 }
-            },
-            plugins: [ChartDataLabels]
-        });
-    }
-}
+                acc[item.SPECIALITY] += (parseInt(item.PVT_OPD) || 0) + (parseInt(item.GEN_OPD) || 0);
+                return acc;
+            }, {});
+
+            // Convert the grouped data into an array and sort by total OPD
+            const sortedData = Object.entries(groupedData)
+                .map(([speciality, totalOPD]) => ({
+                    SPECIALITY: speciality,
+                    TOTAL_OPD: totalOPD
+                }))
+                .sort((a, b) => b.TOTAL_OPD - a.TOTAL_OPD);
+
+            // Create the chart if there is valid data
+            if (sortedData.length > 0) {
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: sortedData.map(item => item.SPECIALITY), // X-axis labels
+                        datasets: [
+                            {
+                                label: 'Total OPD',
+                                data: sortedData.map(item => item.TOTAL_OPD), // Y-axis data for Total OPD
+                                borderColor: 'rgb(75, 192, 192)',
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderWidth: 2,
+                                fill: true, // Show area under the line
+                                tension: 0.4 // Smooth the line
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Total OPD by Specialty'
+                            },
+                            tooltip: {
+                                enabled: true
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    autoSkip: false,
+                                    maxRotation: 90,
+                                    minRotation: 90
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Specialty'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Total OPD Count'
+                                }
+                            }
+                        },
+                        elements: {
+                            point: {
+                                radius: 5, // Size of data points
+                                hoverRadius: 7 // Size of points on hover
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
 
     </script>
   
