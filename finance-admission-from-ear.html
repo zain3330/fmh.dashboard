@@ -306,7 +306,7 @@
         const endDate = document.getElementById('endDate').value;
         const worksheetData = departmentData.map(item => [
             item.NAME,
-            item.SPECIALITY,
+            item.DEPARTMENT,
             item.ADMISSION_FROM_OPD,
         ]);
         const worksheet = XLSX.utils.aoa_to_sheet([
@@ -319,7 +319,7 @@
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Department Data');
 
         // Save the file as .xlsx
-        XLSX.writeFile(workbook,  `finance_admission_from_opd_${startDate}_to_${endDate}.xlsx`);
+        XLSX.writeFile(workbook,  `finance_admission_from_ear_${startDate}_to_${endDate}.xlsx`);
     }
 
     function toggleView() {

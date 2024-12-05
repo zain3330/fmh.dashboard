@@ -306,7 +306,7 @@
         const endDate = document.getElementById('endDate').value;
         const worksheetData = departmentData.map(item => [
             item.NAME,
-            item.SPECIALITY,
+            item.DEPARTMENT,
             item.ADMISSION_FROM_OPD,
         ]);
         const worksheet = XLSX.utils.aoa_to_sheet([
