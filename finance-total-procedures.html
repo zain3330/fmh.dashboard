@@ -277,13 +277,12 @@
             pageData.forEach(item => {
                 const row = tableBody.insertRow();
                 row.innerHTML = `
-                            <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.MONTH}</td>
-                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.CPT_ID}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${item.CPT_DESC}</td>
-                    <td class="px-6 py-4 whitespace-nowrap  text-right  font-serif text-gray-500">${(parseInt(item.NO_OF_PROCEDURES) || 0).toLocaleString()}</td>
-               <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${item.MAJOR_MINOR}</td>
-
-                `;
+        <td class="px-6 py-4 whitespace-nowrap font-serif text-gray-500">${item.MONTH}</td>
+        <td class="px-6 py-4 whitespace-nowrap font-serif text-gray-500">${item.CPT_ID}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-right font-serif text-gray-500">${item.CPT_DESC}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-right font-serif text-gray-500">${(parseInt(item.NO_OF_PROCEDURES) || 0).toLocaleString()}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-right font-serif text-gray-500">${item.MAJOR_MINOR ? item.MAJOR_MINOR : 'Others'}</td>
+    `;
             });
 
             updatePagination();

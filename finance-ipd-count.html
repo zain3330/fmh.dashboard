@@ -381,9 +381,11 @@
             }
         }
 
+
         function updateGraph() {
             const ctx = document.getElementById('chartCanvas').getContext('2d');
 
+            // Destroy the previous chart instance if it exists
             if (chart) {
                 chart.destroy();
             }
@@ -392,7 +394,7 @@
                 return; // Don't create a chart if there's no data
             }
 
-            // Group and sum the ADMISSIONS by SPECIALITY
+            // Group and sum the admissions by speciality
             const groupedData = departmentData.reduce((acc, item) => {
                 if (acc[item.SPECIALITY]) {
                     acc[item.SPECIALITY] += item.ADMISSIONS;
@@ -407,85 +409,38 @@
                 .map(([speciality, admissions]) => ({ SPECIALITY: speciality, ADMISSIONS: admissions }))
                 .sort((a, b) => b.ADMISSIONS - a.ADMISSIONS);
 
-            if (sortedData.length === 0) {
-                return; // Don't create a chart if there's no data after processing
-            }
-
-            const admissionsData = sortedData.map(item => item.ADMISSIONS);
-            const minAdmissions = Math.min(...admissionsData);
-            const maxAdmissions = Math.max(...admissionsData);
-            const paddingFactor = 0.2; // Increased to 20% padding for more space
-            const paddingRange = (maxAdmissions - minAdmissions) * paddingFactor;
-
-            // Create a map to store the count of each admission value
-            const admissionCounts = new Map();
-            admissionsData.forEach(value => {
-                admissionCounts.set(value, (admissionCounts.get(value) || 0) + 1);
-            });
-
-            // Calculate jittered positions for overlapping points
-            const jitteredData = admissionsData.map((value, index) => {
-                if (admissionCounts.get(value) > 1) {
-                    const offset = (index % 2 === 0 ? 1 : -1) * 0.2;
-                    return value + offset;
-                }
-                return value;
-            });
-
+            // Create the chart
             chart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: sortedData.map(item => item.SPECIALITY),
                     datasets: [{
-                        label: 'IPD Count',
-                        data: jitteredData,
+                        label: 'Total Admissions',
+                        data: sortedData.map(item => item.ADMISSIONS),
                         borderColor: 'rgb(75, 192, 192)',
                         tension: 0.1,
                         pointRadius: 7,
                         pointHoverRadius: 10,
-                        borderWidth: 3,
-                        fill: false
+                        borderWidth: 2
                     }]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 20,
-                            bottom: 20
-                        }
-                    },
                     plugins: {
                         legend: {
                             position: 'top',
-                            padding: 20
                         },
                         title: {
                             display: true,
-                            text: 'IPD Count by Speciality',
-                            padding: 20
+                            text: 'Total Admissions by Speciality'
                         },
                         tooltip: {
                             enabled: true,
-                            padding: 12,
                             callbacks: {
                                 label: function(context) {
-                                    return `IPD Count: ${Math.round(context.parsed.y)}`;
+                                    return `Admissions: ${context.raw}`;
                                 }
                             }
-                        },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'top',
-                            offset: 10,
-                            formatter: (value, context) => {
-                                return `${Math.round(admissionsData[context.dataIndex])}`;
-                            },
-                            font: {
-                                weight: 'bold'
-                            },
-                            padding: 6
                         }
                     },
                     scales: {
@@ -493,47 +448,40 @@
                             ticks: {
                                 autoSkip: false,
                                 maxRotation: 90,
-                                minRotation: 90,
-                                padding: 10
-                            },
-                            grid: {
-                                display: true,
-                                drawBorder: true,
-                                drawOnChartArea: true,
-                                drawTicks: true,
+                                minRotation: 90
                             }
                         },
                         y: {
-                            min: Math.max(0, minAdmissions - (paddingRange * 1.5)),
-                            max: maxAdmissions + (paddingRange * 1.5),
-                            ticks: {
-                                stepSize: Math.ceil((maxAdmissions - minAdmissions) / 40),
-                                padding: 0.2
-                            },
-                            grid: {
-                                display: true,
-                                drawBorder: true,
-                                drawOnChartArea: true,
-                                drawTicks: true,
-                            }
+                            beginAtZero: true
                         }
                     },
                     elements: {
                         point: {
                             pointStyle: 'circle',
-                            radius: 7,
-                            hoverRadius: 10,
-                            borderWidth: 2,
-                            backgroundColor: 'white'
+                            radius: 5,
+                            backgroundColor: 'rgb(75, 192, 192)'
                         },
                         line: {
                             tension: 0.1
+                        }
+                    },
+                    plugins: {
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'top',
+                            formatter: (value) => `${value}`,
+                            font: {
+                                weight: 'bold'
+                            }
                         }
                     }
                 },
                 plugins: [ChartDataLabels]
             });
         }
+
+
+
 
     </script>
 
