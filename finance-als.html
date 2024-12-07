@@ -440,6 +440,14 @@
                 ],
             },
             {
+                name: "Procedures",
+                icon: "fa-chart-pie",
+                submenu: [
+                    { name: "Total Procedures", link: "finance-total-procedures.html", icon: "fa-users" },
+                    { name: "Admission from EAR", link: "finance-admission-from-ear.html", icon: "fa-bed" },
+                ],
+            },
+            {
 
                 name: "Average Length Of Stay", link: "finance-als.html", icon: "fa-users"
 
@@ -460,6 +468,7 @@
             },
         ],
     };
+
 
     function createDropdownItems(options, parentId = '') {
       const fragment = document.createDocumentFragment();
