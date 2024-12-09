@@ -127,9 +127,9 @@
 
                                         Download Data
                                     </button>
-                                    <button id="toggleViewButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
-                                        Show Graph
-                                    </button>
+<!--                                    <button id="toggleViewButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">-->
+<!--                                        Show Graph-->
+<!--                                    </button>-->
                                 </div>
                             </div>
                         </div>
@@ -139,8 +139,8 @@
                                     <tr>
                                         <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor Name</th>
                                         <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Speciality</th>
-                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Private OPD</th>
-                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">General OPD</th>
+                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Total EAR</th>
+
                                     </tr>
                                 </thead>
                                 <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
@@ -150,7 +150,7 @@
                                     <tr>
                                         <th class="px-6 py-3 text-left   font-serif text-gray-500 uppercase tracking-wider" colspan="2">Total</th>
                                         <th id="totalPvtOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>
-                                        <th id="totalGenOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>
+
                                     </tr>
                                 </tfoot>
                             </table>
@@ -298,8 +298,8 @@
                 row.innerHTML = `
                     <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.DOCTOR_NAME}</td>
                     <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.SPECIALITY}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${(parseInt(item.PVT_OPD) || 0).toLocaleString()}</td>
-                    <td class="px-6 py-4 whitespace-nowrap  text-right  font-serif text-gray-500">${(parseInt(item.GEN_OPD) || 0).toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${(parseInt(item.Total_EAR) || 0).toLocaleString()}</td>
+
                 `;
             });
 
@@ -323,11 +323,11 @@
         }
 
         function updateTotals() {
-            const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.PVT_OPD) || 0), 0);
-            const totalGenOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.GEN_OPD) || 0), 0);
+            const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.Total_EAR) || 0), 0);
+
 
             document.getElementById('totalPvtOpd').textContent = totalPvtOpd.toLocaleString();
-            document.getElementById('totalGenOpd').textContent = totalGenOpd.toLocaleString();
+
         }
 
         function changePage(direction) {
@@ -341,12 +341,11 @@
             const worksheetData = departmentData.map(item => [
                 item.DOCTOR_NAME,
                 item.SPECIALITY,
-                item.PVT_OPD,
-                item.GEN_OPD,
+                item.Total_EAR,
             ]);
 
             const worksheet = XLSX.utils.aoa_to_sheet([
-                ['Doctor Name', 'Speciality', 'Private OPD', 'General OPD'],
+                ['Doctor Name', 'Speciality', 'Total EAR',],
                 ...worksheetData,
             ]);
 
@@ -393,7 +392,7 @@
                 if (!acc[item.SPECIALITY]) {
                     acc[item.SPECIALITY] = 0;
                 }
-                acc[item.SPECIALITY] += (parseInt(item.PVT_OPD) || 0) + (parseInt(item.GEN_OPD) || 0);
+                acc[item.SPECIALITY] += (parseInt(item.Total_EAR) || 0) ;
                 return acc;
             }, {});
 
@@ -414,7 +413,7 @@
                         datasets: [
                             {
                                 label: 'Total OPD',
-                                data: sortedData.map(item => item.TOTAL_OPD), // Y-axis data for Total OPD
+                                data: sortedData.map(item => item.Total_EAR), // Y-axis data for Total OPD
                                 borderColor: 'rgb(75, 192, 192)',
                                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                                 borderWidth: 2,
