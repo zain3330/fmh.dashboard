@@ -30,7 +30,7 @@
       <!-- Sidebar -->
       <aside id="sidebar" class="w-64 bg-gray-900 text-white transition-all duration-300">
         <div class="p-4">
-            <h1 id="userName" class="text-center text-2xl font-bold"></h1>
+          <h1 id="userName" class="text-center text-2xl font-bold"></h1>
         </div>
         <nav class="mt-6">
           <div class="relative">
@@ -52,15 +52,15 @@
       <header class="bg-white shadow-sm sticky top-0 z-10">
         <div class="max-w-8xl mx-auto  p-4 flex justify-between items-center">
             <div class="flex items-center space-x-4">
-          
+
             <button onclick="toggleSidebar()" class="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 <i class="fas fa-bars w-6 h-6"></i>
               </button>
-              <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">Total Procedures</h2>
+              <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">EAR Count</h2>
               </div>
 
             <div class="flex items-center space-x-4">
-             
+
                 <button onclick="logout()" class="flex items-center space-x-2 bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-md transition duration-200">
                   <i class="fas fa-sign-out-alt w-4 h-4"></i>
                   <span>Logout</span>
@@ -70,7 +70,7 @@
       </header>
       <div class="max-w-`8xl mx-auto py- sm:px-6 lg:px-0 ">
         <div id="departmentContent" class="px-4 py-2 sm:px-0">
-          
+
                     <!-- <div class="p-6 bg-white border-b border-gray-200">
                         <div class="flex justify-between items-center">
                             <h1 class="text-2xl font-bold text-gray-800">OPD Count</h1>
@@ -79,100 +79,114 @@
                             </button>
                         </div>
                     </div> -->
-                <div class="p-6">
-                    <div class="space-y-4">
-                        <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
+                                <div class="flex-1">
+                                    <label for="type" class="block text-sm font-medium text-gray-700">Hospital Type</label>
+                                    <select id="type" name="hospitalType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                        <option value="M" selected>Hospital</option>
+                                        <option value="D">Dental</option>
+                                    </select>
+                                </div>
+                                <div class="flex-1">
+                                    <label for="hospital" class="block text-sm font-medium text-gray-700">Hospital</label>
+                                    <select id="hospital" name="hospital" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                        <option value="ALL" selected>All</option>
+                                        <option value="FMH">FMH Hospital</option>
+                                        <option value="HH">Hijaz Hospital</option>
+                                    </select>
+                                </div>
+                                <div class="flex-1">
+                                    <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
+                                    <input type="date" id="startDate" name="startDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                </div>
+                                <div class="flex-1">
+                                    <label for="endDate" class="block text-sm font-medium text-gray-700">End Date</label>
+                                    <input type="date" id="endDate" name="endDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                </div>
+                                <div class="flex-1">
+                                    <label for="name" class="block text-sm font-medium text-gray-700">Doctor Name</label>
+                                    <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                </div>
+                                <div class="flex-1">
+                                    <label for="departemnt" class="block text-sm font-medium text-gray-700">Department</label>
+                                    <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <button id="resetButton" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
+                                    Reset
+                                </button>
+                                <div class="space-x-2">
+                                    <button id="searchButton" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                                        Search
+                                    </button>
+                                    <button id="downloadButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                        <i class="fas fa-download inline-block w-4 h-4 mr-2"></i>
 
-
-                            <div class="flex-1">
-                                <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
-                                <input type="date" id="startDate" name="startDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            </div>
-                            <div class="flex-1">
-                                <label for="endDate" class="block text-sm font-medium text-gray-700">End Date</label>
-                                <input type="date" id="endDate" name="endDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            </div>
-                            <div class="flex-1">
-                                <label for="name" class="block text-sm font-medium text-gray-700">Cpt id</label>
-                                <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            </div>
-                            <div class="flex-1">
-                                <label for="departemnt" class="block text-sm font-medium text-gray-700">Cpt Description</label>
-                                <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                        Download Data
+                                    </button>
+                                    <button id="toggleViewButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
+                                        Show Graph
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <button id="resetButton" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
-                                Reset
+                        <div id="tableView" class="mt-6 rounded-md border">
+                            <table id="dataTable" class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor Name</th>
+                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Speciality</th>
+                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Private OPD</th>
+                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">General OPD</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
+                                    <!-- Table rows will be inserted here -->
+                                </tbody>
+                                <tfoot id="tableFoot" class="bg-gray-50 hidden">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left   font-serif text-gray-500 uppercase tracking-wider" colspan="2">Total</th>
+                                        <th id="totalPvtOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>
+                                        <th id="totalGenOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div id="graphView" class="mt-6 rounded-md border p-4 hidden">
+                            <canvas id="chartCanvas"></canvas>
+                        </div>
+                        <div id="pagination" class="mt-4 flex justify-center items-center space-x-2 hidden">
+                            <button id="firstPage"
+                                    class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                              First
                             </button>
-                            <div class="space-x-2">
-                                <button id="searchButton" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                                    Search
-                                </button>
-                                <button id="downloadButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                                    <i class="fas fa-download inline-block w-4 h-4 mr-2"></i>
-                                    Download Data
-                                </button>
-<!--                                <button id="toggleViewButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">-->
-<!--                                    Show Graph-->
-<!--                                </button>-->
-                            </div>
+                            <button id="prevPage"
+                                    class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                              Previous
+                            </button>
+                            <span id="pageInfo" class="text-sm font-medium text-gray-700">
+                              Page 1 of 10
+                            </span>
+                            <button id="nextPage"
+                                    class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                              Next
+                            </button>
+                            <button id="lastPage"
+                                    class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                              Last
+                            </button>
                         </div>
-                    </div>
-                    <div id="tableView" class="mt-6 rounded-md border">
-                        <table id="dataTable" class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Month</th>
-                                    <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Cpt id</th>
-                                    <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Cpt Desc</th>
-                                    <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">No of Procedures</th>
-                                    <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Major Minor</th>
-
-                                </tr>
-                            </thead>
-                            <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
-                                <!-- Table rows will be inserted here -->
-                            </tbody>
-                            <tfoot id="tableFoot" class="bg-gray-50 hidden">
-                                <tr>
-                                    <th class="px-6 py-3 text-left font-serif text-gray-500 uppercase tracking-wider" colspan="3">Total</th>
-                                    <th id="totalADMISSIONS" class="px-6 py-3 text-right font-serif text-gray-500 uppercase tracking-wider"></th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <div id="graphView" class="mt-6 rounded-md border p-4 hidden">
-                        <canvas id="chartCanvas"></canvas>
-                    </div>
-                    <div id="pagination" class="mt-4 flex justify-center items-center space-x-2 hidden">
-                        <button id="firstPage" class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                            First
-                        </button>
-                        <button id="prevPage" class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                            Previous
-                        </button>
-                        <span id="pageInfo" class="text-sm font-medium text-gray-700">
-                            Page 1 of 10
-                        </span>
-                        <button id="nextPage" class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                            Next
-                        </button>
-                        <button id="lastPage" class="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                            Last
-                        </button>
                     </div>
                 </div>
-
-    </div>
-</div>
-</div>
-</main>
-</div>
-
+              </div>
+            </div>
+          </main>
+        </div>
     <script>
-      
-
+  
         let departmentData = [];
         let currentPage = 1;
         const itemsPerPage = 10;
@@ -188,10 +202,13 @@
         document.getElementById('toggleViewButton').addEventListener('click', toggleView);
 
         function resetForm() {
+            document.getElementById('type').value = 'M';
+            document.getElementById('hospital').value = 'ALL';
             document.getElementById('startDate').value = '';
             document.getElementById('endDate').value = '';
             document.getElementById('name').value = '';
             document.getElementById('departemnt').value = '';
+            
             departmentData = [];
             currentPage = 1;
             updateTable();
@@ -214,17 +231,19 @@
             searchButton.disabled = true;
             searchButton.textContent = 'Searching...';
 
-            const apiUrl = 'https://prod-07.northeurope.logic.azure.com:443/workflows/a132e1c13a6a416683dacfd05158c499/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=QGZ3R0EIEfqZlJXHc5nMHTdmC1xxKXsKniaU1UDs4uQ';
-
+            const apiUrl = 'https://prod-63.northeurope.logic.azure.com:443/workflows/7a251ad20b204be581fcb94e4e45776a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=FVJ_KyJvZsAX3LdYKyyn9RaRvp-I1k2Z-t-aiFIKRVU';
+            const hospitalValue = document.getElementById('hospital').value;
 
             const requestBody = {
                 startDate: document.getElementById('startDate').value,
                 endDate: document.getElementById('endDate').value,
-                cpt_id: document.getElementById('name').value,
-                cpt_desc: document.getElementById('departemnt').value,
-
+                name: document.getElementById('name').value,
+                type: document.getElementById('type').value,
+                department: document.getElementById('departemnt').value,
+                hos1: (hospitalValue === 'ALL' || hospitalValue === 'FMH') ? 'FMH' : '',
+                hos2: (hospitalValue === 'ALL' || hospitalValue === 'HH') ? 'HH' : '',
             };
-    
+
             try {
                 const response = await fetch(apiUrl, {
                     method: 'POST',
@@ -277,12 +296,11 @@
             pageData.forEach(item => {
                 const row = tableBody.insertRow();
                 row.innerHTML = `
-        <td class="px-6 py-4 whitespace-nowrap font-serif text-gray-500">${item.MONTH}</td>
-        <td class="px-6 py-4 whitespace-nowrap font-serif text-gray-500">${item.CPT_ID}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-left font-serif text-gray-500">${item.CPT_DESC}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-right font-serif text-gray-500">${(parseInt(item.NO_OF_PROCEDURES) || 0).toLocaleString()}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-right font-serif text-gray-500">${item.MAJOR_MINOR ? item.MAJOR_MINOR : 'Others'}</td>
-    `;
+                    <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.DOCTOR_NAME}</td>
+                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.SPECIALITY}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${(parseInt(item.PVT_OPD) || 0).toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap  text-right  font-serif text-gray-500">${(parseInt(item.GEN_OPD) || 0).toLocaleString()}</td>
+                `;
             });
 
             updatePagination();
@@ -305,8 +323,11 @@
         }
 
         function updateTotals() {
-            const totalADMISSIONS = departmentData.reduce((sum, item) => sum + (parseInt(item.NO_OF_PROCEDURES) || 0), 0);
-            document.getElementById('totalADMISSIONS').textContent = totalADMISSIONS.toLocaleString();
+            const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.PVT_OPD) || 0), 0);
+            const totalGenOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.GEN_OPD) || 0), 0);
+
+            document.getElementById('totalPvtOpd').textContent = totalPvtOpd.toLocaleString();
+            document.getElementById('totalGenOpd').textContent = totalGenOpd.toLocaleString();
         }
 
         function changePage(direction) {
@@ -314,30 +335,28 @@
             updateTable();
         }
 
-
         function downloadData() {
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
             const worksheetData = departmentData.map(item => [
-                item.MONTH,
-                item.CPT_ID,
-                item.CPT_DESC,
-                item.NO_OF_PROCEDURES,
-                item.MAJOR_MINOR,
-            ]);
-            const worksheet = XLSX.utils.aoa_to_sheet([
-                ['Month', 'Cap Id', 'Cpt Desc', 'No of Procedures' ,'Major Minor'],
-                ...worksheetData, // Data
+                item.DOCTOR_NAME,
+                item.SPECIALITY,
+                item.PVT_OPD,
+                item.GEN_OPD,
             ]);
 
-            // Create a new workbook and append the worksheet
+            const worksheet = XLSX.utils.aoa_to_sheet([
+                ['Doctor Name', 'Speciality', 'Private OPD', 'General OPD'],
+                ...worksheetData,
+            ]);
+
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Department Data');
 
-            // Save the file as .xlsx
-            XLSX.writeFile(workbook,  `ipd_${startDate}_to_${endDate}.xlsx`);
+            XLSX.writeFile(workbook, `opd_${startDate}_to_${endDate}.xlsx`);
         }
-        
+
+
         function toggleView() {
             const tableView = document.getElementById('tableView');
             const graphView = document.getElementById('graphView');
@@ -361,139 +380,100 @@
         function updateGraph() {
             const ctx = document.getElementById('chartCanvas').getContext('2d');
 
-            // Destroy the previous chart instance if it exists
             if (chart) {
                 chart.destroy();
             }
 
-            if (!departmentData || departmentData.length === 0) {
-                return; // Do not create a chart if there's no data
+            if (departmentData.length === 0) {
+                return; // Don't create a chart if there's no data
             }
 
-            // Group and sum the NO_OF_PROCEDURES by CPT_DESC
+            // Group the data by SPECIALITY and sum the PVT_OPD and GEN_OPD values
             const groupedData = departmentData.reduce((acc, item) => {
-                acc[item.CPT_DESC] = (acc[item.CPT_DESC] || 0) + parseInt(item.NO_OF_PROCEDURES);
+                if (!acc[item.SPECIALITY]) {
+                    acc[item.SPECIALITY] = 0;
+                }
+                acc[item.SPECIALITY] += (parseInt(item.PVT_OPD) || 0) + (parseInt(item.GEN_OPD) || 0);
                 return acc;
             }, {});
 
-            // Convert the grouped data into a sorted array
+            // Convert the grouped data into an array and sort by total OPD
             const sortedData = Object.entries(groupedData)
-                .map(([CPT_DESC, NO_OF_PROCEDURES]) => ({ CPT_DESC, NO_OF_PROCEDURES }))
-                .sort((a, b) => b.NO_OF_PROCEDURES - a.NO_OF_PROCEDURES);
+                .map(([speciality, totalOPD]) => ({
+                    SPECIALITY: speciality,
+                    TOTAL_OPD: totalOPD
+                }))
+                .sort((a, b) => b.TOTAL_OPD - a.TOTAL_OPD);
 
-            if (sortedData.length === 0) {
-                return; // Do not create a chart if there's no data after processing
-            }
-
-            const labels = sortedData.map(item => item.CPT_DESC);
-            const dataValues = sortedData.map(item => item.NO_OF_PROCEDURES);
-
-            const minValue = Math.min(...dataValues);
-            const maxValue = Math.max(...dataValues);
-            const paddingFactor = 0.1; // Add 10% padding for visual spacing
-            const paddingRange = (maxValue - minValue) * paddingFactor;
-
-            // Create the chart
-            chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels,
-                    datasets: [{
-                        label: 'Number of Procedures',
-                        data: dataValues,
-                        borderColor: 'rgb(75, 192, 192)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.1)',
-                        tension: 0.1,
-                        pointRadius: 5,
-                        pointHoverRadius: 8,
-                        borderWidth: 2,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 20,
-                            right: 20,
-                            bottom: 20,
-                            left: 20
-                        }
+            // Create the chart if there is valid data
+            if (sortedData.length > 0) {
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: sortedData.map(item => item.SPECIALITY), // X-axis labels
+                        datasets: [
+                            {
+                                label: 'Total OPD',
+                                data: sortedData.map(item => item.TOTAL_OPD), // Y-axis data for Total OPD
+                                borderColor: 'rgb(75, 192, 192)',
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderWidth: 2,
+                                fill: true, // Show area under the line
+                                tension: 0.4 // Smooth the line
+                            }
+                        ]
                     },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Number of Procedures by CPT Description',
-                            font: {
-                                size: 16
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Total OPD by Specialty'
+                            },
+                            tooltip: {
+                                enabled: true
                             }
                         },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `Procedures: ${context.parsed.y}`;
+                        scales: {
+                            x: {
+                                ticks: {
+                                    autoSkip: false,
+                                    maxRotation: 90,
+                                    minRotation: 90
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Specialty'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Total OPD Count'
                                 }
                             }
                         },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'top',
-                            offset: 5,
-                            formatter: (value) => value,
-                            font: {
-                                weight: 'bold',
-                                size: 10
-                            },
-                            color: 'rgb(75, 192, 192)'
-                        }
-                    },
-                    scales: {
-                        x: {
-                            ticks: {
-                                autoSkip: true,
-                                maxRotation: 45,
-                                minRotation: 45,
-                                padding: 10
-                            },
-                            grid: {
-                                display: false
+                        elements: {
+                            point: {
+                                radius: 5, // Size of data points
+                                hoverRadius: 7 // Size of points on hover
                             }
-                        },
-                        y: {
-                            beginAtZero: true,
-                            suggestedMin: Math.max(0, minValue - paddingRange),
-                            suggestedMax: maxValue + paddingRange,
-                            ticks: {
-                                stepSize: Math.ceil((maxValue - minValue) / 10),
-                                padding: 10
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            }
-                        }
-                    },
-                    elements: {
-                        line: {
-                            tension: 0.3
                         }
                     }
-                },
-                plugins: [ChartDataLabels]
-            });
+                });
+            }
         }
 
 
-
-
-
     </script>
-
-        
+  
+    
   <script>
+
       const departmentOptions = {
           Finance: [
               {
@@ -544,7 +524,7 @@
       };
 
 
-      function createDropdownItems(options, parentId = '') {
+    function createDropdownItems(options, parentId = '') {
       const fragment = document.createDocumentFragment();
       options.forEach(option => {
         if (option.submenu) {
@@ -619,6 +599,7 @@
 
     function logout() {
       localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('fullName');
       window.location.href = 'index.html';
     }
 
@@ -649,8 +630,6 @@
           }
       }
 
-
-
       document.addEventListener('click', function(event) {
           if (!event.target.closest('.relative')) {
               document.querySelectorAll('[id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
@@ -665,6 +644,8 @@
               userNameElement.textContent = `${fullName}`;
           }
       });
+
   </script>
+
 </body>
 </html>

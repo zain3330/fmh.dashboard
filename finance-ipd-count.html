@@ -114,6 +114,10 @@
                                 <label for="departemnt" class="block text-sm font-medium text-gray-700">Department</label>
                                 <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             </div>
+                            <div class="flex-1">
+                                <label for="patient_type" class="block text-sm font-medium text-gray-700">Patient Type</label>
+                                <input type="text" id="patient_type" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            </div>
                         </div>
                         <div class="flex justify-between items-center">
                             <button id="resetButton" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
@@ -215,6 +219,7 @@
             document.getElementById('endDate').value = '';
             document.getElementById('name').value = '';
             document.getElementById('departemnt').value = '';
+            document.getElementById('patient_type').value = '';
             departmentData = [];
             currentPage = 1;
             updateTable();
@@ -246,6 +251,7 @@
                 name: document.getElementById('name').value,
                 type: document.getElementById('type').value,
                 department: document.getElementById('departemnt').value,
+                pat:document.getElementById('patient_type').value,
                 hos1: (hospitalValue === 'ALL' || hospitalValue === 'FMH') ? 'FMH' : '',
                 hos2: (hospitalValue === 'ALL' || hospitalValue === 'HH') ? 'HH' : '',
             };
@@ -495,6 +501,7 @@
                   submenu: [
                       { name: "OPD Count", link: "finance-opd-count.html", icon: "fa-users" },
                       { name: "IPD Count", link: "finance-ipd-count.html", icon: "fa-bed" },
+                      { name: "EAR Count", link: "finance-ear-count.html", icon: "fa-users" },
                   ],
               },
               {
@@ -509,7 +516,7 @@
                   name: "Procedures",
                   icon: "fa-chart-pie",
                   submenu: [
-                      { name: "Total Procedures", link: "finance-total-procedures.html", icon: "fa-users" },
+                      { name: "Total FMH Procedures", link: "finance-total-procedures.html", icon: "fa-users" },
                       { name: "Admission from EAR", link: "finance-admission-from-ear.html", icon: "fa-bed" },
                   ],
               },
