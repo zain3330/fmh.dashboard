@@ -20,6 +20,13 @@
             },
         }
     </script>
+    <style>
+        /* Add this style to the head section */
+        .table-container {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        </style>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-... your_hash ..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
@@ -100,6 +107,14 @@
                                 <label for="departemnt" class="block text-sm font-medium text-gray-700">Cpt Description</label>
                                 <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             </div>
+                            <div class="flex-1">
+                                <label for="name" class="block text-sm font-medium text-gray-700">Doctor Name</label>
+                                <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            </div>
+                            <div class="flex-1">
+                                <label for="depart" class="block text-sm font-medium text-gray-700">Department</label>
+                                <input type="text" id="depart" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            </div>
                         </div>
                         <div class="flex justify-between items-center">
                             <button id="resetButton" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
@@ -120,27 +135,31 @@
                         </div>
                     </div>
                     <div id="tableView" class="mt-6 rounded-md border">
-                        <table id="dataTable" class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
+                        <div class="overflow-auto">
+                            <table id="dataTable" class="min-w-full divide-y divide-gray-200 table-auto">
+                                <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Month</th>
-                                    <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Cpt id</th>
-                                    <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Cpt Desc</th>
-                                    <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">No of Procedures</th>
-                                    <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Major Minor</th>
-
+                                    <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider">Month</th>
+                                    <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider">Name</th>
+                                    <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider">Department</th>
+                                    <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider">Cpt id</th>
+                                    <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider">Cpt Desc</th>
+                                    <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider">No of Procedures</th>
+                                    <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider">Major Minor</th>
                                 </tr>
-                            </thead>
-                            <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
+                                </thead>
+                                <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
                                 <!-- Table rows will be inserted here -->
-                            </tbody>
-                            <tfoot id="tableFoot" class="bg-gray-50 hidden">
+                                </tbody>
+                                <tfoot id="tableFoot" class="bg-gray-50 hidden">
                                 <tr>
-                                    <th class="px-6 py-3 text-left font-serif text-gray-500 uppercase tracking-wider" colspan="3">Total</th>
-                                    <th id="totalADMISSIONS" class="px-6 py-3 text-right font-serif text-gray-500 uppercase tracking-wider"></th>
+                                    <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider" colspan="5">Total</th>
+                                    <th id="totalADMISSIONS" class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider"></th>
                                 </tr>
-                            </tfoot>
-                        </table>
+                                </tfoot>
+                            </table>
+                        </div>
+
                     </div>
                     <div id="graphView" class="mt-6 rounded-md border p-4 hidden">
                         <canvas id="chartCanvas"></canvas>
@@ -163,7 +182,6 @@
                         </button>
                     </div>
                 </div>
-
     </div>
 </div>
 </div>
@@ -192,6 +210,8 @@
             document.getElementById('endDate').value = '';
             document.getElementById('name').value = '';
             document.getElementById('departemnt').value = '';
+            document.getElementById('name').value = '';
+            document.getElementById('depart').value = '';
             departmentData = [];
             currentPage = 1;
             updateTable();
@@ -222,6 +242,8 @@
                 endDate: document.getElementById('endDate').value,
                 cpt_id: document.getElementById('name').value,
                 cpt_desc: document.getElementById('departemnt').value,
+             name:   document.getElementById('name').value ,
+               department: document.getElementById('depart').value ,
 
             };
     
@@ -278,10 +300,12 @@
                 const row = tableBody.insertRow();
                 row.innerHTML = `
         <td class="px-6 py-4 whitespace-nowrap font-serif text-gray-500">${item.MONTH}</td>
+           <td class="px-6 py-4 whitespace-nowrap font-serif text-gray-500">${item.NAME}</td>
+              <td class="px-6 py-4 whitespace-nowrap font-serif text-gray-500">${item.DEPARTMENT}</td>
         <td class="px-6 py-4 whitespace-nowrap font-serif text-gray-500">${item.CPT_ID}</td>
         <td class="px-6 py-4 whitespace-nowrap text-left font-serif text-gray-500">${item.CPT_DESC}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-right font-serif text-gray-500">${(parseInt(item.NO_OF_PROCEDURES) || 0).toLocaleString()}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-right font-serif text-gray-500">${item.MAJOR_MINOR ? item.MAJOR_MINOR : 'Others'}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-left font-serif text-gray-500">${(parseInt(item.NO_OF_PROCEDURES) || 0).toLocaleString()}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-left font-serif text-gray-500">${item.MAJOR_MINOR ? item.MAJOR_MINOR : 'Others'}</td>
     `;
             });
 
@@ -320,13 +344,15 @@
             const endDate = document.getElementById('endDate').value;
             const worksheetData = departmentData.map(item => [
                 item.MONTH,
+                item.NAME,
+                item.DEPARTMENT,
                 item.CPT_ID,
                 item.CPT_DESC,
                 item.NO_OF_PROCEDURES,
                 item.MAJOR_MINOR,
             ]);
             const worksheet = XLSX.utils.aoa_to_sheet([
-                ['Month', 'Cap Id', 'Cpt Desc', 'No of Procedures' ,'Major Minor'],
+                ['Month','Name' ,'Department' , 'Cap Id', 'Cpt Desc', 'No of Procedures' ,'Major Minor'],
                 ...worksheetData, // Data
             ]);
 
