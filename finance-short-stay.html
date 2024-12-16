@@ -222,10 +222,13 @@
 
         const apiUrl = 'https://prod-61.northeurope.logic.azure.com:443/workflows/462717b01b7c44438fd52edfeaba6c69/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=demkhj7EjdxF3KFQ-3eUNwyR7kXb0phudNuVRnhq5HY';
 
-
+// Increment the endDate by 1 day
+        const endDateObj = new Date(endDate);
+        endDateObj.setDate(endDateObj.getDate() + 1);
+        endDate = endDateObj.toISOString().split('T')[0];
         const requestBody = {
             startDate: document.getElementById('startDate').value,
-            endDate: document.getElementById('endDate').value,
+            endDate: endDate,
             name: document.getElementById('name').value,
             department: document.getElementById('departemnt').value,
 
