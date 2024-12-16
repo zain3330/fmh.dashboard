@@ -68,7 +68,7 @@
                     <button onclick="toggleSidebar()" class="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
                         <i class="fas fa-bars w-6 h-6"></i>
                     </button>
-                    <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">Admission from OPD</h2>
+                    <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">Corporate Billing & Receipt</h2>
                 </div>
 
                 <div class="flex items-center space-x-4">
@@ -83,28 +83,33 @@
         <div class="max-w-`8xl mx-auto py- sm:px-6 lg:px-0 ">
             <div id="departmentContent" class="px-4 py-2 sm:px-0">
 
+                <!-- <div class="p-6 bg-white border-b border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <h1 class="text-2xl font-bold text-gray-800">OPD Count</h1>
+                        <button onclick="window.location.href='home.html'" class="p-2 rounded-full hover:bg-gray-100">
+                            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div> -->
                 <div class="p-6">
                     <div class="space-y-4">
                         <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
+
                             <div class="flex-1">
-                                <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
-                                <input type="date" id="startDate" name="startDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <label for="startYear" class="block text-sm font-medium text-gray-700">Start Year</label>
+                                <select id="startYear" name="startYear" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                    <script>
+                                        const currentYear = new Date().getFullYear();
+                                        for (let year = currentYear; year >= 2020; year--) {
+                                            document.write(`<option value="${year}">${year}</option>`);
+                                        }
+                                    </script>
+                                </select>
                             </div>
+
                             <div class="flex-1">
-                                <label for="endDate" class="block text-sm font-medium text-gray-700">End Date</label>
-                                <input type="date" id="endDate" name="endDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            </div>
-                            <div class="flex-1">
-                                <label for="name" class="block text-sm font-medium text-gray-700">Doctor Name</label>
-                                <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            </div>
-                            <div class="flex-1">
-                                <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
-                                <input type="text" id="department" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            </div>
-                            <div class="flex-1">
-                                <label for="type" class="block text-sm font-medium text-gray-700">Patient Type</label>
-                                <input type="text" id="type" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <label for="clint" class="block text-sm font-medium text-gray-700">Client</label>
+                                <input type="text" id="clint" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             </div>
                         </div>
                         <div class="flex justify-between items-center">
@@ -119,9 +124,7 @@
                                     <i class="fas fa-download inline-block w-4 h-4 mr-2"></i>
                                     Download Data
                                 </button>
-                                <button id="toggleViewButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
-                                    Show Graph
-                                </button>
+
                             </div>
                         </div>
                     </div>
@@ -129,25 +132,16 @@
                         <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left font-serif text-gray-500 uppercase tracking-wider w-1/3">Doctor Name</th>
-                                <th class="px-6 py-3 text-center font-serif text-gray-500 uppercase tracking-wider w-1/3">Speciality</th>
-                                <th class="px-6 py-3 text-center font-serif text-gray-500 uppercase tracking-wider w-1/3">Patient Type</th>
-                                <th class="px-6 py-3 text-right font-serif text-gray-500 uppercase tracking-wider w-1/3">Admissions</th>
+                                <th class="px-6 py-3 text-left font-serif text-gray-500 uppercase tracking-wider">Field</th>
+                                <th id="monthHeader" class="px-6 py-3 text-center font-serif text-gray-500 uppercase tracking-wider"></th>
                             </tr>
                             </thead>
                             <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
-                            <!-- Table rows will be inserted here -->
+                            <!-- Transformed table rows will be inserted here -->
                             </tbody>
-                            <tfoot id="tableFoot" class="bg-gray-50 hidden">
-                            <tr>
-                                <th class="px-6 py-3 text-left font-serif text-gray-500 uppercase tracking-wider" colspan="3">Total</th>
-                                <th id="totalADMISSIONS" class="px-6 py-3 text-right font-serif text-gray-500 uppercase tracking-wider"></th>
-                            </tr>
-                            </tfoot>
                         </table>
+
                     </div>
-
-
                     <div id="graphView" class="mt-6 rounded-md border p-4 hidden">
                         <canvas id="chartCanvas"></canvas>
                     </div>
@@ -171,6 +165,14 @@
                 </div>
 
 
+
+
+
+
+
+
+
+
             </div>
         </div>
 </div>
@@ -178,6 +180,7 @@
 </div>
 
 <script>
+
 
     let departmentData = [];
     let currentPage = 1;
@@ -194,11 +197,9 @@
     document.getElementById('toggleViewButton').addEventListener('click', toggleView);
 
     function resetForm() {
-        document.getElementById('startDate').value = '';
-        document.getElementById('endDate').value = '';
-        document.getElementById('name').value = '';
-        document.getElementById('department').value = '';
-        document.getElementById('type').value = '';
+        document.getElementById('startYear').value = '';
+        document.getElementById('clint').value = '';
+
         departmentData = [];
         currentPage = 1;
         updateTable();
@@ -209,30 +210,20 @@
         }
     }
 
-    const today = new Date();
-    const lastThreeDays = new Date(today);
-    lastThreeDays.setDate(today.getDate() - 3);
-    const maxDate = lastThreeDays.toISOString().split('T')[0];
-    document.getElementById('startDate').setAttribute('max', maxDate);
-    document.getElementById('endDate').setAttribute('max', maxDate);
+
 
     async function fetchData() {
         const searchButton = document.getElementById('searchButton');
         searchButton.disabled = true;
         searchButton.textContent = 'Searching...';
 
-        const apiUrl = 'https://prod-59.northeurope.logic.azure.com:443/workflows/15ede064f7504a08a37accc94ad864a5/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=eGu2Aij9cYZHXoJdbSvhv-Q8UmC-1Mif351cwP75Njw';
+        const apiUrl = 'https://prod-14.northeurope.logic.azure.com:443/workflows/a90dff7e119e4c0aa14741365b61a025/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Ycf8FIsxL9Anx1T9yYMTlWbyfdZ5bb1afrR9syT4bDw';
+
 // Increment the endDate by 1 day
-        let endDate = document.getElementById('endDate').value;
-        const endDateObj = new Date(endDate);
-        endDateObj.setDate(endDateObj.getDate() + 1);
-        endDate = endDateObj.toISOString().split('T')[0];
+
         const requestBody = {
-            startDate: document.getElementById('startDate').value,
-            endDate: endDate,
-            name: document.getElementById('name').value,
-            department: document.getElementById('department').value,
-            type:document.getElementById('type').value,
+            year: document.getElementById('startYear').value,
+            clint: document.getElementById('clint').value,
         };
 
         try {
@@ -268,84 +259,130 @@
         }
         updateTable();
     }
-
     function updateTable() {
         const tableBody = document.getElementById('tableBody');
-        const tableFoot = document.getElementById('tableFoot');
+        const tableHeader = document.querySelector('#dataTable thead tr');
         tableBody.innerHTML = '';
+        tableHeader.innerHTML = ''; // Clear existing headers
 
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        const pageData = departmentData.slice(startIndex, endIndex);
+        // Extract unique months and clients
+        const months = [...new Set(departmentData.map(item => item.MONTH))];
+        const clients = [...new Set(departmentData.map(item => item.CLINT))];
 
-        if (pageData.length === 0) {
-            tableFoot.classList.add('hidden');
-        } else {
-            tableFoot.classList.remove('hidden');
-        }
+        // Build dynamic headers
+        const clintHeader = document.createElement('th');
+        clintHeader.className = 'px-6 py-4 whitespace-nowrap font-serif text-gray-700 text-center';
+        clintHeader.textContent = 'Clint / Date'; // First column header
+        tableHeader.appendChild(clintHeader);
 
-        pageData.forEach(item => {
-            const row = tableBody.insertRow();
-            row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.NAME}</td>
-                    <td class="px-6 py-4 whitespace-nowrap  text-center  font-serif text-gray-500">${item.DEPARTMENT}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap  text-center  font-serif text-gray-500">${item.PATIENT_TYPE}</td>
+        const openingHeader = document.createElement('th');
+        openingHeader.className = 'px-6 py-4 whitespace-nowrap font-serif text-gray-700 text-center';
+        openingHeader.textContent = 'Opening'; // Second column header
+        tableHeader.appendChild(openingHeader);
 
-                    <td class="px-6 py-4 whitespace-nowrap text-right   font-serif text-gray-500">${(parseInt(item.ADMISSION_FROM_OPD) || 0).toLocaleString()}</td>
-                `;
+        months.forEach(month => {
+            const monthHeader = document.createElement('th');
+            monthHeader.className = 'px-6 py-4 whitespace-nowrap text-gray-700 text-center';
+            monthHeader.innerHTML = `
+            <div>${month}</div>
+            <div class="text-sm text-gray-500">(Billing / Receipt)</div>`;
+            tableHeader.appendChild(monthHeader);
         });
 
-        updatePagination();
-        updateTotals();
+        // Populate rows grouped by client
+        clients.forEach(client => {
+            const clientRow = tableBody.insertRow();
+
+            // First cell: Client name
+            const clientNameCell = clientRow.insertCell();
+            clientNameCell.className = 'px-6 py-4 whitespace-nowrap text-gray-700';
+            clientNameCell.textContent = client;
+
+            // Second cell: Opening balance
+            const openingCell = clientRow.insertCell();
+            openingCell.className = 'px-6 py-4 whitespace-nowrap text-right font-bold text-gray-500';
+            const openingData = departmentData.find(item => item.CLINT === client);
+            openingCell.textContent = openingData
+                ? openingData.OPENING_BALANCE.toLocaleString('en-US', { minimumFractionDigits: 2 })
+                : '-';
+
+            // Add cells for each month
+            months.forEach(month => {
+                const cell = clientRow.insertCell();
+                cell.className = 'px-6 py-4 whitespace-nowrap text-right font-bold text-gray-500';
+
+                // Find data for the current client and month
+                const data = departmentData.find(item => item.CLINT === client && item.MONTH === month);
+                if (data) {
+                    cell.innerHTML = `
+                    <span>${data.BILLING.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span> /
+                    <span>${data.RECEIPT.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>`;
+                } else {
+                    // If no data, leave the cell empty
+                    cell.innerHTML = '-';
+                }
+            });
+        });
     }
 
-    function updatePagination() {
-        const paginationElement = document.getElementById('pagination');
-        if (departmentData.length > 0) {
-            paginationElement.classList.remove('hidden');
-            const totalPages = Math.ceil(departmentData.length / itemsPerPage);
-            document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
-            document.getElementById('prevPage').disabled = currentPage === 1;
-            document.getElementById('nextPage').disabled = currentPage === totalPages;
-            document.getElementById('firstPage').disabled = currentPage === 1;
-            document.getElementById('lastPage').disabled = currentPage === totalPages;
-        } else {
-            paginationElement.classList.add('hidden');
-        }
-    }
 
-    function updateTotals() {
-        const totalADMISSIONS = departmentData.reduce((sum, item) => sum + (parseInt(item.ADMISSION_FROM_OPD) || 0), 0);
-        document.getElementById('totalADMISSIONS').textContent = totalADMISSIONS.toLocaleString();
-    }
+
+
+
+
+
+    // function updateTotals() {
+    //     const totalADMISSIONS = departmentData.reduce((sum, item) => sum + (parseInt(item.ADMISSIONS) || 0), 0);
+    //     document.getElementById('totalADMISSIONS').textContent = totalADMISSIONS.toLocaleString();
+    // }
 
     function changePage(direction) {
         currentPage += direction;
         updateTable();
     }
 
-
     function downloadData() {
-        const startDate = document.getElementById('startDate').value;
-        const endDate = document.getElementById('endDate').value;
-        const worksheetData = departmentData.map(item => [
-            item.NAME,
-            item.DEPARTMENT,
-            item.PATIENT_TYPE,
-            item.ADMISSION_FROM_OPD,
-        ]);
+        const startDate = document.getElementById('startYear').value;
+
+
+        // Extract unique months and clients
+        const months = [...new Set(departmentData.map(item => item.MONTH))];
+        const clients = [...new Set(departmentData.map(item => item.CLINT))];
+
+        // Prepare the headers
+        const headers = ['Client / Month', 'Opening Balance', ...months.map(month => `${month} - Billing / Receipt`)];
+
+        // Build rows grouped by clients
+        const worksheetData = clients.map(client => {
+            // Find the opening balance for the client
+            const openingData = departmentData.find(item => item.CLINT === client);
+            const openingBalance = openingData ? openingData.OPENING_BALANCE : '-';
+
+            // Monthly billing and receipt data
+            const monthData = months.map(month => {
+                const data = departmentData.find(item => item.CLINT === client && item.MONTH === month);
+                return data
+                    ? `${data.BILLING.toLocaleString('en-US', { minimumFractionDigits: 2 })} / ${data.RECEIPT.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
+                    : '- / -';
+            });
+
+            return [client, openingBalance, ...monthData];
+        });
+
+        // Combine headers and data
         const worksheet = XLSX.utils.aoa_to_sheet([
-            ['Doctor Name', 'Speciality', 'Patient Type', 'Admissions'], // Headers
-            ...worksheetData, // Data
+            headers, // Header row
+            ...worksheetData, // Client data rows
         ]);
 
-        // Create a new workbook and append the worksheet
+        // Create a workbook and append the worksheet
         const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Department Data');
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Short Stay Data');
 
-        // Save the file as .xlsx
-        XLSX.writeFile(workbook,  `finance_admission_from_opd_${startDate}_to_${endDate}.xlsx`);
+        // Save the file
+        XLSX.writeFile(workbook, `corporate_receipt_${startDate}.xlsx`);
     }
+
 
     function toggleView() {
         const tableView = document.getElementById('tableView');
@@ -378,43 +415,36 @@
             return; // Don't create a chart if there's no data
         }
 
-        // Sort data from greater to lesser values
-        const sortedData = [...departmentData].sort((a, b) => b.ADMISSION_FROM_OPD - a.ADMISSION_FROM_OPD);
-
-        // Remove duplicate DEPARTMENT entries while summing their ADMISSION_FROM_OPD values
-        const uniqueData = [];
-        const departmentMap = new Map();
-
-        sortedData.forEach(item => {
-            if (departmentMap.has(item.DEPARTMENT)) {
-                departmentMap.set(
-                    item.DEPARTMENT,
-                    departmentMap.get(item.DEPARTMENT) + item.ADMISSION_FROM_OPD
-                );
+        // Group and sum the ADMISSIONS by SPECIALITY
+        const groupedData = departmentData.reduce((acc, item) => {
+            if (acc[item.SPECIALITY]) {
+                acc[item.SPECIALITY] += item.ADMISSIONS;
             } else {
-                departmentMap.set(item.DEPARTMENT, item.ADMISSION_FROM_OPD);
+                acc[item.SPECIALITY] = item.ADMISSIONS;
             }
-        });
+            return acc;
+        }, {});
 
-        departmentMap.forEach((admissions, department) => {
-            uniqueData.push({ DEPARTMENT: department, ADMISSION_FROM_OPD: admissions });
-        });
+        // Convert the grouped data into a sorted array
+        const sortedData = Object.entries(groupedData)
+            .map(([speciality, admissions]) => ({ SPECIALITY: speciality, ADMISSIONS: admissions }))
+            .sort((a, b) => b.ADMISSIONS - a.ADMISSIONS);
 
-        // Sort uniqueData in descending order based on ADMISSION_FROM_OPD
-        uniqueData.sort((a, b) => b.ADMISSION_FROM_OPD - a.ADMISSION_FROM_OPD);
+        if (sortedData.length === 0) {
+            return; // Don't create a chart if there's no data after processing
+        }
 
-        // Create the chart
         chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: uniqueData.map(item => item.DEPARTMENT),
+                labels: sortedData.map(item => item.SPECIALITY),
                 datasets: [{
-                    label: 'Admissions from OPD',
-                    data: uniqueData.map(item => item.ADMISSION_FROM_OPD),
+                    label: 'IPD Count',
+                    data: sortedData.map(item => item.ADMISSIONS),
                     borderColor: 'rgb(75, 192, 192)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     tension: 0.1,
-                    fill: false
+                    pointRadius: 7,
+                    pointHoverRadius: 10
                 }]
             },
             options: {
@@ -425,53 +455,48 @@
                     },
                     title: {
                         display: true,
-                        text: 'Admissions from OPD by Department'
+                        text: 'Short Stay by Speciality'
                     },
                     tooltip: {
-                        mode: 'index',
-                        intersect: false,
+                        enabled: false
                     }
                 },
                 scales: {
                     x: {
-                        title: {
-                            display: true,
-                            text: 'Department Name'
-                        },
                         ticks: {
                             autoSkip: false,
                             maxRotation: 90,
                             minRotation: 90
                         }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Number of Admissions'
-                        }
                     }
                 },
                 elements: {
-                    line: {
-                        borderWidth: 2
-                    },
                     point: {
-                        radius: 5,
-                        hoverRadius: 7
+                        pointStyle: 'circle'
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: (value, context) => {
+                            return `${value}`;
+                        },
+                        font: {
+                            weight: 'bold'
+                        }
                     }
                 }
-            }
+            },
+            plugins: [ChartDataLabels]
         });
     }
-
-
-
 
 </script>
 
 
 <script>
+
     const departmentOptions = {
         Finance: [
             {
@@ -601,6 +626,7 @@
 
     function logout() {
         localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('fullName');
         window.location.href = 'index.html';
     }
 
@@ -632,7 +658,7 @@
     }
 
 
-
+    // Close dropdowns when clicking outside
     document.addEventListener('click', function(event) {
         if (!event.target.closest('.relative')) {
             document.querySelectorAll('[id$="-dropdown"]').forEach(el => el.classList.add('hidden'));

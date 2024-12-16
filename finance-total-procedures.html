@@ -52,6 +52,18 @@
               <!-- Dropdown items will be inserted here -->
             </div>
           </div>
+            <div class="relative">
+                <button onclick="toggleDropdown('Corporate')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
+            <span class="flex items-center">
+              <i class="fas fa-briefcase w-5 h-5 mr-2"></i>
+              <span class="sidebar-text">Corporate</span>
+            </span>
+                    <i class="fas fa-chevron-down w-4 h-4"></i>
+                </button>
+                <div id="Corporate-dropdown" class="hidden bg-gray-700 py-2">
+                    <!-- Dropdown items will be inserted here -->
+                </div>
+            </div>
         </nav>
       </aside>
       <main class="flex-1 overflow-y-auto bg-gray-100">
@@ -527,47 +539,51 @@
           Finance: [
               {
                   name: "Count",
-                  icon: "fa-chart-pie",
+                  icon: "fa-chart-bar", // General counting/statistics icon
                   submenu: [
-                      { name: "OPD Count", link: "finance-opd-count.html", icon: "fa-users" },
-                      { name: "IPD Count", link: "finance-ipd-count.html", icon: "fa-bed" },
-                      { name: "EAR Count", link: "finance-ear-count.html", icon: "fa-users" },
+                      { name: "OPD Count", link: "finance-opd-count.html", icon: "fa-user-md" }, // Doctor/patient icon
+                      { name: "IPD Count", link: "finance-ipd-count.html", icon: "fa-procedures" }, // Bed icon
+                      { name: "EAR Count", link: "finance-ear-count.html", icon: "fa-users" }, // Group icon
                   ],
               },
               {
                   name: "Conversion to IPD",
-                  icon: "fa-chart-pie",
+                  icon: "fa-exchange-alt", // Conversion/movement icon
                   submenu: [
-                      { name: "Admission from OPD", link: "finance-admission-from-opd.html", icon: "fa-users" },
-                      { name: "Admission from EAR", link: "finance-admission-from-ear.html", icon: "fa-bed" },
+                      { name: "Admission from OPD", link: "finance-admission-from-opd.html", icon: "fa-user-plus" }, // Admission icon
+                      { name: "Admission from EAR", link: "finance-admission-from-ear.html", icon: "fa-user-check" }, // Confirmation icon
                   ],
               },
               {
                   name: "Procedures",
-                  icon: "fa-chart-pie",
+                  icon: "fa-stethoscope", // Medical procedures icon
                   submenu: [
-                      { name: "Total FMH Procedures", link: "finance-total-procedures.html", icon: "fa-users" },
-                      { name: "Admission from EAR", link: "finance-admission-from-ear.html", icon: "fa-bed" },
+                      { name: "Total FMH Procedures", link: "finance-total-procedures.html", icon: "fa-notes-medical" }, // Medical notes icon
+
                   ],
               },
               {
-
-                  name: "Average Length Of Stay", link: "finance-als.html", icon: "fa-users"
-
-              },
-              // {
-              //     name: "Short Stay",
-              //     icon: "fa-chart-pie",
-              //     submenu: [
-              //         { name: "Short Stay", link: "finance-short-stay.html", icon: "fa-users" },
-              //
-              //     ],
-              // },
-              {
-                  name: "Bed Occupancy", link: "finance-bed-occupancy.html", icon: "fa-users"
+                  name: "Average Length Of Stay",
+                  link: "finance-als.html",
+                  icon: "fa-clock", // Time icon for length of stay
               },
               {
-                  name: "Short Stay", link: "finance-short-stay.html", icon: "fa-users"
+                  name: "Bed Occupancy",
+                  link: "finance-bed-occupancy.html",
+                  icon: "fa-hospital-bed", // Hospital bed icon
+              },
+              {
+                  name: "Short Stay",
+                  link: "finance-short-stay.html",
+                  icon: "fa-user-clock", // Short stay/patient icon
+              },
+          ],
+
+          Corporate: [
+              {
+                  name: "Corporate Billing & Receipt",
+                  link: "finance-corporate-billing-receipt.html",
+                  icon: "fa-file-invoice-dollar", // Billing/receipt icon
               },
           ],
       };
