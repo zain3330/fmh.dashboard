@@ -210,10 +210,13 @@
         searchButton.textContent = 'Searching...';
 
         const apiUrl = 'https://prod-59.northeurope.logic.azure.com:443/workflows/15ede064f7504a08a37accc94ad864a5/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=eGu2Aij9cYZHXoJdbSvhv-Q8UmC-1Mif351cwP75Njw';
-
+// Increment the endDate by 1 day
+        const endDateObj = new Date(endDate);
+        endDateObj.setDate(endDateObj.getDate() + 1);
+        endDate = endDateObj.toISOString().split('T')[0];
         const requestBody = {
             startDate: document.getElementById('startDate').value,
-            endDate: document.getElementById('endDate').value,
+            endDate: endDate,
             name: document.getElementById('name').value,
             department: document.getElementById('department').value,
             type:document.getElementById('type').value,
