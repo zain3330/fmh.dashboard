@@ -222,12 +222,12 @@
             }
         }
 
-        const today = new Date();
-        const lastThreeDays = new Date(today);
-        lastThreeDays.setDate(today.getDate() - 3);
-        const maxDate = lastThreeDays.toISOString().split('T')[0];
-        document.getElementById('startDate').setAttribute('max', maxDate);
-        document.getElementById('endDate').setAttribute('max', maxDate);
+        // const today = new Date();
+        // const lastThreeDays = new Date(today);
+        // lastThreeDays.setDate(today.getDate() - 3);
+        // const maxDate = lastThreeDays.toISOString().split('T')[0];
+        // document.getElementById('startDate').setAttribute('max', maxDate);
+        // document.getElementById('endDate').setAttribute('max', maxDate);
 
         async function fetchData() {
             const searchButton = document.getElementById('searchButton');
@@ -236,10 +236,13 @@
 
             const apiUrl = 'https://prod-07.northeurope.logic.azure.com:443/workflows/a132e1c13a6a416683dacfd05158c499/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=QGZ3R0EIEfqZlJXHc5nMHTdmC1xxKXsKniaU1UDs4uQ';
 
-
+// Increment the endDate by 1 day
+            const endDateObj = new Date(endDate);
+            endDateObj.setDate(endDateObj.getDate() + 1);
+            endDate = endDateObj.toISOString().split('T')[0];
             const requestBody = {
                 startDate: document.getElementById('startDate').value,
-                endDate: document.getElementById('endDate').value,
+                endDate:endDate,
                 cpt_id: document.getElementById('cpt_id').value,
                 cpt_desc: document.getElementById('departemnt').value,
              name:   document.getElementById('name').value ,
