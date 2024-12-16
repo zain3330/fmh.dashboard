@@ -100,8 +100,8 @@
                                 <input type="date" id="endDate" name="endDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             </div>
                             <div class="flex-1">
-                                <label for="name" class="block text-sm font-medium text-gray-700">Cpt id</label>
-                                <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <label for="cpt_id" class="block text-sm font-medium text-gray-700">Cpt id</label>
+                                <input type="text" id="cpt_id" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             </div>
                             <div class="flex-1">
                                 <label for="departemnt" class="block text-sm font-medium text-gray-700">Cpt Description</label>
@@ -208,7 +208,7 @@
         function resetForm() {
             document.getElementById('startDate').value = '';
             document.getElementById('endDate').value = '';
-            document.getElementById('name').value = '';
+            document.getElementById('cpt_id').value = '';
             document.getElementById('departemnt').value = '';
             document.getElementById('name').value = '';
             document.getElementById('depart').value = '';
@@ -240,7 +240,7 @@
             const requestBody = {
                 startDate: document.getElementById('startDate').value,
                 endDate: document.getElementById('endDate').value,
-                cpt_id: document.getElementById('name').value,
+                cpt_id: document.getElementById('cpt_id').value,
                 cpt_desc: document.getElementById('departemnt').value,
              name:   document.getElementById('name').value ,
                department: document.getElementById('depart').value ,
