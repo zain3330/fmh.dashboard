@@ -210,10 +210,13 @@
 
             const apiUrl = 'https://prod-50.northeurope.logic.azure.com:443/workflows/3ce0bc30395f49f48113026d3f4a69f0/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=nkX4824cev39i3CgN-mRB6pEJGkanUZSCgloJDvQXxc';
             // const hospitalValue = document.getElementById('hospital').value;
-
+// Increment the endDate by 1 day
+            const endDateObj = new Date(endDate);
+            endDateObj.setDate(endDateObj.getDate() + 1);
+            endDate = endDateObj.toISOString().split('T')[0];
             const requestBody = {
                 startDate: document.getElementById('startDate').value,
-                endDate: document.getElementById('endDate').value,
+                endDate: endDate,
                 type: document.getElementById('type').value,
                 department: document.getElementById('departemnt').value,
                 // hos1: (hospitalValue === 'ALL' || hospitalValue === 'FMH') ? 'FMH' : '',
