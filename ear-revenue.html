@@ -57,6 +57,7 @@
                     <!-- Dropdown items will be inserted here -->
                 </div>
             </div>
+
         </nav>
       </aside>
       <main class="flex-1 overflow-y-auto bg-gray-100">
@@ -68,7 +69,7 @@
             <button onclick="toggleSidebar()" class="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 <i class="fas fa-bars w-6 h-6"></i>
               </button>
-              <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">EAR Count</h2>
+              <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">Ear Revenue</h2>
               </div>
 
             <div class="flex items-center space-x-4">
@@ -95,21 +96,6 @@
                         <div class="space-y-4">
                             <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
                                 <div class="flex-1">
-                                    <label for="type" class="block text-sm font-medium text-gray-700">Hospital Type</label>
-                                    <select id="type" name="hospitalType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                        <option value="M" selected>Hospital</option>
-                                        <option value="D">Dental</option>
-                                    </select>
-                                </div>
-                                <div class="flex-1">
-                                    <label for="hospital" class="block text-sm font-medium text-gray-700">Hospital</label>
-                                    <select id="hospital" name="hospital" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                        <option value="ALL" selected>All</option>
-                                        <option value="FMH">FMH Hospital</option>
-                                        <option value="HH">Hijaz Hospital</option>
-                                    </select>
-                                </div>
-                                <div class="flex-1">
                                     <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
                                     <input type="date" id="startDate" name="startDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                 </div>
@@ -122,8 +108,16 @@
                                     <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                 </div>
                                 <div class="flex-1">
-                                    <label for="departemnt" class="block text-sm font-medium text-gray-700">Department</label>
-                                    <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                    <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
+                                    <input type="text" id="department" name="department" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                </div>
+                                <div class="flex-1">
+                                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                                    <input type="text" id="description" name="description" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                </div>
+                                <div class="flex-1">
+                                    <label for="patient_type" class="block text-sm font-medium text-gray-700">Patient Type</label>
+                                    <input type="text" id="patient_type" name="patient_type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                 </div>
                             </div>
                             <div class="flex justify-between items-center">
@@ -149,22 +143,29 @@
                             <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor Name</th>
-                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Speciality</th>
-                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Total EAR</th>
+                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor</th>
+                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Department </th>
+                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Description</th>
+                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Patient Type</th>
+                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Client Name</th>
+                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Income Setup</th>
+
+
+                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Invoice Count</th>
+                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">RECEIVABLE</th>
 
                                     </tr>
                                 </thead>
                                 <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
                                     <!-- Table rows will be inserted here -->
                                 </tbody>
-                                <tfoot id="tableFoot" class="bg-gray-50 hidden">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left   font-serif text-gray-500 uppercase tracking-wider" colspan="2">Total</th>
-                                        <th id="totalPvtOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>
+<!--                                <tfoot id="tableFoot" class="bg-gray-50 hidden">-->
+<!--                                    <tr>-->
+<!--                                        <th class="px-6 py-3 text-left   font-serif text-gray-500 uppercase tracking-wider" colspan="2">Total</th>-->
+<!--                                        <th id="totalPvtOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>-->
 
-                                    </tr>
-                                </tfoot>
+<!--                                    </tr>-->
+<!--                                </tfoot>-->
                             </table>
                         </div>
                         <div id="graphView" class="mt-6 rounded-md border p-4 hidden">
@@ -214,12 +215,12 @@
         document.getElementById('toggleViewButton').addEventListener('click', toggleView);
 
         function resetForm() {
-            document.getElementById('type').value = 'M';
-            document.getElementById('hospital').value = 'ALL';
             document.getElementById('startDate').value = '';
             document.getElementById('endDate').value = '';
             document.getElementById('name').value = '';
-            document.getElementById('departemnt').value = '';
+            document.getElementById('department').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('patient_type').value = '';
             
             departmentData = [];
             currentPage = 1;
@@ -243,8 +244,8 @@
             searchButton.disabled = true;
             searchButton.textContent = 'Searching...';
 
-            const apiUrl = 'https://prod-63.northeurope.logic.azure.com:443/workflows/7a251ad20b204be581fcb94e4e45776a/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=FVJ_KyJvZsAX3LdYKyyn9RaRvp-I1k2Z-t-aiFIKRVU';
-            const hospitalValue = document.getElementById('hospital').value;
+            const apiUrl = 'https://prod-52.northeurope.logic.azure.com:443/workflows/2a73f99408ad49e8ad9d3e2d88f4f7a2/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=30ydxZ7c3OTcx6lDuHCzvbDMXZLQ2i1CaRUE9xR1uDw';
+
 // Increment the endDate by 1 day
             let endDate = document.getElementById('endDate').value;
             const endDateObj = new Date(endDate);
@@ -254,10 +255,9 @@
                 startDate: document.getElementById('startDate').value,
                 endDate: endDate,
                 name: document.getElementById('name').value,
-                type: document.getElementById('type').value,
-                department: document.getElementById('departemnt').value,
-                hos1: (hospitalValue === 'ALL' || hospitalValue === 'FMH') ? 'FMH' : '',
-                hos2: (hospitalValue === 'ALL' || hospitalValue === 'HH') ? 'HH' : '',
+                department: document.getElementById('department').value,
+                des: document.getElementById('description').value,
+                patient_type: document.getElementById('patient_type').value,
             };
 
             try {
@@ -296,31 +296,37 @@
 
         function updateTable() {
             const tableBody = document.getElementById('tableBody');
-            const tableFoot = document.getElementById('tableFoot');
+
             tableBody.innerHTML = '';
 
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
             const pageData = departmentData.slice(startIndex, endIndex);
 
-            if (pageData.length === 0) {
-                tableFoot.classList.add('hidden');
-            } else {
-                tableFoot.classList.remove('hidden');
-            }
+
 
             pageData.forEach(item => {
                 const row = tableBody.insertRow();
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.DOCTOR_NAME}</td>
-                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.SPECIALITY}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${(parseInt(item.Total_EAR) || 0).toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.ADM_DOCTOR}</td>
+                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.ADM_DEPARTMENT}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.SUB_LDGR_DESC}</td>
+
+                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.PATIENT_TYPE}</td>
+
+                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.CL_NAME}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.IN_SETUP}</td>
+
+
+                                        <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${(parseInt(item.INVOICE_COUNT) || 0).toLocaleString()}</td>
+
+              <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${(parseInt(item.RECEIVABLE) || 0).toLocaleString()}</td>
 
                 `;
             });
 
             updatePagination();
-            updateTotals();
+
         }
 
         function updatePagination() {
@@ -338,13 +344,13 @@
             }
         }
 
-        function updateTotals() {
-            const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.Total_EAR) || 0), 0);
-
-
-            document.getElementById('totalPvtOpd').textContent = totalPvtOpd.toLocaleString();
-
-        }
+        // function updateTotals() {
+        //     const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.Total_EAR) || 0), 0);
+        //
+        //
+        //     document.getElementById('totalPvtOpd').textContent = totalPvtOpd.toLocaleString();
+        //
+        // }
 
         function changePage(direction) {
             currentPage += direction;
@@ -355,20 +361,27 @@
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
             const worksheetData = departmentData.map(item => [
-                item.DOCTOR_NAME,
-                item.SPECIALITY,
-                item.Total_EAR,
+                item.ADM_DOCTOR,
+                item.ADM_DEPARTMENT,
+                item.SUB_LDGR_DESC,
+                item.PATIENT_TYPE,
+                item.CL_NAME,
+                item.IN_SETUP,
+
+
+                item.INVOICE_COUNT,
+                item.RECEIVABLE,
             ]);
 
             const worksheet = XLSX.utils.aoa_to_sheet([
-                ['Doctor Name', 'Speciality', 'Total EAR',],
+                ['Doctor Name', 'Department', 'Description','Patient Type','Client Name','Income Setup','Invoice Count','Receivable'],
                 ...worksheetData,
             ]);
 
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Department Data');
 
-            XLSX.writeFile(workbook, `opd_${startDate}_to_${endDate}.xlsx`);
+            XLSX.writeFile(workbook, `ipd_revenue_${startDate}_to_${endDate}.xlsx`);
         }
 
 
@@ -541,6 +554,8 @@
                   link: "finance-short-stay.html",
                   icon: "fa-user-clock", // Short stay/patient icon
               },
+
+
           ],
 
           Corporate: [
@@ -550,6 +565,8 @@
                   icon: "fa-file-invoice-dollar", // Billing/receipt icon
               },
           ],
+
+
       };
 
     function createDropdownItems(options, parentId = '') {
