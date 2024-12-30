@@ -192,7 +192,12 @@
         let currentPage = 1;
         const itemsPerPage = 10;
         let chart = null;
-
+        const today = new Date();
+        const lastThreeDays = new Date(today);
+        lastThreeDays.setDate(today.getDate() - 3);
+        const maxDate = lastThreeDays.toISOString().split('T')[0];
+        document.getElementById('startDate').setAttribute('max', maxDate);
+        document.getElementById('endDate').setAttribute('max', maxDate);
         document.getElementById('firstPage').addEventListener('click', () => goToPage(1));
         document.getElementById('lastPage').addEventListener('click', () => goToPage('last'));
         document.getElementById('searchButton').addEventListener('click', fetchData);
@@ -219,12 +224,6 @@
             }
         }
 
-        const today = new Date();
-        const lastThreeDays = new Date(today);
-        lastThreeDays.setDate(today.getDate() - 3);
-        const maxDate = lastThreeDays.toISOString().split('T')[0];
-        document.getElementById('startDate').setAttribute('max', maxDate);
-        document.getElementById('endDate').setAttribute('max', maxDate);
 
         async function fetchData() {
             const searchButton = document.getElementById('searchButton');
@@ -337,7 +336,7 @@
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
             const worksheetData = departmentData.map(item => [
-                item.DOCTOR,
+                item.NAME,
                 item.DEPARTMENT,
                 item.NO_OF_PROCEDURES,
             ]);
@@ -502,17 +501,22 @@
               {
                   name: "Average Length Of Stay",
                   link: "finance-als.html",
-                  icon: "fa-clock", // Time icon for length of stay
+                  icon: "fa-clock",
               },
               {
                   name: "Bed Occupancy",
                   link: "finance-bed-occupancy.html",
-                  icon: "fa-clinic-medical", // Hospital bed icon
+                  icon: "fa-clinic-medical",
               },
               {
                   name: "Short Stay",
                   link: "finance-short-stay.html",
-                  icon: "fa-user-clock", // Short stay/patient icon
+                  icon: "fa-user-clock",
+              },
+              {
+                  name: "C-Section",
+                  link: "c-section.html",
+                  icon: "fa fa-baby",
               },
 
 
