@@ -111,6 +111,10 @@
                                 <label for="departemnt" class="block text-sm font-medium text-gray-700">Department</label>
                                 <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             </div>
+                            <div class="flex-1">
+                                <label for="type" class="block text-sm font-medium text-gray-700">Patient Type</label>
+                                <input type="text" id="type" name="type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            </div>
                         </div>
                         <div class="flex justify-between items-center">
                             <button id="resetButton" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
@@ -244,7 +248,7 @@
             endDate: endDate,
             name: document.getElementById('name').value,
             department: document.getElementById('departemnt').value,
-
+            type: document.getElementById('type').value,
         };
 
         try {
