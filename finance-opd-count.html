@@ -149,10 +149,10 @@
                             <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor Name</th>
-                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Speciality</th>
-                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Private OPD</th>
-                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">General OPD</th>
+                                        <th class="px-6 py-3 text-sm text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor Name</th>
+                                        <th class="px-6 py-3 text-sm text-left  font-serif text-gray-500 uppercase tracking-wider">Speciality</th>
+                                        <th class="px-6 py-3 text-sm text-right  font-serif text-gray-500 uppercase tracking-wider">Private OPD</th>
+                                        <th class="px-6 py-3 text-sm text-right  font-serif text-gray-500 uppercase tracking-wider">General OPD</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
@@ -311,10 +311,10 @@
             pageData.forEach(item => {
                 const row = tableBody.insertRow();
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.DOCTOR_NAME}</td>
-                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.SPECIALITY}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${(parseInt(item.PVT_OPD) || 0).toLocaleString()}</td>
-                    <td class="px-6 py-4 whitespace-nowrap  text-right  font-serif text-gray-500">${(parseInt(item.GEN_OPD) || 0).toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-serif text-gray-500">${item.DOCTOR_NAME}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm  font-serif text-gray-500">${item.SPECIALITY}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-right  font-serif text-gray-500">${(parseInt(item.PVT_OPD) || 0).toLocaleString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm  text-right  font-serif text-gray-500">${(parseInt(item.GEN_OPD) || 0).toLocaleString()}</td>
                 `;
             });
 
