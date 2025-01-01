@@ -206,7 +206,12 @@
         let currentPage = 1;
         const itemsPerPage = 10;
         let chart = null;
-
+        const today = new Date();
+        const lastThreeDays = new Date(today);
+        lastThreeDays.setDate(today.getDate() - 3);
+        const maxDate = lastThreeDays.toISOString().split('T')[0];
+        document.getElementById('startDate').setAttribute('max', maxDate);
+        document.getElementById('endDate').setAttribute('max', maxDate);
         document.getElementById('firstPage').addEventListener('click', () => goToPage(1));
         document.getElementById('lastPage').addEventListener('click', () => goToPage('last'));
         document.getElementById('searchButton').addEventListener('click', fetchData);
@@ -215,6 +220,7 @@
         document.getElementById('nextPage').addEventListener('click', () => changePage(1));
         document.getElementById('resetButton').addEventListener('click', resetForm);
         document.getElementById('toggleViewButton').addEventListener('click', toggleView);
+
 
         function resetForm() {
             document.getElementById('startDate').value = '';
@@ -234,12 +240,7 @@
             }
         }
 
-        const today = new Date();
-        const lastThreeDays = new Date(today);
-        lastThreeDays.setDate(today.getDate() - 3);
-        const maxDate = lastThreeDays.toISOString().split('T')[0];
-        document.getElementById('startDate').setAttribute('max', maxDate);
-        document.getElementById('endDate').setAttribute('max', maxDate);
+
 
         async function fetchData() {
             const searchButton = document.getElementById('searchButton');
