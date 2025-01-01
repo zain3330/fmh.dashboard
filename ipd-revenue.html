@@ -143,16 +143,18 @@
                             <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor</th>
-                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Department </th>
-                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Description</th>
-                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Patient Type</th>
-                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Client Name</th>
-                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Income Setup</th>
+                                        <th class="px-6 py-3 text-sm text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor</th>
+                                        <th class="px-6 py-3 text-sm text-left  font-serif text-gray-500 uppercase tracking-wider">
+                                            Doctor Department </th>
+                                        <th class="px-6 py-3 text-sm text-left  font-serif text-gray-500 uppercase tracking-wider">
+                                            Income Department</th>
+                                        <th class="px-6 py-3 text-sm text-left  font-serif text-gray-500 uppercase tracking-wider">Patient Type</th>
+                                        <th class="px-6 py-3 text-sm text-left  font-serif text-gray-500 uppercase tracking-wider">Client Name</th>
+                                        <th class="px-6 py-3 text-sm text-left  font-serif text-gray-500 uppercase tracking-wider">Income Setup</th>
 
 
-                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Invoice Count</th>
-                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">RECEIVABLE</th>
+                                        <th class="px-6 py-3 text-sm text-right  font-serif text-gray-500 uppercase tracking-wider">Invoice Count</th>
+                                        <th class="px-6 py-3 text-sm text-right  font-serif text-gray-500 uppercase tracking-wider">amount</th>
 
                                     </tr>
                                 </thead>
@@ -308,19 +310,19 @@
             pageData.forEach(item => {
                 const row = tableBody.insertRow();
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.ADM_DOCTOR}</td>
-                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.ADM_DEPARTMENT}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.SUB_LDGR_DESC}</td>
+                    <td class="px-6 py-4 text-sm  font-serif text-gray-500">${item.ADM_DOCTOR}</td>
+                    <td class="px-6 py-4 text-sm   font-serif text-gray-500">${item.ADM_DEPARTMENT}</td>
+                                        <td class="px-6 py-4 text-sm   font-serif text-gray-500">${item.SUB_LDGR_DESC}</td>
 
-                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.PATIENT_TYPE}</td>
+                    <td class="px-6 py-4 text-sm    font-serif text-gray-500">${item.PATIENT_TYPE}</td>
 
-                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.CL_NAME}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.IN_SETUP}</td>
+                    <td class="px-6 py-4    text-sm font-serif text-gray-500">${item.CL_NAME}</td>
+                                        <td class="px-6 py-4 text-sm   font-serif text-gray-500">${item.IN_SETUP}</td>
 
 
-                                        <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${(parseInt(item.INVOICE_COUNT) || 0).toLocaleString()}</td>
+                                        <td class="px-6 py-4 text-sm text-right whitespace-nowrap font-serif text-gray-500">${(parseInt(item.INVOICE_COUNT) || 0).toLocaleString()}</td>
 
-              <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${(parseInt(item.RECEIVABLE) || 0).toLocaleString()}</td>
+              <td class="px-6 py-4 text-sm text-right whitespace-nowrap font-serif text-gray-500">${(parseInt(item.RECEIVABLE) || 0).toLocaleString()}</td>
 
                 `;
             });
