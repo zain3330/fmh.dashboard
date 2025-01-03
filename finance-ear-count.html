@@ -357,7 +357,7 @@
             const worksheetData = departmentData.map(item => [
                 item.DOCTOR_NAME,
                 item.SPECIALITY,
-                item.Total_EAR,
+                parseFloat(item.Total_EAR) || 0,
             ]);
 
             const worksheet = XLSX.utils.aoa_to_sheet([
@@ -536,6 +536,11 @@
                   name: "C-Section",
                   link: "c-section.html",
                   icon: "fa fa-baby",
+              },
+              {
+                  name: "Normal Deliveries",
+                  link: "normal-deliveries.html",
+                  icon: "fa fa-hand-holding-heart",
               },
           ],
 

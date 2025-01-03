@@ -24,7 +24,7 @@
 
 </head>
 
-
+  
 <body class="bg-gray-100">
     <div class="flex h-screen overflow-hidden">
       <!-- Sidebar -->
@@ -57,7 +57,6 @@
                     <!-- Dropdown items will be inserted here -->
                 </div>
             </div>
-
         </nav>
       </aside>
       <main class="flex-1 overflow-y-auto bg-gray-100">
@@ -69,7 +68,7 @@
             <button onclick="toggleSidebar()" class="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 <i class="fas fa-bars w-6 h-6"></i>
               </button>
-              <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">C-Section</h2>
+              <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">Normal Deliveries</h2>
               </div>
 
             <div class="flex items-center space-x-4">
@@ -95,6 +94,7 @@
                     <div class="p-6">
                         <div class="space-y-4">
                             <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
+
                                 <div class="flex-1">
                                     <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
                                     <input type="date" id="startDate" name="startDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
@@ -108,10 +108,9 @@
                                     <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                 </div>
                                 <div class="flex-1">
-                                    <label for="department" class="block text-sm font-medium text-gray-700">Doctor Department</label>
-                                    <input type="text" id="department" name="department" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                    <label for="departemnt" class="block text-sm font-medium text-gray-700">Department</label>
+                                    <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                 </div>
-
                             </div>
                             <div class="flex justify-between items-center">
                                 <button id="resetButton" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
@@ -136,11 +135,9 @@
                             <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor</th>
-                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Department </th>
-
-                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">NO OF PROCEDURES</th>
-
+                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor Name</th>
+                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">DEPARTMENT</th>
+                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Total EAR</th>
 
                                     </tr>
                                 </thead>
@@ -150,7 +147,7 @@
                                 <tfoot id="tableFoot" class="bg-gray-50 hidden">
                                     <tr>
                                         <th class="px-6 py-3 text-left   font-serif text-gray-500 uppercase tracking-wider" colspan="2">Total</th>
-                                        <th id="totalPvtOpd" class="px-6 py-3   text-right  font-serif text-gray-500 uppercase tracking-wider"></th>
+                                        <th id="totalPvtOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>
 
                                     </tr>
                                 </tfoot>
@@ -187,17 +184,12 @@
           </main>
         </div>
     <script>
-
+  
         let departmentData = [];
         let currentPage = 1;
         const itemsPerPage = 10;
         let chart = null;
-        const today = new Date();
-        const lastThreeDays = new Date(today);
-        lastThreeDays.setDate(today.getDate() - 3);
-        const maxDate = lastThreeDays.toISOString().split('T')[0];
-        document.getElementById('startDate').setAttribute('max', maxDate);
-        document.getElementById('endDate').setAttribute('max', maxDate);
+
         document.getElementById('firstPage').addEventListener('click', () => goToPage(1));
         document.getElementById('lastPage').addEventListener('click', () => goToPage('last'));
         document.getElementById('searchButton').addEventListener('click', fetchData);
@@ -208,12 +200,12 @@
         document.getElementById('toggleViewButton').addEventListener('click', toggleView);
 
         function resetForm() {
+
             document.getElementById('startDate').value = '';
             document.getElementById('endDate').value = '';
             document.getElementById('name').value = '';
-            document.getElementById('department').value = '';
-
-
+            document.getElementById('departemnt').value = '';
+            
             departmentData = [];
             currentPage = 1;
             updateTable();
@@ -224,14 +216,20 @@
             }
         }
 
+        const today = new Date();
+        const lastThreeDays = new Date(today);
+        lastThreeDays.setDate(today.getDate() - 3);
+        const maxDate = lastThreeDays.toISOString().split('T')[0];
+        document.getElementById('startDate').setAttribute('max', maxDate);
+        document.getElementById('endDate').setAttribute('max', maxDate);
 
         async function fetchData() {
             const searchButton = document.getElementById('searchButton');
             searchButton.disabled = true;
             searchButton.textContent = 'Searching...';
 
-            const apiUrl = 'https://prod-13.northeurope.logic.azure.com:443/workflows/55990fc11a434b90b7d4093faf062157/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=BjUxLG418U52P1Lvxn8LQwQZIny7J7UlOMpe9wrBSMA';
-
+            const apiUrl = 'https://prod-41.northeurope.logic.azure.com:443/workflows/533399a29c0046719565e2ac4c9d914c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=gCWAVqFWmrGad1EY6X8TclUDFjY6on47FtZBg-DHiaM';
+// Increment the endDate by 1 day
             let endDate = document.getElementById('endDate').value;
             const endDateObj = new Date(endDate);
             endDateObj.setDate(endDateObj.getDate() + 1);
@@ -240,7 +238,8 @@
                 startDate: document.getElementById('startDate').value,
                 endDate: endDate,
                 name: document.getElementById('name').value,
-                department: document.getElementById('department').value,
+                department: document.getElementById('departemnt').value,
+
             };
 
             try {
@@ -295,18 +294,14 @@
             pageData.forEach(item => {
                 const row = tableBody.insertRow();
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.NAME}</td>
-                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.DEPARTMENT}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${(parseInt(item.NO_OF_PROCEDURES) || 0).toLocaleString()}</td>
-
-
-
+                    <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.DOCTOR_NAME}</td>
+                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.SPECIALITY}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${(parseInt(item.Total_EAR) || 0).toLocaleString()}</td>
                 `;
             });
 
             updatePagination();
             updateTotals();
-
         }
 
         function updatePagination() {
@@ -325,7 +320,7 @@
         }
 
         function updateTotals() {
-            const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.NO_OF_PROCEDURES) || 0), 0);
+            const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.Total_EAR) || 0), 0);
 
 
             document.getElementById('totalPvtOpd').textContent = totalPvtOpd.toLocaleString();
@@ -341,20 +336,20 @@
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
             const worksheetData = departmentData.map(item => [
-                item.NAME,
-                item.DEPARTMENT,
-                item.NO_OF_PROCEDURES,
+                item.DOCTOR_NAME,
+                item.SPECIALITY,
+                parseFloat(item.Total_EAR) || 0,
             ]);
 
             const worksheet = XLSX.utils.aoa_to_sheet([
-                ['Doctor Name', 'Department', 'No of Procedures'],
+                ['Doctor Name', 'Department', 'No of Procedures',],
                 ...worksheetData,
             ]);
 
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Department Data');
 
-            XLSX.writeFile(workbook, `c_section_${startDate}_to_${endDate}.xlsx`);
+            XLSX.writeFile(workbook, `normal_deliveries_${startDate}_to_${endDate}.xlsx`);
         }
 
 
@@ -471,8 +466,8 @@
 
 
     </script>
-
-
+  
+    
   <script>
 
       const departmentOptions = {
@@ -506,17 +501,17 @@
               {
                   name: "Average Length Of Stay",
                   link: "finance-als.html",
-                  icon: "fa-clock",
+                  icon: "fa-clock", // Time icon for length of stay
               },
               {
                   name: "Bed Occupancy",
                   link: "finance-bed-occupancy.html",
-                  icon: "fa-clinic-medical",
+                  icon: "fa-clinic-medical", // Hospital bed icon
               },
               {
                   name: "Short Stay",
                   link: "finance-short-stay.html",
-                  icon: "fa-user-clock",
+                  icon: "fa-user-clock", // Short stay/patient icon
               },
               {
                   name: "C-Section",
@@ -528,8 +523,6 @@
                   link: "normal-deliveries.html",
                   icon: "fa fa-hand-holding-heart",
               },
-
-
           ],
 
           Corporate: [
@@ -548,10 +541,7 @@
                   link: "finance-corporate-billing-receipt.html",
                   icon: "fa-file-invoice-dollar", // Billing/receipt icon
               },
-
           ],
-
-
       };
 
     function createDropdownItems(options, parentId = '') {
@@ -562,21 +552,21 @@
           submenuButton.className = 'w-full text-left flex items-center justify-between py-2 px-4 text-sm text-gray-300 hover:bg-gray-600 hover:text-white';
           const submenuId = `${parentId}${option.name.replace(/\s+/g, '')}`;
           submenuButton.onclick = () => toggleDropdown(submenuId);
-
+          
           const iconSpan = document.createElement('span');
           iconSpan.className = 'flex items-center';
           iconSpan.innerHTML = `<i class="fas ${option.icon} w-4 h-4 mr-2"></i><span class="sidebar-text">${option.name}</span>`;
-
+          
           const chevronIcon = document.createElement('i');
           chevronIcon.className = 'fas fa-chevron-right w-4 h-4';
-
+          
           submenuButton.appendChild(iconSpan);
           submenuButton.appendChild(chevronIcon);
-
+          
           const submenu = document.createElement('div');
           submenu.id = `${submenuId}-dropdown`;
           submenu.className = 'hidden bg-gray-800 py-2 pl-6';
-
+          
           submenu.appendChild(createDropdownItems(option.submenu, submenuId));
 
           fragment.appendChild(submenuButton);
@@ -601,15 +591,15 @@
       const dropdown = document.getElementById(`${id}-dropdown`);
       if (dropdown) {
         const isHidden = dropdown.classList.contains('hidden');
-
+        
         // Close all dropdowns at the same level
         dropdown.parentElement.querySelectorAll(':scope > [id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
-
+        
         // Toggle the clicked dropdown
         if (isHidden) {
           dropdown.classList.remove('hidden');
         }
-
+        
         // Rotate the chevron icon
         const button = document.querySelector(`button[onclick="toggleDropdown('${id}')"]`);
         const chevron = button.querySelector('.fa-chevron-right');
