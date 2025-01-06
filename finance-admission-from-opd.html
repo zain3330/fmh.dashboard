@@ -209,12 +209,6 @@
         }
     }
 
-    const today = new Date();
-    const lastThreeDays = new Date(today);
-    lastThreeDays.setDate(today.getDate() - 3);
-    const maxDate = lastThreeDays.toISOString().split('T')[0];
-    document.getElementById('startDate').setAttribute('max', maxDate);
-    document.getElementById('endDate').setAttribute('max', maxDate);
 
     async function fetchData() {
         const searchButton = document.getElementById('searchButton');

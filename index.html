@@ -127,10 +127,30 @@
 
     const mrno = mrnoInput.value;
     const pin = pinInput.value;
-
+    const allowedMRNOs = ['10060000005622', '10060000002293', ,'10060000001970'];
+    const adminMRNO = 'admin';
+    const adminPassword = 'admin123';
     loader.classList.remove('hidden');
     buttonText.classList.add('invisible');
     errorMessage.classList.add('hidden');
+
+    // Admin login check
+    if (mrno === adminMRNO && pin === adminPassword) {
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('isAdmin', 'true');
+      localStorage.setItem('mrno', mrno); // Store admin mrno for auth check
+      window.location.href = 'home.html';
+      return;
+    }
+    // Check if the MRNO is allowed
+    if (!allowedMRNOs.includes(mrno)) {
+      pinInput.value = '';
+      errorMessage.textContent = ' Your Employee Code does not have the required permissions to log in. Please contact Waqar Ahmad in the MIS department for guidance';
+      errorMessage.classList.remove('hidden');
+      loader.classList.add('hidden');
+      buttonText.classList.remove('invisible');
+      return;
+    }
 
     try {
       const response = await fetch(apiUrl, {
@@ -156,6 +176,7 @@
       }
     } catch (error) {
       console.error('Error:', error);
+      pinInput.value = '';
       errorMessage.textContent = error.message === 'Invalid credentials'
               ? 'Invalid credentials. Please try again.'
               : 'An error occurred. Please try again later.';
