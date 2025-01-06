@@ -278,14 +278,11 @@
     document.addEventListener('DOMContentLoaded', function() {
       const userNameElement = document.getElementById('userName');
       const fullName = localStorage.getItem('fullName');
-      const isAdmin = localStorage.getItem('isAdmin') === 'true';
-
-      if (isAdmin) {
-        userNameElement.textContent = 'Admin';
-      } else if (fullName) {
-        userNameElement.textContent = fullName;
+      if (fullName) {
+        userNameElement.textContent = `${fullName}`;
       }
     });
+
 
   </script>
 </body>
