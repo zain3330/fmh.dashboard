@@ -135,13 +135,7 @@
     errorMessage.classList.add('hidden');
 
     // Admin login check
-    if (mrno === adminMRNO && pin === adminPassword) {
-      localStorage.setItem('isLoggedIn', 'true');
 
-      localStorage.setItem('mrno', mrno); // Store admin mrno for auth check
-      window.location.href = 'home.html';
-      return;
-    }
     // Check if the MRNO is allowed
     if (!allowedMRNOs.includes(mrno)) {
       pinInput.value = '';
