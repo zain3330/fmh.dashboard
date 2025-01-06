@@ -137,7 +137,7 @@
     // Admin login check
     if (mrno === adminMRNO && pin === adminPassword) {
       localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('isAdmin', 'true');
+
       localStorage.setItem('mrno', mrno); // Store admin mrno for auth check
       window.location.href = 'home.html';
       return;
