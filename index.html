@@ -128,17 +128,14 @@
     const mrno = mrnoInput.value;
     const pin = pinInput.value;
     const allowedMRNOs = ['10060000005622', '10060000002293', '10060000000579','10060000001970','10060000002301'];
-
     loader.classList.remove('hidden');
     buttonText.classList.add('invisible');
     errorMessage.classList.add('hidden');
 
-    // Admin login check
-
     // Check if the MRNO is allowed
     if (!allowedMRNOs.includes(mrno)) {
       pinInput.value = '';
-      errorMessage.textContent = ' Your Employee Code does not have the required permissions to log in. Please contact the MIS department for guidance';
+      errorMessage.textContent = 'Your Employee Code does not have the required permissions to log in. Please contact the MIS department for guidance';
       errorMessage.classList.remove('hidden');
       loader.classList.add('hidden');
       buttonText.classList.remove('invisible');
@@ -162,6 +159,7 @@
 
       if (data[0] && data[0]['UserCount '] === 1) {
         localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('mrno', mrno); // Store MRNO for later checks
         localStorage.setItem('fullName', data[0]['FULL_NAME']);
         window.location.href = 'home.html';
       } else {
