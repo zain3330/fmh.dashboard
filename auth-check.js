@@ -1,5 +1,5 @@
 (function() {
-    const allowedMRNOs = ['10060000005622', '10060000002293','10060000001970'];
+    const allowedMRNOs = ['10060000005622', '10060000002293','10060000000579','10060000001970'];
     const adminMRNO = 'admin';
 
     function checkAuth() {
