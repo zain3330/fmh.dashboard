@@ -127,6 +127,10 @@
                                 <label for="depart" class="block text-sm font-medium text-gray-700">Department</label>
                                 <input type="text" id="depart" name="depart" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             </div>
+                            <div class="flex-1">
+                                <label for="type" class="block text-sm font-medium text-gray-700">Patient Type</label>
+                                <input type="text" id="type" name="type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            </div>
                         </div>
                         <div class="flex justify-between items-center">
                             <button id="resetButton" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
@@ -156,6 +160,7 @@
                                     <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider">Department</th>
                                     <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider">Cpt id</th>
                                     <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider">Cpt Desc</th>
+                                    <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider">Patient Type</th>
                                     <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider">No of Proc</th>
                                     <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider">Major Minor</th>
                                 </tr>
@@ -165,7 +170,7 @@
                                 </tbody>
                                 <tfoot id="tableFoot" class="bg-gray-50 hidden">
                                 <tr>
-                                    <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider" colspan="4">Total</th>
+                                    <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider" colspan="5">Total</th>
                                     <th id="totalADMISSIONS" class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider"></th>
                                 </tr>
                                 </tfoot>
@@ -224,6 +229,7 @@
             document.getElementById('departemnt').value = '';
             document.getElementById('name').value = '';
             document.getElementById('depart').value = '';
+            document.getElementById('type').value = '';
             departmentData = [];
             currentPage = 1;
             updateTable();
@@ -259,6 +265,7 @@
                 cpt_desc: document.getElementById('departemnt').value,
              name:   document.getElementById('name').value ,
                department: document.getElementById('depart').value ,
+                type: document.getElementById('type').value ,
 
             };
     
@@ -315,12 +322,13 @@
                 const row = tableBody.insertRow();
                 row.innerHTML = `
 
-           <td class="px-6 py-4 whitespace-nowrap font-serif text-gray-500">${item.NAME}</td>
-              <td class="px-6 py-4 whitespace-nowrap font-serif text-gray-500">${item.DEPARTMENT}</td>
-        <td class="px-6 py-4 whitespace-nowrap font-serif text-gray-500">${item.CPT_ID}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-left font-serif text-gray-500">${item.CPT_DESC}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-left font-serif text-gray-500">${(parseInt(item.NO_OF_PROCEDURES) || 0).toLocaleString()}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-left font-serif text-gray-500">${item.MAJOR_MINOR ? item.MAJOR_MINOR : 'Others'}</td>
+           <td class="px-6 py-4  text-sm font-serif text-gray-500">${item.NAME}</td>
+              <td class="px-6 py-4  text-sm font-serif text-gray-500">${item.DEPARTMENT}</td>
+        <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.CPT_ID}</td>
+        <td class="px-6 py-4  text-sm text-left font-serif text-gray-500">${item.CPT_DESC}</td>
+            <td class="px-6 py-4  text-sm text-left font-serif text-gray-500">${item.TYPE}</td>
+        <td class="px-6 py-4 whitespace-nowrap  text-left font-serif text-gray-500">${(parseInt(item.NO_OF_PROCEDURES) || 0).toLocaleString()}</td>
+        <td class="px-6 py-4 whitespace-nowrap  text-left font-serif text-gray-500">${item.MAJOR_MINOR ? item.MAJOR_MINOR : 'Others'}</td>
     `;
             });
 
@@ -363,11 +371,12 @@
                 item.DEPARTMENT,
                 item.CPT_ID,
                 item.CPT_DESC,
+                item.TYPE,
                 item.NO_OF_PROCEDURES,
                 item.MAJOR_MINOR,
             ]);
             const worksheet = XLSX.utils.aoa_to_sheet([
-                ['Month','Name' ,'Department' , 'Cap Id', 'Cpt Desc', 'No of Procedures' ,'Major Minor'],
+                ['Month','Name' ,'Department' , 'Cap Id', 'Cpt Desc','Patient Type' ,'No of Procedures' ,'Major Minor'],
                 ...worksheetData, // Data
             ]);
 
@@ -376,7 +385,7 @@
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Department Data');
 
             // Save the file as .xlsx
-            XLSX.writeFile(workbook,  `ipd_${startDate}_to_${endDate}.xlsx`);
+            XLSX.writeFile(workbook,  `total_procedures_${startDate}_to_${endDate}.xlsx`);
         }
         
         function toggleView() {
