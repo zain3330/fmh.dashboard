@@ -57,6 +57,7 @@
                     <!-- Dropdown items will be inserted here -->
                 </div>
             </div>
+
         </nav>
       </aside>
       <main class="flex-1 overflow-y-auto bg-gray-100">
@@ -68,7 +69,7 @@
             <button onclick="toggleSidebar()" class="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 <i class="fas fa-bars w-6 h-6"></i>
               </button>
-              <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">Normal Deliveries</h2>
+              <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">Mortality</h2>
               </div>
 
             <div class="flex items-center space-x-4">
@@ -94,7 +95,6 @@
                     <div class="p-6">
                         <div class="space-y-4">
                             <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
-
                                 <div class="flex-1">
                                     <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
                                     <input type="date" id="startDate" name="startDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
@@ -104,12 +104,12 @@
                                     <input type="date" id="endDate" name="endDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                 </div>
                                 <div class="flex-1">
-                                    <label for="name" class="block text-sm font-medium text-gray-700">Doctor Name</label>
-                                    <input type="text" id="name" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                    <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
+                                    <input type="text" id="department" name="department" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                 </div>
                                 <div class="flex-1">
-                                    <label for="departemnt" class="block text-sm font-medium text-gray-700">Department</label>
-                                    <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                    <label for="patient_type" class="block text-sm font-medium text-gray-700">Patient Type</label>
+                                    <input type="text" id="patient_type" name="patient_type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                 </div>
                             </div>
                             <div class="flex justify-between items-center">
@@ -135,22 +135,31 @@
                             <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">Doctor Name</th>
-                                        <th class="px-6 py-3 text-left  font-serif text-gray-500 uppercase tracking-wider">DEPARTMENT</th>
-                                        <th class="px-6 py-3 text-right  font-serif text-gray-500 uppercase tracking-wider">Total EAR</th>
+                                        <th class="px-6 py-3 text-sm text-left  font-serif text-gray-500 uppercase tracking-wider">Day Date</th>
+                                        <th class="px-6 py-3 text-sm text-left  font-serif text-gray-500 uppercase tracking-wider">
+                                           Location </th>
+                                        <th class="px-6 py-3 text-sm text-left  font-serif text-gray-500 uppercase tracking-wider">
+                                             Department</th>
+                                        <th class="px-6 py-3 text-sm text-left  font-serif text-gray-500 uppercase tracking-wider">MRNO</th>
+                                        <th class="px-6 py-3 text-sm text-left  font-serif text-gray-500 uppercase tracking-wider">Name</th>
+
+                                        <th class="px-6 py-3 text-sm text-left  font-serif text-gray-500 uppercase tracking-wider">Patient Type</th>
+
+
+
 
                                     </tr>
                                 </thead>
                                 <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
                                     <!-- Table rows will be inserted here -->
                                 </tbody>
-                                <tfoot id="tableFoot" class="bg-gray-50 hidden">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left   font-serif text-gray-500 uppercase tracking-wider" colspan="2">Total</th>
-                                        <th id="totalPvtOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>
+<!--                                <tfoot id="tableFoot" class="bg-gray-50 hidden">-->
+<!--                                    <tr>-->
+<!--                                        <th class="px-6 py-3 text-left   font-serif text-gray-500 uppercase tracking-wider" colspan="2">Total</th>-->
+<!--                                        <th id="totalPvtOpd" class="px-6 py-3 text-right    font-serif text-gray-500 uppercase tracking-wider"></th>-->
 
-                                    </tr>
-                                </tfoot>
+<!--                                    </tr>-->
+<!--                                </tfoot>-->
                             </table>
                         </div>
                         <div id="graphView" class="mt-6 rounded-md border p-4 hidden">
@@ -189,7 +198,6 @@
         let currentPage = 1;
         const itemsPerPage = 10;
         let chart = null;
-
         document.getElementById('firstPage').addEventListener('click', () => goToPage(1));
         document.getElementById('lastPage').addEventListener('click', () => goToPage('last'));
         document.getElementById('searchButton').addEventListener('click', fetchData);
@@ -199,12 +207,12 @@
         document.getElementById('resetButton').addEventListener('click', resetForm);
         document.getElementById('toggleViewButton').addEventListener('click', toggleView);
 
-        function resetForm() {
 
+        function resetForm() {
             document.getElementById('startDate').value = '';
             document.getElementById('endDate').value = '';
-            document.getElementById('name').value = '';
-            document.getElementById('departemnt').value = '';
+            document.getElementById('department').value = '';
+            document.getElementById('patient_type').value = '';
             
             departmentData = [];
             currentPage = 1;
@@ -223,7 +231,8 @@
             searchButton.disabled = true;
             searchButton.textContent = 'Searching...';
 
-            const apiUrl = 'https://prod-41.northeurope.logic.azure.com:443/workflows/533399a29c0046719565e2ac4c9d914c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=gCWAVqFWmrGad1EY6X8TclUDFjY6on47FtZBg-DHiaM';
+            const apiUrl = 'https://prod-26.northeurope.logic.azure.com:443/workflows/cbad247262f2426eb491554c596be5f0/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Pw1hJX3J4xEwRudLgJCCM-TXHRJfeczFU1ZcnRVYO68';
+
 // Increment the endDate by 1 day
             let endDate = document.getElementById('endDate').value;
             const endDateObj = new Date(endDate);
@@ -232,9 +241,8 @@
             const requestBody = {
                 startDate: document.getElementById('startDate').value,
                 endDate: endDate,
-                name: document.getElementById('name').value,
-                department: document.getElementById('departemnt').value,
-
+                department: document.getElementById('department').value,
+                patient_type: document.getElementById('patient_type').value,
             };
 
             try {
@@ -273,30 +281,37 @@
 
         function updateTable() {
             const tableBody = document.getElementById('tableBody');
-            const tableFoot = document.getElementById('tableFoot');
+
             tableBody.innerHTML = '';
 
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
             const pageData = departmentData.slice(startIndex, endIndex);
 
-            if (pageData.length === 0) {
-                tableFoot.classList.add('hidden');
-            } else {
-                tableFoot.classList.remove('hidden');
-            }
+
 
             pageData.forEach(item => {
                 const row = tableBody.insertRow();
-                row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${item.DOCTOR_NAME}</td>
-                    <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.SPECIALITY}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right  font-serif text-gray-500">${(parseInt(item.Total_EAR) || 0).toLocaleString()}</td>
+                const date = new Date(item.DAY_DATE);
+                const options = { day: 'numeric', month: 'short', year: 'numeric' };
+                const formattedDate = date.toLocaleDateString('en-GB', options);                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap  font-serif text-gray-500">${formattedDate}</td>
+                    <td class="px-6 py-4 text-sm   font-serif text-gray-500">${item.LOCATION}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.DEPARTMENT}</td>
+
+                   <td class="px-6 py-4 whitespace-nowrap    font-serif text-gray-500">${item.MRNO}</td>
+
+                    <td class="px-6 py-4    whitespace-nowrap font-serif text-gray-500">${item.NAME}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap   font-serif text-gray-500">${item.PATIENT_TYPE}</td>
+
+
+
+
                 `;
             });
 
             updatePagination();
-            updateTotals();
+
         }
 
         function updatePagination() {
@@ -314,13 +329,13 @@
             }
         }
 
-        function updateTotals() {
-            const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.Total_EAR) || 0), 0);
-
-
-            document.getElementById('totalPvtOpd').textContent = totalPvtOpd.toLocaleString();
-
-        }
+        // function updateTotals() {
+        //     const totalPvtOpd = departmentData.reduce((sum, item) => sum + (parseInt(item.Total_EAR) || 0), 0);
+        //
+        //
+        //     document.getElementById('totalPvtOpd').textContent = totalPvtOpd.toLocaleString();
+        //
+        // }
 
         function changePage(direction) {
             currentPage += direction;
@@ -330,21 +345,28 @@
         function downloadData() {
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
-            const worksheetData = departmentData.map(item => [
-                item.DOCTOR_NAME,
-                item.SPECIALITY,
-                parseFloat(item.Total_EAR) || 0,
-            ]);
+            const worksheetData = departmentData.map(item => {
+                const dateOnly = item.DAY_DATE.split('T')[0];
+                return [
+                    dateOnly,
+                    item.LOCATION,
+                    item.DEPARTMENT,
+                    item.MRNO,
+                    item.NAME,
+                    item.PATIENT_TYPE,
+                ];
+            });
+
 
             const worksheet = XLSX.utils.aoa_to_sheet([
-                ['Doctor Name', 'Department', 'No of Procedures',],
+                ['Day Date','Location' , 'Department', 'MRNO','Name','Patient Type'],
                 ...worksheetData,
             ]);
 
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Department Data');
 
-            XLSX.writeFile(workbook, `normal_deliveries_${startDate}_to_${endDate}.xlsx`);
+            XLSX.writeFile(workbook, `mortality_${startDate}_to_${endDate}.xlsx`);
         }
 
 
@@ -543,6 +565,8 @@
                   icon: "fa-file-invoice-dollar", // Billing/receipt icon
               },
           ],
+
+
       };
 
     function createDropdownItems(options, parentId = '') {
