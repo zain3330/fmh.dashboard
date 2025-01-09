@@ -97,13 +97,13 @@
 
   function formatMRNo(value) {
     if (value.length === 4) {
-      return "1006000000" + value; // Add prefix for 4-digit MR No.
+      return "1006000000" + value;
     } else if (value.length === 3) {
-      return "10060000000" + value; // Add prefix for 3-digit MR No.
+      return "10060000000" + value;
     } else if (value.length === 2) {
-      return "100600000000" + value; // Add prefix for 2-digit MR No.
+      return "100600000000" + value;
     }
-    return value; // Default to user input if full MR No. is entered
+    return value;
   }
 
   // Function to auto-fill the MR No. when required
