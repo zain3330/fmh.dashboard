@@ -125,6 +125,9 @@
                             </div>
                         </div>
                     </div>
+                    <div id="percentageDisplay" class="mt-4 p-4 bg-blue-100 rounded-md text-blue-800 font-semibold text-center hidden">
+                        Admissions Percentage: <span id="percentageValue"></span>%
+                    </div>
                     <div id="tableView" class="mt-6 rounded-md border">
                         <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
@@ -187,7 +190,10 @@
 
     document.getElementById('firstPage').addEventListener('click', () => goToPage(1));
     document.getElementById('lastPage').addEventListener('click', () => goToPage('last'));
-    document.getElementById('searchButton').addEventListener('click', fetchData);
+    document.getElementById('searchButton').addEventListener('click', async () => {
+        await fetchData();
+        await fetchPercentage();
+    });
     document.getElementById('downloadButton').addEventListener('click', downloadData);
     document.getElementById('prevPage').addEventListener('click', () => changePage(-1));
     document.getElementById('nextPage').addEventListener('click', () => changePage(1));
@@ -204,13 +210,51 @@
         currentPage = 1;
         updateTable();
         document.getElementById('downloadButton').disabled = true;
+        document.getElementById('percentageDisplay').value = '';
+        document.getElementById('percentageDisplay').classList.add('hidden');
         if (chart) {
             chart.destroy();
             chart = null;
         }
     }
 
+    async function fetchPercentage() {
+        document.getElementById('percentageDisplay').value = '';
+        document.getElementById('percentageDisplay').classList.add('hidden');
+        const apiUrl = 'https://prod-25.northeurope.logic.azure.com:443/workflows/cf5ed3b80c04489fac7badb46b20b642/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=0GXjkJLBaLsS4IfLcoPuWuJKp6npAPpS_vrOF22JLCw';
+        let endDate = document.getElementById('endDate').value;
+        const endDateObj = new Date(endDate);
+        endDateObj.setDate(endDateObj.getDate() + 1);
+        endDate = endDateObj.toISOString().split('T')[0];
+        const requestBody = {
+            startDate: document.getElementById('startDate').value,
+            endDate: endDate,
+        };
 
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+
+            const data = await response.json();
+            if (data && data.length > 0) {
+                const percentage = data[0].CONVERSION;
+                document.getElementById('percentageValue').textContent = percentage.toFixed(2);
+                document.getElementById('percentageDisplay').classList.remove('hidden');
+            } else {
+                document.getElementById('percentageDisplay').classList.add('hidden');
+            }
+        } catch (error) {
+            console.error('Failed to fetch percentage data:', error);
+            document.getElementById('percentageDisplay').classList.add('hidden');
+        }
+    }
 
     async function fetchData() {
         const searchButton = document.getElementById('searchButton');
