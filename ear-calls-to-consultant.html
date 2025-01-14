@@ -20,6 +20,13 @@
             },
         }
     </script>
+    <style>
+        /* Add this style to the head section */
+        .table-container {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+        </style>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-... your_hash ..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
@@ -68,7 +75,7 @@
             <button onclick="toggleSidebar()" class="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
                 <i class="fas fa-bars w-6 h-6"></i>
               </button>
-              <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">Bed Occupancy</h2>
+              <h2 id="departmentTitle" class="text-2xl font-bold text-gray-900">EAR Calls to Consultant</h2>
               </div>
 
             <div class="flex items-center space-x-4">
@@ -94,22 +101,7 @@
                 <div class="p-6">
                     <div class="space-y-4">
                         <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
-                            <div class="flex-1">
-                                <label for="type" class="block text-sm font-medium text-gray-700">Hospital Type</label>
-                                <select id="type" name="hospitalType" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                    <option value="M" selected>Hospital</option>
-                                    <option value="D">Dental</option>
-                                </select>
-                            </div>
-                         
-                            <div class="flex-1">
-                                <label for="hospital" class="block text-sm font-medium text-gray-700">Hospital</label>
-                                <select id="hospital" name="hospital" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                    <option value="ALL" selected>All</option>
-                                    <option value="FMH">FMH Hospital</option>
-                                    <option value="HH">Hijaz Hospital</option>
-                                </select>
-                            </div>
+
                             <div class="flex-1">
                                 <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
                                 <input type="date" id="startDate" name="startDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
@@ -119,8 +111,8 @@
                                 <input type="date" id="endDate" name="endDate" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             </div>
                             <div class="flex-1">
-                                <label for="departemnt" class="block text-sm font-medium text-gray-700">Department</label>
-                                <input type="text" id="departemnt" name="name" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <label for="depart" class="block text-sm font-medium text-gray-700">Department</label>
+                                <input type="text" id="depart" name="depart" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             </div>
                         </div>
                         <div class="flex justify-between items-center">
@@ -135,24 +127,39 @@
                                     <i class="fas fa-download inline-block w-4 h-4 mr-2"></i>
                                     Download Data
                                 </button>
-                                <button id="toggleViewButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
-                                    Show Graph
-                                </button>
+<!--                                <button id="toggleViewButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">-->
+<!--                                    Show Graph-->
+<!--                                </button>-->
                             </div>
                         </div>
                     </div>
                     <div id="tableView" class="mt-6 rounded-md border">
-                        <table id="dataTable" class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
+
+                            <table id="dataTable" class="min-w-full divide-y divide-gray-200 table-auto">
+                                <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-center font-serif text-gray-500 uppercase tracking-wider">Speciality</th>
-                                    <th class="px-6 py-3 text-center font-serif text-gray-500 uppercase tracking-wider">Bed Occupancy</th>
+
+                                    <th class="px-4 py-2 text-sm text-left font-serif text-gray-500 uppercase tracking-wider">PATIENT MRNO</th>
+                                    <th class="px-4 py-2 text-sm text-left font-serif text-gray-500 uppercase tracking-wider">NAME</th>
+                                    <th class="px-4 py-2 text-sm text-left font-serif text-gray-500 uppercase tracking-wider">ENTERED BY</th>
+                                    <th class="px-4 py-2 text-sm text-left font-serif text-gray-500 uppercase tracking-wider">ENTERED DATE</th>
+                                    <th class="px-4 py-2 text-sm text-left font-serif text-gray-500 uppercase tracking-wider">CONSULTANT MRNO</th>
+                                    <th class="px-4 py-2 text-sm text-left font-serif text-gray-500 uppercase tracking-wider">RESON FOR CONSULT</th>
+                                    <th class="px-4 py-2 text-sm text-left font-serif text-gray-500 uppercase tracking-wider">DEPARTMENT</th>
                                 </tr>
-                            </thead>
-                            <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
+                                </thead>
+                                <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
                                 <!-- Table rows will be inserted here -->
-                            </tbody>
-                        </table>
+                                </tbody>
+<!--                                <tfoot id="tableFoot" class="bg-gray-50 hidden">-->
+<!--                                <tr>-->
+<!--                                    <th class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider" colspan="5">Total</th>-->
+<!--                                    <th id="totalADMISSIONS" class="px-4 py-2 text-left font-serif text-gray-500 uppercase tracking-wider"></th>-->
+<!--                                </tr>-->
+<!--                                </tfoot>-->
+                            </table>
+
+
                     </div>
                     <div id="graphView" class="mt-6 rounded-md border p-4 hidden">
                         <canvas id="chartCanvas"></canvas>
@@ -175,7 +182,6 @@
                         </button>
                     </div>
                 </div>
-
     </div>
 </div>
 </div>
@@ -200,8 +206,6 @@
         document.getElementById('toggleViewButton').addEventListener('click', toggleView);
 
         function resetForm() {
-            document.getElementById('type').value = 'M';
-            document.getElementById('hospital').value = 'ALL';
             document.getElementById('startDate').value = '';
             document.getElementById('endDate').value = '';
             document.getElementById('departemnt').value = '';
@@ -215,20 +219,19 @@
             }
         }
 
-        const today = new Date();
-        const lastThreeDays = new Date(today);
-        lastThreeDays.setDate(today.getDate() - 3);
-        const maxDate = lastThreeDays.toISOString().split('T')[0];
-        document.getElementById('startDate').setAttribute('max', maxDate);
-        document.getElementById('endDate').setAttribute('max', maxDate);
+        // const today = new Date();
+        // const lastThreeDays = new Date(today);
+        // lastThreeDays.setDate(today.getDate() - 3);
+        // const maxDate = lastThreeDays.toISOString().split('T')[0];
+        // document.getElementById('startDate').setAttribute('max', maxDate);
+        // document.getElementById('endDate').setAttribute('max', maxDate);
 
         async function fetchData() {
             const searchButton = document.getElementById('searchButton');
             searchButton.disabled = true;
             searchButton.textContent = 'Searching...';
 
-            const apiUrl = 'https://prod-04.northeurope.logic.azure.com:443/workflows/cb110db55e9643d18081aa47105f83f5/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=aPd9DuavqDRel8HZZLjnxpT6A7A2CNS9100OVhZh12I';
-            const hospitalValue = document.getElementById('hospital').value;
+            const apiUrl = 'https://prod-25.northeurope.logic.azure.com:443/workflows/cfab119c21ef4b53b09ad3ebff539264/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=PKPrDMQKN8sFDwkScR5iDxhW4M0Kc3Syu_TZ7_xGmXg';
             let endDate = document.getElementById('endDate').value;
 // Increment the endDate by 1 day
             const endDateObj = new Date(endDate);
@@ -236,11 +239,9 @@
             endDate = endDateObj.toISOString().split('T')[0];
             const requestBody = {
                 startDate: document.getElementById('startDate').value,
-                endDate: endDate,
-                type: document.getElementById('type').value,
-                department: document.getElementById('departemnt').value,
-                hos1: (hospitalValue === 'ALL' || hospitalValue === 'FMH') ? 'FMH' : '',
-                hos2: (hospitalValue === 'ALL' || hospitalValue === 'HH') ? 'HH' : '',
+                endDate:endDate,
+               department: document.getElementById('depart').value ,
+
             };
     
             try {
@@ -279,7 +280,7 @@
 
         function updateTable() {
             const tableBody = document.getElementById('tableBody');
-            const tableFoot = document.getElementById('tableFoot');
+            // const tableFoot = document.getElementById('tableFoot');
             tableBody.innerHTML = '';
 
             const startIndex = (currentPage - 1) * itemsPerPage;
@@ -291,16 +292,29 @@
             // } else {
             //     tableFoot.classList.remove('hidden');
             // }
-
             pageData.forEach(item => {
                 const row = tableBody.insertRow();
+                // Convert the date to a more user-friendly format
+                const enteredDate = new Date(item.ENTERED_DATE);
+                const formattedDate = enteredDate.toLocaleString('en-US', {
+                    dateStyle: 'medium',
+                    timeStyle: 'short'
+                });
+
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-center font-serif text-gray-500">${item.SPECIALITY}</td>
-                   <td class="px-6 py-4 whitespace-nowrap text-center font-serif text-gray-500">${(parseInt(item.OCC_PER) || 0).toLocaleString()}</td>
-                `;
+        <td class="px-6 py-4 text-sm font-serif text-gray-500">${item.PATIENT_MRNO}</td>
+        <td class="px-6 py-4 text-sm font-serif text-gray-500">${item.NAME}</td>
+        <td class="px-6 py-4 text-sm font-serif text-gray-500">${item.ENTERED_BY}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-left font-serif text-gray-500">${formattedDate}</td>
+        <td class="px-6 py-4 text-sm text-left font-serif text-gray-500">${item.CONSULTANT_MRNO}</td>
+        <td class="px-6 py-4 text-sm text-left font-serif text-gray-500">${item.REASON_FOR_CONSULT}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-left font-serif text-gray-500">${item.DEPARTMENT}</td>
+    `;
             });
 
+
             updatePagination();
+            // updateTotals();
         }
 
         function updatePagination() {
@@ -319,7 +333,7 @@
         }
 
         // function updateTotals() {
-        //     const totalADMISSIONS = departmentData.reduce((sum, item) => sum + (parseInt(item.OCC_PER) || 0), 0);
+        //     const totalADMISSIONS = departmentData.reduce((sum, item) => sum + (parseInt(item.NO_OF_PROCEDURES) || 0), 0);
         //     document.getElementById('totalADMISSIONS').textContent = totalADMISSIONS.toLocaleString();
         // }
 
@@ -328,26 +342,37 @@
             updateTable();
         }
 
+
         function downloadData() {
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
-            const worksheetData = departmentData.map(item => [
-                item.SPECIALITY,
-                item.OCC_PER,
-            ]);
+            const worksheetData = departmentData.map(item => {
 
-            // Add headers
-            const worksheet = XLSX.utils.aoa_to_sheet([
-                ['Speciality', 'Bed Occupancy'],
-                ...worksheetData,
+                const dateTime = item.ENTERED_DATE.split('T');
+                const date = dateTime[0];
+                const time = dateTime[1].split('.')[0]; // Removing any milliseconds if present
+                return [
+                    item.PATIENT_MRNO,
+                    item.NAME,
+                    item.ENTERED_BY,
+                    `${date} ${time}`, // Combining date and time
+                    item.CONSULTANT_MRNO,
+                    item.RESON_FOR_CONSULT,
+                    item.DEPARTMENT
+                ];
+            });
+
+                const worksheet = XLSX.utils.aoa_to_sheet([
+                ['Patient Mrno','Name' ,'Entered BY' , 'Entered Date', 'Consultant MRNO','Reason for Consult' ,'Department' ],
+                ...worksheetData, // Data
             ]);
 
             // Create a new workbook and append the worksheet
             const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'Bed Occupancy Data');
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Department Data');
 
-            // Trigger the download
-            XLSX.writeFile(workbook, `bed_occupancy_${startDate}_to_${endDate}.xlsx`);
+            // Save the file as .xlsx
+            XLSX.writeFile(workbook,  `ear-calls-to-consultant_${startDate}_to_${endDate}.xlsx`);
         }
         
         function toggleView() {
@@ -373,68 +398,124 @@
         function updateGraph() {
             const ctx = document.getElementById('chartCanvas').getContext('2d');
 
+            // Destroy the previous chart instance if it exists
             if (chart) {
                 chart.destroy();
             }
 
-            if (departmentData.length === 0) {
-                return; // Don't create a chart if there's no data
+            if (!departmentData || departmentData.length === 0) {
+                return; // Do not create a chart if there's no data
             }
 
-            // Sort data from greater to lesser values
-            const sortedData = [...departmentData].sort((a, b) => b.OCC_PER - a.OCC_PER);
+            // Group and sum the NO_OF_PROCEDURES by CPT_DESC
+            const groupedData = departmentData.reduce((acc, item) => {
+                acc[item.CPT_DESC] = (acc[item.CPT_DESC] || 0) + parseInt(item.NO_OF_PROCEDURES);
+                return acc;
+            }, {});
 
+            // Convert the grouped data into a sorted array
+            const sortedData = Object.entries(groupedData)
+                .map(([CPT_DESC, NO_OF_PROCEDURES]) => ({ CPT_DESC, NO_OF_PROCEDURES }))
+                .sort((a, b) => b.NO_OF_PROCEDURES - a.NO_OF_PROCEDURES);
+
+            if (sortedData.length === 0) {
+                return; // Do not create a chart if there's no data after processing
+            }
+
+            const labels = sortedData.map(item => item.CPT_DESC);
+            const dataValues = sortedData.map(item => item.NO_OF_PROCEDURES);
+
+            const minValue = Math.min(...dataValues);
+            const maxValue = Math.max(...dataValues);
+            const paddingFactor = 0.1; // Add 10% padding for visual spacing
+            const paddingRange = (maxValue - minValue) * paddingFactor;
+
+            // Create the chart
             chart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: sortedData.map(item => item.SPECIALITY),
+                    labels,
                     datasets: [{
-                        label: 'Average Length of Stay',
-                        data: sortedData.map(item => item.OCC_PER),
+                        label: 'Number of Procedures',
+                        data: dataValues,
                         borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.1)',
                         tension: 0.1,
-                        pointRadius: 7,
-                        pointHoverRadius: 10
+                        pointRadius: 5,
+                        pointHoverRadius: 8,
+                        borderWidth: 2,
+                        fill: true
                     }]
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            top: 20,
+                            right: 20,
+                            bottom: 20,
+                            left: 20
+                        }
+                    },
                     plugins: {
                         legend: {
                             position: 'top',
                         },
                         title: {
                             display: true,
-                            text: 'Average Length of Stay by Speciality'
+                            text: 'Number of Procedures by CPT Description',
+                            font: {
+                                size: 16
+                            }
                         },
                         tooltip: {
-                            enabled: false
+                            callbacks: {
+                                label: function(context) {
+                                    return `Procedures: ${context.parsed.y}`;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'top',
+                            offset: 5,
+                            formatter: (value) => value,
+                            font: {
+                                weight: 'bold',
+                                size: 10
+                            },
+                            color: 'rgb(75, 192, 192)'
                         }
                     },
                     scales: {
                         x: {
                             ticks: {
-                                autoSkip: false,
-                                maxRotation: 90,
-                                minRotation: 90
+                                autoSkip: true,
+                                maxRotation: 45,
+                                minRotation: 45,
+                                padding: 10
+                            },
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            suggestedMin: Math.max(0, minValue - paddingRange),
+                            suggestedMax: maxValue + paddingRange,
+                            ticks: {
+                                stepSize: Math.ceil((maxValue - minValue) / 10),
+                                padding: 10
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
                             }
                         }
                     },
                     elements: {
-                        point: {
-                            pointStyle: 'circle'
-                        }
-                    },
-                    plugins: {
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'top',
-                            formatter: (value, context) => {
-                                return `${value}`;
-                            },
-                            font: {
-                                weight: 'bold'
-                            }
+                        line: {
+                            tension: 0.3
                         }
                     }
                 },
@@ -442,11 +523,14 @@
             });
         }
 
+
+
+
+
     </script>
 
         
   <script>
-
       const departmentOptions = {
           Finance: [
               {
@@ -515,6 +599,7 @@
                   "link": "ear-calls-to-consultant.html",
                   "icon": "fa fa-phone"
               }
+
           ],
 
           Corporate: [
@@ -533,8 +618,11 @@
                   link: "finance-corporate-billing-receipt.html",
                   icon: "fa-file-invoice-dollar", // Billing/receipt icon
               },
+
+
           ],
       };
+
 
       function createDropdownItems(options, parentId = '') {
       const fragment = document.createDocumentFragment();
@@ -611,8 +699,6 @@
 
     function logout() {
       localStorage.removeItem('isLoggedIn');
-      localStorage.removeItem('fullName');
-
       window.location.href = 'index.html';
     }
 
@@ -644,13 +730,13 @@
       }
 
 
-      // Close dropdowns when clicking outside
-    document.addEventListener('click', function(event) {
-      if (!event.target.closest('.relative')) {
-        document.querySelectorAll('[id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
-        document.querySelectorAll('.fa-chevron-right').forEach(el => el.style.transform = 'rotate(0deg)');
-      }
-    });
+
+      document.addEventListener('click', function(event) {
+          if (!event.target.closest('.relative')) {
+              document.querySelectorAll('[id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
+              document.querySelectorAll('.fa-chevron-right').forEach(el => el.style.transform = 'rotate(0deg)');
+          }
+      });
 
       document.addEventListener('DOMContentLoaded', function() {
           const userNameElement = document.getElementById('userName');
