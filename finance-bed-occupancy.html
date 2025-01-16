@@ -225,7 +225,7 @@
         async function fetchData() {
             const searchButton = document.getElementById('searchButton');
             searchButton.disabled = true;
-            searchButton.textContent = 'Searching...';
+            searchButton.textContent = 'Search in Progress, Please Wait...';
 
             const apiUrl = 'https://prod-04.northeurope.logic.azure.com:443/workflows/cb110db55e9643d18081aa47105f83f5/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=aPd9DuavqDRel8HZZLjnxpT6A7A2CNS9100OVhZh12I';
             const hospitalValue = document.getElementById('hospital').value;

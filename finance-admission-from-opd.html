@@ -247,7 +247,7 @@
     async function fetchData() {
         const searchButton = document.getElementById('searchButton');
         searchButton.disabled = true;
-        searchButton.textContent = 'Searching...';
+        searchButton.textContent = 'Search in Progress, Please Wait...';
 
         const apiUrl = 'https://prod-59.northeurope.logic.azure.com:443/workflows/15ede064f7504a08a37accc94ad864a5/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=eGu2Aij9cYZHXoJdbSvhv-Q8UmC-1Mif351cwP75Njw';
         let endDate = document.getElementById('endDate').value;
