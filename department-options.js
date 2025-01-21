@@ -25,6 +25,15 @@ const departmentOptions = {
 
             ],
         },
+        {
+            name: "Discharge Type",
+            icon: "fa-hospital-user", // Medical procedures icon
+            submenu: [
+                { name: "EAR Discharge Type", link: "ear_discharge_type.html", icon: "fa-ear-listen" }, // Medical notes icon
+                { name: "IPD Discharge Type", link: "ipd_discharge_type.html", icon: "fa-procedures" }, // Medical notes icon
+
+            ],
+        },
 
         {
             name: "Average Length Of Stay",
