@@ -33,6 +33,18 @@
         </a>
         <nav class="mt-6">
             <div class="relative">
+                <button onclick="toggleDropdown('Clinical')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
+              <span class="flex items-center">
+                <i class="fas fa-dollar-sign w-5 h-5 mr-2"></i>
+                <span class="sidebar-text">Clinical</span>
+              </span>
+                    <i class="fas fa-chevron-down w-4 h-4"></i>
+                </button>
+                <div id="Clinical-dropdown" class="hidden bg-gray-700 py-2">
+                    <!-- Dropdown items will be inserted here -->
+                </div>
+            </div>
+            <div class="relative">
                 <button onclick="toggleDropdown('Finance')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
               <span class="flex items-center">
                 <i class="fas fa-dollar-sign w-5 h-5 mr-2"></i>
@@ -56,8 +68,7 @@
                     <!-- Dropdown items will be inserted here -->
                 </div>
             </div>
-        </nav>
-    </aside>
+        </nav>    </aside>
     <main class="flex-1 overflow-y-auto bg-gray-100">
         <!-- Main Content -->
         <header class="bg-white shadow-sm sticky top-0 z-10">

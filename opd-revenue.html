@@ -33,33 +33,44 @@
         <a href="home.html" class="p-4">
           <h1 id="userName"  class="text-center text-2xl font-bold"></h1>
         </a>
-        <nav class="mt-6">
-          <div class="relative">
-            <button onclick="toggleDropdown('Finance')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
+          <nav class="mt-6">
+              <div class="relative">
+                  <button onclick="toggleDropdown('Clinical')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
+              <span class="flex items-center">
+                <i class="fas fa-dollar-sign w-5 h-5 mr-2"></i>
+                <span class="sidebar-text">Clinical</span>
+              </span>
+                      <i class="fas fa-chevron-down w-4 h-4"></i>
+                  </button>
+                  <div id="Clinical-dropdown" class="hidden bg-gray-700 py-2">
+                      <!-- Dropdown items will be inserted here -->
+                  </div>
+              </div>
+              <div class="relative">
+                  <button onclick="toggleDropdown('Finance')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
               <span class="flex items-center">
                 <i class="fas fa-dollar-sign w-5 h-5 mr-2"></i>
                 <span class="sidebar-text">Finance</span>
               </span>
-              <i class="fas fa-chevron-down w-4 h-4"></i>
-            </button>
-            <div id="Finance-dropdown" class="hidden bg-gray-700 py-2">
-              <!-- Dropdown items will be inserted here -->
-            </div>
-          </div>
-            <div class="relative">
-                <button onclick="toggleDropdown('Corporate')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
+                      <i class="fas fa-chevron-down w-4 h-4"></i>
+                  </button>
+                  <div id="Finance-dropdown" class="hidden bg-gray-700 py-2">
+                      <!-- Dropdown items will be inserted here -->
+                  </div>
+              </div>
+              <div class="relative">
+                  <button onclick="toggleDropdown('Corporate')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
             <span class="flex items-center">
               <i class="fas fa-briefcase w-5 h-5 mr-2"></i>
               <span class="sidebar-text">Corporate</span>
             </span>
-                    <i class="fas fa-chevron-down w-4 h-4"></i>
-                </button>
-                <div id="Corporate-dropdown" class="hidden bg-gray-700 py-2">
-                    <!-- Dropdown items will be inserted here -->
-                </div>
-            </div>
-
-        </nav>
+                      <i class="fas fa-chevron-down w-4 h-4"></i>
+                  </button>
+                  <div id="Corporate-dropdown" class="hidden bg-gray-700 py-2">
+                      <!-- Dropdown items will be inserted here -->
+                  </div>
+              </div>
+          </nav>
       </aside>
       <main class="flex-1 overflow-y-auto bg-gray-100">
       <!-- Main Content -->

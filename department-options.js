@@ -1,5 +1,5 @@
 const departmentOptions = {
-    Finance: [
+    Clinical: [
         {
             name: "Count",
             icon: "fa-chart-bar", // General counting/statistics icon
@@ -97,6 +97,13 @@ const departmentOptions = {
             name: "Corporate Billing & Receipt",
             link: "finance-corporate-billing-receipt.html",
             icon: "fa-file-invoice-dollar", // Billing/receipt icon
+        },
+    ],
+    Finance: [
+        {
+            name: "General Ledger",
+            link: "general-ledger.html",
+            icon: "fa-user",
         },
     ],
 };
