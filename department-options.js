@@ -105,5 +105,12 @@ const departmentOptions = {
             link: "general-ledger.html",
             icon: "fa-user",
         },
+        {
+            name: "Debtor Aging Master",
+            link: "debtor-aging-master.html",
+            icon: "fa-list-alt"
+        },
+
+
     ],
 };
