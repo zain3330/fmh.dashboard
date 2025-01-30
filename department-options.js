@@ -103,20 +103,24 @@ const departmentOptions = {
         {
             name: "General Ledger",
             link: "general-ledger.html",
-            icon: "fa-user",
+            icon: "fa-book", // Changed to ledger/book icon (better for accounting)
         },
         {
             name: "Trial Balance",
             link: "trail-balance.html",
-            icon: "fa-balance-scale",
+            icon: "fa-balance-scale", // Good choice (represents balance)
         },
         {
             name: "Debtor Aging Master",
             link: "debtor-aging-master.html",
-            icon: "fa-list-alt"
+            icon: "fa-hourglass-half", // Changed (aging/debt timing concept)
         },
+        {
+            name: "SSP Refer Letter Data",
+            link: "SSP-Refer-Letter-Data.html",
+            icon: "fa-file-invoice", // Changed (better for financial documents)
+        },
+    ]
 
-
-    ],
 };
 
