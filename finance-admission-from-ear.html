@@ -21,6 +21,34 @@
             },
         }
     </script>
+    <style>
+        .loader {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid #ccc;
+            border-radius: 50%;
+            border-top-color: #3b82f6;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background-color: rgb(219 234 254);
+            border-radius: 0.375rem;
+            margin-top: 1rem;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-... your_hash ..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
@@ -137,8 +165,16 @@
                             </div>
                         </div>
                     </div>
-                    <div id="percentageDisplay" class="mt-4 p-4 bg-blue-100 rounded-md text-blue-800 font-semibold text-center hidden">
-                        Admissions Percentage: <span id="percentageValue"></span>%
+                    <div id="percentageDisplay" class="mt-4 hidden">
+                        <!-- Loading State -->
+                        <div id="loadingState" class="loading-container">
+                            <div class="loader"></div>
+                            <span class="font-semibold text-blue-800">Calculating percentage...</span>
+                        </div>
+                        <!-- Result State -->
+                        <div id="resultState" class="p-4 bg-blue-100 rounded-md text-blue-800 font-semibold text-center hidden">
+                            Admissions Percentage: <span id="percentageValue"></span>%
+                        </div>
                     </div>
                     <div id="tableView" class="mt-6 rounded-md border">
                         <table id="dataTable" class="min-w-full divide-y divide-gray-200">
@@ -209,8 +245,15 @@
     document.getElementById('firstPage').addEventListener('click', () => goToPage(1));
     document.getElementById('lastPage').addEventListener('click', () => goToPage('last'));
     document.getElementById('searchButton').addEventListener('click', async () => {
+        const searchButton = document.getElementById('searchButton');
+        searchButton.disabled = true;
+        searchButton.innerHTML = '<div class="loader" style="width: 16px; height: 16px; margin-right: 8px;"></div>Searching...';
+
         await fetchData();
         await fetchPercentage();
+
+        searchButton.disabled = false;
+        searchButton.innerHTML = 'Search';
     });
     document.getElementById('downloadButton').addEventListener('click', downloadData);
     document.getElementById('prevPage').addEventListener('click', () => changePage(-1));
@@ -228,8 +271,9 @@
         currentPage = 1;
         updateTable();
         document.getElementById('downloadButton').disabled = true;
-        document.getElementById('percentageDisplay').value = '';
         document.getElementById('percentageDisplay').classList.add('hidden');
+        document.getElementById('loadingState').classList.add('hidden');
+        document.getElementById('resultState').classList.add('hidden');
         if (chart) {
             chart.destroy();
             chart = null;
@@ -237,8 +281,11 @@
     }
 
     async function fetchPercentage() {
-        document.getElementById('percentageDisplay').value = '';
-        document.getElementById('percentageDisplay').classList.add('hidden');
+        // Show loading state
+        document.getElementById('percentageDisplay').classList.remove('hidden');
+        document.getElementById('loadingState').classList.remove('hidden');
+        document.getElementById('resultState').classList.add('hidden');
+
         const apiUrl = 'https://prod-25.northeurope.logic.azure.com:443/workflows/cf5ed3b80c04489fac7badb46b20b642/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=0GXjkJLBaLsS4IfLcoPuWuJKp6npAPpS_vrOF22JLCw';
         let endDate = document.getElementById('endDate').value;
         const endDateObj = new Date(endDate);
@@ -264,7 +311,8 @@
             if (data && data.length > 0) {
                 const percentage = data[0].CONVERSION;
                 document.getElementById('percentageValue').textContent = percentage.toFixed(2);
-                document.getElementById('percentageDisplay').classList.remove('hidden');
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('resultState').classList.remove('hidden');
             } else {
                 document.getElementById('percentageDisplay').classList.add('hidden');
             }
