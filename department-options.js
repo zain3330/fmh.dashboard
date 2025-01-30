@@ -106,6 +106,11 @@ const departmentOptions = {
             icon: "fa-user",
         },
         {
+            name: "Trail Balance",
+            link: "trail-balance.html",
+            icon: "fa-balance-scale",
+        },
+        {
             name: "Debtor Aging Master",
             link: "debtor-aging-master.html",
             icon: "fa-list-alt"
@@ -114,3 +119,4 @@ const departmentOptions = {
 
     ],
 };
+
