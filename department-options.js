@@ -106,7 +106,7 @@ const departmentOptions = {
             icon: "fa-user",
         },
         {
-            name: "Trail Balance",
+            name: "Trial Balance",
             link: "trail-balance.html",
             icon: "fa-balance-scale",
         },
