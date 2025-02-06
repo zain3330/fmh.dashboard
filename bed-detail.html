@@ -94,17 +94,24 @@
             </div>
         </div>
       </header>
+          <!-- Modified loader HTML with absolute positioning -->
+          <div id="tableLoader" class="fixed inset-5 flex items-center justify-center ml-64  z-10">
+              <div class="flex flex-col items-center space-y-3 ">
+                  <!-- Animated Loading Spinner -->
+                  <div class="relative">
+                      <div class="w-12 h-12 border-4 border-gray-200 rounded-full animate-spin"></div>
+                      <div class="absolute top-0 left-0 w-12 h-12 border-4 border-gray-800 rounded-full animate-spin"
+                           style="border-top-color: transparent; animation-duration: 1s;">
+                      </div>
+                  </div>
+                  <!-- Loading Text -->
+                  <div class="text-gray-600 text-sm font-medium">Loading data...</div>
+              </div>
+          </div>
       <div class="max-w-`8xl mx-auto py- sm:px-6 lg:px-0 ">
         <div id="departmentContent" class="px-4 py-2 sm:px-0">
 
-                    <!-- <div class="p-6 bg-white border-b border-gray-200">
-                        <div class="flex justify-between items-center">
-                            <h1 class="text-2xl font-bold text-gray-800">OPD Count</h1>
-                            <button onclick="window.location.href='home.html'" class="p-2 rounded-full hover:bg-gray-100">
-                                <i data-lucide="arrow-left" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-                    </div> -->
+
                     <div class="p-6">
                         <div class="space-y-4">
                             <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
@@ -126,13 +133,11 @@
 
                                         Download Data
                                     </button>
-<!--                                    <button id="toggleViewButton" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">-->
-<!--                                        Show Graph-->
-<!--                                    </button>-->
+
                                 </div>
                             </div>
                         </div>
-                        <div id="tableView" class="mt-6 rounded-md border">
+                        <div id="tableView" class="mt-6 rounded-md border relative">
                             <table id="dataTable" class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
@@ -209,6 +214,9 @@
         document.getElementById('resetButton').addEventListener('click', resetForm);
         document.getElementById('toggleViewButton').addEventListener('click', toggleView);
         window.onload = function() {
+            // Hide table and show loader initially
+            document.getElementById('tableView').style.display = 'none';
+            document.getElementById('tableLoader').style.display = 'flex';
             fetchData();
         };
         function resetForm() {
@@ -219,7 +227,7 @@
             
             departmentData = [];
             currentPage = 1;
-            updateTable();
+            fetchData();
             document.getElementById('downloadButton').disabled = true;
             if (chart) {
                 chart.destroy();
@@ -230,21 +238,20 @@
             document.getElementById('searchButton').click();
         };
 
-
         async function fetchData() {
-            // const searchButton = document.getElementById('searchButton');
-            // searchButton.disabled = true;
-            // searchButton.textContent = 'Search in Progress, Please Wait...';
-
             const apiUrl = 'https://prod-37.northeurope.logic.azure.com:443/workflows/ae8a0c4bf9524b20be215e75b142f16c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=M79CXHGuoXdSnUXT_eGsvXgQ0dca6JS4EFDQkrGMmUI';
-// Increment the endDate by 1 day
 
             const requestBody = {
                 department: document.getElementById('departemnt').value,
-
             };
 
             try {
+                // Show loader, hide table
+                document.getElementById('tableLoader').style.display = 'flex';
+                document.getElementById('tableView').style.display = 'none';
+                document.getElementById('pagination').style.display = 'none';
+                document.getElementById('downloadButton').disabled = true;
+
                 const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: {
@@ -257,15 +264,32 @@
 
                 departmentData = await response.json();
                 currentPage = 1;
+
+                // Hide loader, show table
+                document.getElementById('tableLoader').style.display = 'none';
+                document.getElementById('tableView').style.display = 'block';
+                document.getElementById('pagination').style.display = 'flex';
+
                 updateTable();
                 updateGraph();
                 document.getElementById('downloadButton').disabled = false;
+
             } catch (error) {
                 console.error('Failed to fetch data:', error);
-                alert('Failed to fetch data. Please try again.');
-            } finally {
-                // searchButton.disabled = false;
-                // searchButton.textContent = 'Search';
+                // Show error state in the loader
+                document.getElementById('tableLoader').innerHTML = `
+            <div class="flex flex-col items-center space-y-4">
+                <div class="text-red-500">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
+                <div class="text-gray-600 text-sm font-medium">Failed to load data. Please try again.</div>
+                <button onclick="fetchData()" class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
+                    Retry
+                </button>
+            </div>
+        `;
             }
         }
 

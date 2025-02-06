@@ -116,6 +116,11 @@ const departmentOptions = {
             icon: "fa-hourglass-half", // Changed (aging/debt timing concept)
         },
         {
+            name: "Client Receipt Adjustment",
+            link: "client-receipt-adjustment.html",
+            icon: "fa-hourglass-half",
+        },
+        {
             name: "SSP Refer Letter Data",
             link: "SSP-Refer-Letter-Data.html",
             icon: "fa-file-invoice", // Changed (better for financial documents)
