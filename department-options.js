@@ -5,6 +5,7 @@ const departmentOptions = {
             icon: "fa-chart-bar", // General counting/statistics icon
             submenu: [
                 { name: "OPD Count", link: "finance-opd-count.html", icon: "fa-user-md" }, // Doctor/patient icon
+                { name: "OPD Count- Allied Health Specialties", link: "finance-opd-count-ahs.html", icon: "fa-user-nurse" }, // Doctor/patient icon
                 { name: "IPD Count", link: "finance-ipd-count.html", icon: "fa-procedures" }, // Bed icon
                 { name: "EAR Count", link: "finance-ear-count.html", icon: "fa-users" }, // Group icon
             ],
