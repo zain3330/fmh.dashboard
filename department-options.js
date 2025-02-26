@@ -83,50 +83,8 @@ const departmentOptions = {
         }
     ],
 
-    Corporate: [
-        {
-            name: "Billing Sheet",
-            icon: "fa-stethoscope", // Medical procedures icon
-            submenu: [
-                { name: "Ipd Revenue", link: "ipd-revenue.html", icon: "fa-notes-medical" }, // Medical notes icon
-                { name: "Ear Revenue", link: "ear-revenue.html", icon: "fa-notes-medical" },
-                { name: "Opd Revenue", link: "opd-revenue.html", icon: "fa-notes-medical" },
 
-            ],
-        },
-        {
-            name: "Corporate Billing & Receipt",
-            link: "finance-corporate-billing-receipt.html",
-            icon: "fa-file-invoice-dollar", // Billing/receipt icon
-        },
-    ],
-    Finance: [
-        // {
-        //     name: "General Ledger",
-        //     link: "general-ledger.html",
-        //     icon: "fa-book", // Changed to ledger/book icon (better for accounting)
-        // },
-        // {
-        //     name: "Trial Balance",
-        //     link: "trail-balance.html",
-        //     icon: "fa-balance-scale", // Good choice (represents balance)
-        // },
-        // {
-        //     name: "Debtor Aging Master",
-        //     link: "debtor-aging-master.html",
-        //     icon: "fa-hourglass-half", // Changed (aging/debt timing concept)
-        // },
-        // {
-        //     name: "Client Receipt Adjustment",
-        //     link: "client-receipt-adjustment.html",
-        //     icon: "fa-hourglass-half",
-        // },
-        // {
-        //     name: "SSP Refer Letter Data",
-        //     link: "SSP-Refer-Letter-Data.html",
-        //     icon: "fa-file-invoice", // Changed (better for financial documents)
-        // },
-    ]
+
 
 };
 
