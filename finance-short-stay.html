@@ -47,11 +47,7 @@
             </div>
             <div class="relative">
                 <button onclick="toggleDropdown('Finance')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
-              <span class="flex items-center">
-                <i class="fas fa-dollar-sign w-5 h-5 mr-2"></i>
-                <span class="sidebar-text">Finance</span>
-              </span>
-                    <i class="fas fa-chevron-down w-4 h-4"></i>
+
                 </button>
                 <div id="Finance-dropdown" class="hidden bg-gray-700 py-2">
                     <!-- Dropdown items will be inserted here -->
@@ -59,11 +55,7 @@
             </div>
             <div class="relative">
                 <button onclick="toggleDropdown('Corporate')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
-            <span class="flex items-center">
-              <i class="fas fa-briefcase w-5 h-5 mr-2"></i>
-              <span class="sidebar-text">Corporate</span>
-            </span>
-                    <i class="fas fa-chevron-down w-4 h-4"></i>
+
                 </button>
                 <div id="Corporate-dropdown" class="hidden bg-gray-700 py-2">
                     <!-- Dropdown items will be inserted here -->
@@ -484,12 +476,13 @@
 <script>
 
     const departmentOptions = {
-        Finance: [
+        Clinical: [
             {
                 name: "Count",
                 icon: "fa-chart-bar", // General counting/statistics icon
                 submenu: [
                     { name: "OPD Count", link: "finance-opd-count.html", icon: "fa-user-md" }, // Doctor/patient icon
+                    { name: "OPD Count- Allied Health Specialties", link: "finance-opd-count-ahs.html", icon: "fa-user-nurse" }, // Doctor/patient icon
                     { name: "IPD Count", link: "finance-ipd-count.html", icon: "fa-procedures" }, // Bed icon
                     { name: "EAR Count", link: "finance-ear-count.html", icon: "fa-users" }, // Group icon
                 ],
@@ -507,6 +500,15 @@
                 icon: "fa-stethoscope", // Medical procedures icon
                 submenu: [
                     { name: "Total FMH Procedures", link: "finance-total-procedures.html", icon: "fa-notes-medical" }, // Medical notes icon
+
+                ],
+            },
+            {
+                name: "Discharge Type",
+                icon: "fa-hospital-user", // Medical procedures icon
+                submenu: [
+                    { name: "EAR Discharge Type", link: "ear_discharge_type.html", icon: "fa-ear-listen" }, // Medical notes icon
+                    { name: "IPD Discharge Type", link: "ipd_discharge_type.html", icon: "fa-procedures" }, // Medical notes icon
 
                 ],
             },
@@ -556,26 +558,8 @@
                 "link": "ear-notes.html",
                 "icon": "fa fa-sticky-note"
             }
-
         ],
 
-        Corporate: [
-            {
-                name: "Billing Sheet",
-                icon: "fa-stethoscope", // Medical procedures icon
-                submenu: [
-                    { name: "Ipd Revenue", link: "ipd-revenue.html", icon: "fa-notes-medical" }, // Medical notes icon
-                    { name: "Ear Revenue", link: "ear-revenue.html", icon: "fa-notes-medical" },
-                    { name: "Opd Revenue", link: "opd-revenue.html", icon: "fa-notes-medical" },
-
-                ],
-            },
-            {
-                name: "Corporate Billing & Receipt",
-                link: "finance-corporate-billing-receipt.html",
-                icon: "fa-file-invoice-dollar", // Billing/receipt icon
-            },
-        ],
     };
 
     function createDropdownItems(options, parentId = '') {
