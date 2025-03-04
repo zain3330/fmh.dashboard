@@ -22,48 +22,50 @@
         }
     </script>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-... your_hash ..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <style>
+        .sidebar-transition {
+            transition: width 0.3s ease-in-out;
+        }
+    </style>
 </head>
 
   
 <body class="bg-gray-100">
     <div class="flex h-screen overflow-hidden">
       <!-- Sidebar -->
-      <aside id="sidebar" class="w-64 bg-gray-900 text-white transition-all duration-300">
-          <a href="home.html" class="p-4">
-              <h1 id="userName"  class="text-center text-2xl font-bold"></h1>
-          </a>
-          <nav class="mt-6">
-              <div class="relative">
-                  <button onclick="toggleDropdown('Clinical')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
-              <span class="flex items-center">
-                <i class="fas fa-stethoscope w-5 h-5 mr-2"></i>
-                <span class="sidebar-text">Clinical</span>
-              </span>
-                      <i class="fas fa-chevron-down w-4 h-4"></i>
-                  </button>
-                  <div id="Clinical-dropdown" class="hidden bg-gray-700 py-2">
-                      <!-- Dropdown items will be inserted here -->
-                  </div>
-              </div>
-              <div class="relative">
-                  <button onclick="toggleDropdown('Finance')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
+        <aside id="sidebar" class="bg-gray-900 text-white sidebar-transition w-64 min-h-screen overflow-y-auto max-h-screen">
 
-                  </button>
-                  <div id="Finance-dropdown" class="hidden bg-gray-700 py-2">
-                      <!-- Dropdown items will be inserted here -->
-                  </div>
-              </div>
-              <div class="relative">
-                  <button onclick="toggleDropdown('Corporate')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
+            <div class="p-4 flex justify-between items-center">
+                <h1 id="userName" class="text-center text-2xl font-bold sidebar-text"></h1>
+                <div id="userInitials" class="text-center text-2xl font-bold  rounded-full bg-blue-500 flex items-center justify-center hidden"></div>
 
-                  </button>
-                  <div id="Corporate-dropdown" class="hidden bg-gray-700 py-2">
-                      <!-- Dropdown items will be inserted here -->
-                  </div>
-              </div>
-          </nav>
-      </aside>
+                <button id="toggleSidebar" onclick="toggleSidebar()" class="text-white p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
+                    <i class="fas fa-chevron-left sidebar-icon"></i>
+                </button>
+            </div>
+            <nav class="mt-6">
+                <a href="home.html" class="w-full flex items-center py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
+        <span class="flex items-center">
+            <i class="fas fa-tachometer-alt w-5 h-5 mr-2"></i>
+            <span class="sidebar-text">Dashboard</span>
+        </span>
+                </a>
+                <div class="relative">
+                    <button onclick="toggleDropdown('Clinical')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
+                        <span class="flex items-center">
+                            <i class="fas fa-stethoscope w-5 h-5 mr-2"></i>
+                            <span class="sidebar-text">Clinical</span>
+                        </span>
+                        <i class="fas fa-chevron-down w-4 h-4"></i>
+                    </button>
+                    <div id="Clinical-dropdown" class="hidden bg-gray-800 py-2">
+                        <!-- Dropdown items will be inserted here by JavaScript -->
+                    </div>
+                </div>
+
+
+            </nav>
+        </aside>
       <main class="flex-1 overflow-y-auto bg-gray-100">
       <!-- Main Content -->
       <header class="bg-white shadow-sm sticky top-0 z-10">
@@ -185,19 +187,7 @@
 
     <script>
        
-        let departmentData = [];
-        let currentPage = 1;
-        const itemsPerPage = 10;
-        let chart = null;
 
-        document.getElementById('firstPage').addEventListener('click', () => goToPage(1));
-        document.getElementById('lastPage').addEventListener('click', () => goToPage('last'));
-        document.getElementById('searchButton').addEventListener('click', fetchData);
-        document.getElementById('downloadButton').addEventListener('click', downloadData);
-        document.getElementById('prevPage').addEventListener('click', () => changePage(-1));
-        document.getElementById('nextPage').addEventListener('click', () => changePage(1));
-        document.getElementById('resetButton').addEventListener('click', resetForm);
-        document.getElementById('toggleViewButton').addEventListener('click', toggleView);
 
         function resetForm() {
             document.getElementById('type').value = 'M';
@@ -443,127 +433,204 @@
 <script>
 
 
+    // Global variables
+    let isOpen = true;
+    let currentPage = 1;
+    const itemsPerPage = 10; // Added missing variable
+    let departmentData = [];
+    let chart = null;
+
+    // DOM Elements
+    const sidebar = document.getElementById('sidebar');
+    const userName = document.getElementById('userName');
+    const userInitials = document.getElementById('userInitials');
+
+    // Sidebar functionality
     function createDropdownItems(options, parentId = '') {
-      const fragment = document.createDocumentFragment();
-      options.forEach(option => {
-        if (option.submenu) {
-          const submenuButton = document.createElement('button');
-          submenuButton.className = 'w-full text-left flex items-center justify-between py-2 px-4 text-sm text-gray-300 hover:bg-gray-600 hover:text-white';
-          const submenuId = `${parentId}${option.name.replace(/\s+/g, '')}`;
-          submenuButton.onclick = () => toggleDropdown(submenuId);
-          
-          const iconSpan = document.createElement('span');
-          iconSpan.className = 'flex items-center';
-          iconSpan.innerHTML = `<i class="fas ${option.icon} w-4 h-4 mr-2"></i><span class="sidebar-text">${option.name}</span>`;
-          
-          const chevronIcon = document.createElement('i');
-          chevronIcon.className = 'fas fa-chevron-right w-4 h-4';
-          
-          submenuButton.appendChild(iconSpan);
-          submenuButton.appendChild(chevronIcon);
-          
-          const submenu = document.createElement('div');
-          submenu.id = `${submenuId}-dropdown`;
-          submenu.className = 'hidden bg-gray-800 py-2 pl-6';
-          
-          submenu.appendChild(createDropdownItems(option.submenu, submenuId));
+        const fragment = document.createDocumentFragment();
 
-          fragment.appendChild(submenuButton);
-          fragment.appendChild(submenu);
-        } else {
-          const link = document.createElement('a');
-          link.href = option.link;
-          link.className = 'block py-2 px-4 text-sm text-gray-300 hover:bg-gray-600 hover:text-white flex items-center';
-          link.innerHTML = `<i class="fas ${option.icon} w-4 h-4 mr-2"></i><span class="sidebar-text">${option.name}</span>`;
-          fragment.appendChild(link);
-        }
-      });
-      return fragment;
-    }
+        options.forEach(option => {
+            if (option.submenu) {
+                // Create submenu container
+                const submenuContainer = document.createElement('div');
+                submenuContainer.className = 'relative';
 
-    for (const [department, options] of Object.entries(departmentOptions)) {
-      const dropdown = document.getElementById(`${department}-dropdown`);
-      dropdown.appendChild(createDropdownItems(options, department));
-    }
+                // Create submenu button
+                const submenuButton = document.createElement('button');
+                submenuButton.className = 'w-full flex items-center justify-between py-2 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200';
+                submenuButton.setAttribute('data-submenu', `${parentId}-${option.name.replace(/\s+/g, '-').toLowerCase()}`);
+                submenuButton.innerHTML = `
+                <span class="flex items-center">
+                    <i class="fas ${option.icon} w-4 h-4 mr-2"></i>
+                    <span class="sidebar-text">${option.name}</span>
+                </span>
+                <i class="fas fa-chevron-right w-4 h-4 transition-transform duration-200"></i>
+            `;
 
-    function toggleDropdown(id) {
-      const dropdown = document.getElementById(`${id}-dropdown`);
-      if (dropdown) {
-        const isHidden = dropdown.classList.contains('hidden');
-        
-        // Close all dropdowns at the same level
-        dropdown.parentElement.querySelectorAll(':scope > [id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
-        
-        // Toggle the clicked dropdown
-        if (isHidden) {
-          dropdown.classList.remove('hidden');
-        }
-        
-        // Rotate the chevron icon
-        const button = document.querySelector(`button[onclick="toggleDropdown('${id}')"]`);
-        const chevron = button.querySelector('.fa-chevron-right');
-        if (chevron) {
-          chevron.style.transform = isHidden ? 'rotate(90deg)' : 'rotate(0deg)';
-        }
-      }
-    }
+                // Create submenu content
+                const submenuContent = document.createElement('div');
+                submenuContent.id = `${parentId}-${option.name.replace(/\s+/g, '-').toLowerCase()}-submenu`;
+                submenuContent.className = 'hidden pl-4 bg-gray-800/50';
 
-    function showDepartmentContent(department) {
-      const departmentTitle = document.getElementById('departmentTitle');
-      const departmentContent = document.getElementById('departmentContent');
+                submenuContent.appendChild(createDropdownItems(option.submenu, submenuContent.id));
 
-      departmentTitle.textContent = department.replace(/([A-Z])/g, ' $1').trim();
-      departmentContent.innerHTML = `<h3 class="text-xl font-semibold mb-4">Select an option from the ${department} menu to view details.</h3>`;
-    }
+                submenuButton.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    submenuContent.classList.toggle('hidden');
+                    submenuButton.querySelector('.fa-chevron-right').classList.toggle('rotate-90');
+                    saveSidebarState();
+                });
 
-    function logout() {
-      localStorage.removeItem('isLoggedIn');
-      localStorage.removeItem('fullName');
-      window.location.href = 'index.html';
-    }
+                submenuContainer.appendChild(submenuButton);
+                submenuContainer.appendChild(submenuContent);
+                fragment.appendChild(submenuContainer);
+            } else {
+                const link = document.createElement('a');
+                link.href = option.link;
+                link.className = 'block py-2 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200';
+                link.innerHTML = `
+                <span class="flex items-center">
+                    <i class="fas ${option.icon} w-4 h-4 mr-2"></i>
+                    <span class="sidebar-text">${option.name}</span>
+                </span>
+            `;
+                fragment.appendChild(link);
+            }
+        });
 
-    function getInitials(name) {
-        return name.split(' ').map(word => word[0].toUpperCase()).join('');
+        return fragment;
     }
 
     function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        const sidebarTexts = document.querySelectorAll('.sidebar-text');
-        const userNameElement = document.getElementById('userName');
-        const fullName = localStorage.getItem('fullName');
+        isOpen = !isOpen;
+        sidebar.classList.toggle('w-64');
+        sidebar.classList.toggle('w-24');
 
-        if (sidebar.classList.contains('w-64')) {
-            sidebar.classList.remove('w-64');
-            sidebar.classList.add('w-20');
-            sidebarTexts.forEach(text => text.classList.add('hidden'));
-            if (fullName) {
-                userNameElement.textContent = getInitials(fullName);
-            }
+        document.querySelectorAll('.sidebar-text').forEach(el => {
+            el.classList.toggle('hidden');
+        });
+
+        if (isOpen) {
+            userName.classList.remove('hidden');
+            userInitials.classList.add('hidden');
         } else {
-            sidebar.classList.remove('w-20');
-            sidebar.classList.add('w-64');
-            sidebarTexts.forEach(text => text.classList.remove('hidden'));
-            if (fullName) {
-                userNameElement.textContent = fullName;
-            }
+            userName.classList.add('hidden');
+            userInitials.classList.remove('hidden');
+        }
+
+        saveSidebarState();
+    }
+
+    // Remove the document-level click event listener that was closing dropdowns
+    // Instead, modify the toggleDropdown function to handle the state properly
+
+    function toggleDropdown(id) {
+        const dropdown = document.getElementById(`${id}-dropdown`);
+        const chevron = document.querySelector(`button[onclick="toggleDropdown('${id}')"] .fa-chevron-down`);
+
+        if (dropdown) {
+            dropdown.classList.toggle('hidden');
+            if (chevron) chevron.classList.toggle('rotate-180');
+            saveSidebarState();
         }
     }
 
-
-    document.addEventListener('click', function(event) {
-        if (!event.target.closest('.relative')) {
-            document.querySelectorAll('[id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.fa-chevron-right').forEach(el => el.style.transform = 'rotate(0deg)');
-        }
-    });
-
+    // Update the DOMContentLoaded event listener to remove the document click handler
     document.addEventListener('DOMContentLoaded', function() {
-        const userNameElement = document.getElementById('userName');
+        // Initialize event listeners
+        document.getElementById('firstPage')?.addEventListener('click', () => goToPage(1));
+        document.getElementById('lastPage')?.addEventListener('click', () => goToPage('last'));
+        document.getElementById('searchButton')?.addEventListener('click', fetchData);
+        document.getElementById('downloadButton')?.addEventListener('click', downloadData);
+        document.getElementById('prevPage')?.addEventListener('click', () => changePage(-1));
+        document.getElementById('nextPage')?.addEventListener('click', () => changePage(1));
+        document.getElementById('resetButton')?.addEventListener('click', resetForm);
+        document.getElementById('toggleViewButton')?.addEventListener('click', toggleView);
+        document.getElementById('closeModal')?.addEventListener('click', hideAlert);
+
+        // Initialize sidebar
         const fullName = localStorage.getItem('fullName');
         if (fullName) {
-            userNameElement.textContent = `${fullName}`;
+            userName.textContent = fullName;
+            userInitials.textContent = getInitials(fullName);
         }
+
+        // Initialize dropdowns once
+        for (const [department, options] of Object.entries(departmentOptions)) {
+            const dropdown = document.getElementById(`${department}-dropdown`);
+            if (dropdown) {
+                dropdown.appendChild(createDropdownItems(options, department));
+            }
+        }
+
+        // Load sidebar state
+        loadSidebarState();
+
+        // Highlight current page
+        const currentPath = window.location.pathname.split('/').pop();
+        const currentLink = document.querySelector(`a[href="${currentPath}"]`);
+        if (currentLink) {
+            currentLink.classList.add('bg-gray-700', 'text-white');
+        }
+
+        // Add CSS for submenu animations
+        const style = document.createElement('style');
+        style.textContent = `
+        .rotate-90 { transform: rotate(90deg); }
+        [data-submenu] .fa-chevron-right { transition: transform 0.2s ease-in-out; }
+    `;
+        document.head.appendChild(style);
+
+        // Add click event listener to the sidebar for toggling
+        sidebar.addEventListener('click', function(event) {
+            // Only toggle if clicking on the sidebar itself, not its children
+            if (event.target === sidebar) {
+                toggleSidebar();
+            }
+        });
     });
-  </script>
+
+    function saveSidebarState() {
+        const openMenus = Array.from(document.querySelectorAll('[id$="-dropdown"], [id$="-submenu"]'))
+            .filter(el => !el.classList.contains('hidden'))
+            .map(el => el.id);
+
+        localStorage.setItem('sidebarState', JSON.stringify({
+            isOpen,
+            openMenus
+        }));
+    }
+
+    function loadSidebarState() {
+        const savedState = localStorage.getItem('sidebarState');
+        if (savedState) {
+            const { isOpen: savedIsOpen, openMenus } = JSON.parse(savedState);
+            if (!savedIsOpen) toggleSidebar();
+
+            openMenus.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.classList.remove('hidden');
+                    const button = document.querySelector(`[data-submenu="${id.replace('-submenu', '')}"]`);
+                    if (button) {
+                        button.querySelector('.fa-chevron-right').classList.add('rotate-90');
+                    }
+                }
+            });
+        }
+    }
+
+    function getInitials(name) {
+        return name.split(' ').map(n => n[0]).join('').toUpperCase();
+    }
+    function logout() {
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = 'index.html';
+    }
+
+
+
+
+</script>
 </body>
 </html>

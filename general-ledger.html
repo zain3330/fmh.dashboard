@@ -69,39 +69,37 @@
 
 <div class="flex h-screen overflow-hidden">
     <!-- Sidebar -->
-    <aside id="sidebar" class="w-64 bg-gray-900 text-white transition-all duration-300">
-        <a href="home.html" class="p-4">
-            <h1 id="userName"  class="text-center text-2xl font-bold"></h1>
-        </a>
+    <aside id="sidebar" class="bg-gray-900 text-white sidebar-transition w-64 min-h-screen overflow-y-auto max-h-screen">
+
+        <div class="p-4 flex justify-between items-center">
+            <h1 id="userName" class="text-center text-2xl font-bold sidebar-text"></h1>
+            <div id="userInitials" class="text-center text-2xl font-bold  rounded-full bg-blue-500 flex items-center justify-center hidden"></div>
+
+            <button id="toggleSidebar" onclick="toggleSidebar()" class="text-white p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
+                <i class="fas fa-chevron-left sidebar-icon"></i>
+            </button>
+        </div>
         <nav class="mt-6">
+            <a href="home.html" class="w-full flex items-center py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
+        <span class="flex items-center">
+            <i class="fas fa-tachometer-alt w-5 h-5 mr-2"></i>
+            <span class="sidebar-text">Dashboard</span>
+        </span>
+            </a>
             <div class="relative">
                 <button onclick="toggleDropdown('Clinical')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
-              <span class="flex items-center">
-                <i class="fas fa-stethoscope w-5 h-5 mr-2"></i>
-                <span class="sidebar-text">Clinical</span>
-              </span>
+                        <span class="flex items-center">
+                            <i class="fas fa-stethoscope w-5 h-5 mr-2"></i>
+                            <span class="sidebar-text">Clinical</span>
+                        </span>
                     <i class="fas fa-chevron-down w-4 h-4"></i>
                 </button>
-                <div id="Clinical-dropdown" class="hidden bg-gray-700 py-2">
-                    <!-- Dropdown items will be inserted here -->
+                <div id="Clinical-dropdown" class="hidden bg-gray-800 py-2">
+                    <!-- Dropdown items will be inserted here by JavaScript -->
                 </div>
             </div>
-            <div class="relative">
-                <button onclick="toggleDropdown('Finance')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
 
-                </button>
-                <div id="Finance-dropdown" class="hidden bg-gray-700 py-2">
-                    <!-- Dropdown items will be inserted here -->
-                </div>
-            </div>
-            <div class="relative">
-                <button onclick="toggleDropdown('Corporate')" class="w-full flex items-center justify-between py-2 px-4 text-sm hover:bg-gray-700 transition-colors duration-200">
 
-                </button>
-                <div id="Corporate-dropdown" class="hidden bg-gray-700 py-2">
-                    <!-- Dropdown items will be inserted here -->
-                </div>
-            </div>
         </nav>
     </aside>
     <main class="flex-1 overflow-y-auto bg-gray-100">
@@ -553,41 +551,62 @@
 <script>
 
 
+
     function createDropdownItems(options, parentId = '') {
         const fragment = document.createDocumentFragment();
+
         options.forEach(option => {
             if (option.submenu) {
+                // Create submenu container
+                const submenuContainer = document.createElement('div');
+                submenuContainer.className = 'relative';
+
+                // Create submenu button
                 const submenuButton = document.createElement('button');
-                submenuButton.className = 'w-full text-left flex items-center justify-between py-2 px-4 text-sm text-gray-300 hover:bg-gray-600 hover:text-white';
-                const submenuId = `${parentId}${option.name.replace(/\s+/g, '')}`;
-                submenuButton.onclick = () => toggleDropdown(submenuId);
+                submenuButton.className = 'w-full flex items-center justify-between py-2 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200';
+                submenuButton.setAttribute('data-submenu', `${parentId}-${option.name.replace(/\s+/g, '-').toLowerCase()}`);
+                submenuButton.innerHTML = `
+                    <span class="flex items-center">
+                        <i class="fas ${option.icon} w-4 h-4 mr-2"></i>
+                        <span class="sidebar-text">${option.name}</span>
+                    </span>
+                    <i class="fas fa-chevron-right w-4 h-4 transition-transform duration-200"></i>
+                `;
 
-                const iconSpan = document.createElement('span');
-                iconSpan.className = 'flex items-center';
-                iconSpan.innerHTML = `<i class="fas ${option.icon} w-4 h-4 mr-2"></i><span class="sidebar-text">${option.name}</span>`;
+                // Create submenu content
+                const submenuContent = document.createElement('div');
+                submenuContent.id = `${parentId}-${option.name.replace(/\s+/g, '-').toLowerCase()}-submenu`;
+                submenuContent.className = 'hidden pl-4 bg-gray-800/50';
 
-                const chevronIcon = document.createElement('i');
-                chevronIcon.className = 'fas fa-chevron-right w-4 h-4';
+                // Add submenu items recursively
+                submenuContent.appendChild(createDropdownItems(option.submenu, submenuContent.id));
 
-                submenuButton.appendChild(iconSpan);
-                submenuButton.appendChild(chevronIcon);
+                // Add click handler
+                submenuButton.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    submenuContent.classList.toggle('hidden');
+                    submenuButton.querySelector('.fa-chevron-right').classList.toggle('rotate-90');
+                    saveSidebarState();
+                });
 
-                const submenu = document.createElement('div');
-                submenu.id = `${submenuId}-dropdown`;
-                submenu.className = 'hidden bg-gray-800 py-2 pl-6';
-
-                submenu.appendChild(createDropdownItems(option.submenu, submenuId));
-
-                fragment.appendChild(submenuButton);
-                fragment.appendChild(submenu);
+                submenuContainer.appendChild(submenuButton);
+                submenuContainer.appendChild(submenuContent);
+                fragment.appendChild(submenuContainer);
             } else {
+                // Create regular menu item
                 const link = document.createElement('a');
                 link.href = option.link;
-                link.className = 'block py-2 px-4 text-sm text-gray-300 hover:bg-gray-600 hover:text-white flex items-center';
-                link.innerHTML = `<i class="fas ${option.icon} w-4 h-4 mr-2"></i><span class="sidebar-text">${option.name}</span>`;
+                link.className = 'block py-2 px-4 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200';
+                link.innerHTML = `
+                    <span class="flex items-center">
+                        <i class="fas ${option.icon} w-4 h-4 mr-2"></i>
+                        <span class="sidebar-text">${option.name}</span>
+                    </span>
+                `;
                 fragment.appendChild(link);
             }
         });
+
         return fragment;
     }
 
@@ -595,69 +614,113 @@
         const dropdown = document.getElementById(`${department}-dropdown`);
         dropdown.appendChild(createDropdownItems(options, department));
     }
+    // Add CSS for submenu animations
+    const style = document.createElement('style');
+    style.textContent = `
+        .rotate-90 {
+            transform: rotate(90deg);
+        }
+        [data-submenu] .fa-chevron-right {
+            transition: transform 0.2s ease-in-out;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Update toggleSidebar to handle submenu text
+    function toggleSidebar() {
+        isOpen = !isOpen;
+        sidebar.classList.toggle('w-64');
+        sidebar.classList.toggle('w-24');
+
+        // Toggle all text elements in sidebar
+        document.querySelectorAll('.sidebar-text').forEach(el => {
+            el.classList.toggle('hidden');
+        });
+
+        // Toggle username and initials
+        if (isOpen) {
+            userName.classList.remove('hidden');
+            userInitials.classList.add('hidden');
+        } else {
+            userName.classList.add('hidden');
+            userInitials.classList.remove('hidden');
+        }
+
+        saveSidebarState();
+    }
 
     function toggleDropdown(id) {
         const dropdown = document.getElementById(`${id}-dropdown`);
-        if (dropdown) {
-            const isHidden = dropdown.classList.contains('hidden');
+        const chevron = document.querySelector(`button[onclick="toggleDropdown('${id}')"] .fa-chevron-down`);
 
-            // Close all dropdowns at the same level
-            dropdown.parentElement.querySelectorAll(':scope > [id$="-dropdown"]').forEach(el => el.classList.add('hidden'));
+        // Toggle only the clicked dropdown without affecting others
+        dropdown.classList.toggle('hidden');
+        chevron.classList.toggle('rotate-180');
+        saveSidebarState();
+    }
+    function saveSidebarState() {
+        const openMenus = Array.from(document.querySelectorAll('[id$="-dropdown"], [id$="-submenu"]'))
+            .filter(el => !el.classList.contains('hidden'))
+            .map(el => el.id);
 
-            // Toggle the clicked dropdown
-            if (isHidden) {
-                dropdown.classList.remove('hidden');
-            }
+        localStorage.setItem('sidebarState', JSON.stringify({
+            isOpen,
+            openMenus
+        }));
+    }
 
-            // Rotate the chevron icon
-            const button = document.querySelector(`button[onclick="toggleDropdown('${id}')"]`);
-            const chevron = button.querySelector('.fa-chevron-right');
-            if (chevron) {
-                chevron.style.transform = isHidden ? 'rotate(90deg)' : 'rotate(0deg)';
-            }
+    // Update loadSidebarState to handle submenus
+    function loadSidebarState() {
+        const savedState = localStorage.getItem('sidebarState');
+        if (savedState) {
+            const { isOpen: savedIsOpen, openMenus } = JSON.parse(savedState);
+            if (!savedIsOpen) toggleSidebar();
+
+            openMenus.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.classList.remove('hidden');
+                    // Rotate chevron if it's a submenu
+                    const button = document.querySelector(`[data-submenu="${id.replace('-submenu', '')}"]`);
+                    if (button) {
+                        button.querySelector('.fa-chevron-right').classList.add('rotate-90');
+                    }
+                }
+            });
         }
     }
 
-    function showDepartmentContent(department) {
-        const departmentTitle = document.getElementById('departmentTitle');
-        const departmentContent = document.getElementById('departmentContent');
 
-        departmentTitle.textContent = department.replace(/([A-Z])/g, ' $1').trim();
-        departmentContent.innerHTML = `<h3 class="text-xl font-semibold mb-4">Select an option from the ${department} menu to view details.</h3>`;
+    function getInitials(name) {
+        return name.split(' ').map(n => n[0]).join('').toUpperCase();
     }
 
+    document.addEventListener('DOMContentLoaded', function() {
+        const fullName = localStorage.getItem('fullName');
+        if (fullName) {
+            userName.textContent = fullName;
+            userInitials.textContent = getInitials(fullName);
+        }
+        loadSidebarState();
+
+        // Only keep the sidebar toggle functionality
+        sidebar.addEventListener('click', function(event) {
+            if (event.target === sidebar) {
+                toggleSidebar();
+            }
+        });
+    });
+
+    // Highlight current page in sidebar
+    const currentPage = window.location.pathname.split('/').pop();
+    const currentLink = document.querySelector(`a[href="${currentPage}"]`);
+    if (currentLink) {
+        currentLink.classList.add('bg-gray-700', 'text-white');
+    }
     function logout() {
         localStorage.removeItem('isLoggedIn');
         window.location.href = 'index.html';
     }
-
-    function getInitials(name) {
-        return name.split(' ').map(word => word[0].toUpperCase()).join('');
-    }
-
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        const sidebarTexts = document.querySelectorAll('.sidebar-text');
-        const userNameElement = document.getElementById('userName');
-        const fullName = localStorage.getItem('fullName');
-
-        if (sidebar.classList.contains('w-64')) {
-            sidebar.classList.remove('w-64');
-            sidebar.classList.add('w-20');
-            sidebarTexts.forEach(text => text.classList.add('hidden'));
-            if (fullName) {
-                userNameElement.textContent = getInitials(fullName);
-            }
-        } else {
-            sidebar.classList.remove('w-20');
-            sidebar.classList.add('w-64');
-            sidebarTexts.forEach(text => text.classList.remove('hidden'));
-            if (fullName) {
-                userNameElement.textContent = fullName;
-            }
-        }
-    }
-
 
 
     document.addEventListener('click', function(event) {
